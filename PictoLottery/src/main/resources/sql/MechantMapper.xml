@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.picto.dao.MechantDao">
+    <sql id="queryMechantColumn">
+        select ID AS id,
+        merchant_name AS merchant_name,
+        brand AS brand,
+        industry_type AS industryType,
+        phone AS phone,
+        mobile AS mobile,
+        address AS address,
+        volumn AS volumn,
+        main_business AS mainBusiness,
+        remark AS remark,
+        lottery_link AS lotteryLink,
+        lottery_qrcode AS lotteryQrcode,
+        query_link AS queryLink,
+        main_advert AS mainAdvert,
+        banner_advert AS bannerAdvert,
+        lottery_channel AS lotteryChannel,
+        mechant_qrcode AS mechantQrcode,
+        state AS state,
+        create_time AS createTime,
+        update_time AS updateTime
+        from merchant
+    </sql>
+
+    <select id="queryMechantById" resultType="com.picto.entity.Merchant">
+        <include refid="queryMechantColumn" />
+        where id = #{id}
+    </select>
+</mapper>
