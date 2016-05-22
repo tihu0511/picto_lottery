@@ -1,30 +1,67 @@
 package com.picto.controller;
 
-import com.picto.vo.Test;
+import com.picto.Test;
+import com.picto.dao.TestDao;
+import com.picto.entity.TestEntity;
+import com.picto.service.TestService;
+import com.picto.vo.TestVo;
+import com.picto.vo.TestVo1;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Created by BF100271 on 2016/5/21.
+ * Created by wujigang on 2016/5/22.
  */
 @Controller
 public class TestController {
-    @RequestMapping("/test.do")
-    public ModelAndView test(Test test) {
-        System.out.println(test);
-        test.setName("Huozhanbai");
+    @Autowired
+    private TestDao testDao;
+    @Autowired
+    private TestService testService;
 
-        ModelAndView view = new ModelAndView("/jsp/test");
-        view.addObject("test", test);
-        return view;
+    @RequestMapping("/test")
+    public String test(TestVo testVo, TestVo1 testVo1, Model model) {
+        System.out.println(testVo);
+        TestEntity t1 = new TestEntity();
+        t1.setName(testVo.getName());
+        testService.addTestEntity(t1);
+
+        testVo.setName("huozhanbai");
+        testVo.setDate(new Date());
+        model.addAttribute("testVo", testVo);
+        model.addAttribute("testVo1", testVo1);
+        List<TestVo> list = new ArrayList<TestVo>();
+        list.add(new TestVo(1, "huozhanbai"));
+        list.add(new TestVo(2, "abc"));
+        list.add(new TestVo(3, "efd"));
+        model.addAttribute("list", list);
+
+        List<TestEntity> entities = testDao.queryTest();
+        if (null != entities) {
+            for (TestEntity entity : entities) {
+                list.add(new TestVo(entity.getId(), entity.getName()));
+            }
+        }
+
+        return "test";
     }
 
-    @RequestMapping("/testIn.do")
-    public ModelAndView testIn() {
-        return new ModelAndView("/jsp/testIn");
+    @RequestMapping(value = "/dealAjax", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public TestVo dealAjax(@RequestBody TestVo testVo) {
+        System.out.println(testVo);
+        return new TestVo(5, "huozhanbai");
     }
 }

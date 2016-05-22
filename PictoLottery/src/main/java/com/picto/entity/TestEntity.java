@@ -1,9 +1,9 @@
-package com.picto.vo;
+package com.picto.entity;
 
 /**
- * Created by BF100271 on 2016/5/21.
+ * Created by wujigang on 2016/5/22.
  */
-public class Test {
+public class TestEntity {
     private Integer id;
     private String name;
 
@@ -25,7 +25,7 @@ public class Test {
 
     @Override
     public String toString() {
-        return "Test{" +
+        return "TestEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
