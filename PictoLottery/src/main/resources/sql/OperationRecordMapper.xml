@@ -21,4 +21,17 @@
         <include refid="queryOperationRecordColumn" />
         where openid = #{openid} and type = #{type} and operation_time >= #{today}
     </select>
+
+    <insert id="addOperationRecord" keyProperty="id" useGeneratedKeys="true" parameterType="com.picto.entity.OperationRecord">
+        insert into operation_record(openid, merchant_id,
+          <if test="serialNumber != null">
+            serial_number,
+          </if>
+        type, operation_time, create_time)
+        values(#{openid}, #{merchantId},
+          <if test="serialNumber != null">
+              #{serialNumber},
+          </if>
+        #{type}, #{operationTime}, #{createTime})
+    </insert>
 </mapper>

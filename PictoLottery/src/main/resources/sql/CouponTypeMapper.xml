@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.picto.dao.CouponTypeDao">
+    <sql id="queryCouponTypeColumn">
+        select ID AS id,
+        merchant_id AS merchantId,
+        name AS name,
+        icon AS icon,
+        total_num AS totalNum,
+        rest_num AS restNum,
+        is_immediate AS isImmediate,
+        reset_interval AS resetInterval,
+        last_reset_time AS lastResetTime,
+        version AS version,
+        state AS state,
+        create_time AS createTime,
+        update_time AS updateTime,
+        is_thanks AS isThanks
+        from coupon_type
+    </sql>
+
+    <select id="queryAllCouponTypes" resultType="com.picto.entity.CouponType">
+        <include refid="queryCouponTypeColumn" />
+        where state = 1
+    </select>
+
+    <update id="updateCouponTypeRestNum">
+        update coupon_type set rest_num = #{restNum},
+            version = #{version},
+            update_time = #{updateTime}
+        where id = #{id}
+    </update>
+</mapper>

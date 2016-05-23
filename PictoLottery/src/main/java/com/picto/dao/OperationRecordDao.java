@@ -14,4 +14,6 @@ public interface OperationRecordDao {
 
     List<OperationRecord> queryOperationRecordsToday(@Param("openid") String openid,
         @Param("type") Integer operationTypeLottery, @Param("today") Date today);
+
+    void addOperationRecord(OperationRecord operationRecord);
 }

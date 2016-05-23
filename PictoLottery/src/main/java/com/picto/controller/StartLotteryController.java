@@ -36,10 +36,12 @@ public class StartLotteryController {
     private String isValidateOpenid;
 
     @RequestMapping(value = "/startLottery", method = RequestMethod.GET)
-    public String startLottery(@RequestParam("merchantId") Integer merchantId, @RequestParam("code") String code, Model model) {
+    public String startLottery(@RequestParam("merchantId") Integer merchantId, @RequestParam("code") String code,
+                               Model model, HttpServletRequest request) {
         Merchant merchant = mechantDao.queryMechantById(merchantId);
-        model.addAttribute("merchant", merchant);
+//        model.addAttribute("merchant", merchant);
         model.addAttribute("merchantId", merchantId);
+        request.getSession().setAttribute("merchant", merchant);
         model.addAttribute("code", code);
         return "front/startLottery";
     }
