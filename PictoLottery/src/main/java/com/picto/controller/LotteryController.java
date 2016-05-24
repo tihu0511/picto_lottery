@@ -5,14 +5,17 @@ import com.picto.entity.Coupon;
 import com.picto.entity.CouponType;
 import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
+import com.picto.service.CouponService;
 import com.picto.service.LotteryService;
 import com.picto.util.ListUtil;
 import com.picto.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,15 +25,18 @@ import java.util.List;
  */
 @Controller
 public class LotteryController {
+    private static final Logger logger = Logger.getLogger(LotteryController.class);
+
     @Autowired
     private LotteryService lotteryService;
     @Autowired
     private DiscountProductDao discountProductDao;
+    @Autowired
+    private CouponService couponService;
 
     @RequestMapping("/lottery")
-    public String lottery(Model model, HttpServletRequest request) {
+    public String lottery(@RequestParam("openid") String openid, Model model, HttpServletRequest request) {
         Merchant merchant = (Merchant)request.getSession().getAttribute("merchant");
-        String openid = request.getParameter("openid");
         //生成中奖的奖项
         CouponType couponType = lotteryService.lotyCouponType(openid, merchant.getId());
 
@@ -41,6 +47,7 @@ public class LotteryController {
             String luckyIcon = couponType.getIcon();
             model.addAttribute("luckyCouponIcon", luckyIcon);
             model.addAttribute("showIcons", luckyIcon + ";" + luckyIcon + ";" + luckyIcon);
+            model.addAttribute("luckyCouponTypeId", couponType.getId());
         } else {
             //谢谢惠顾生成显示的奖项图标
             model.addAttribute("showIcons", lotteryService.getUnluckyShowIcons(merchant.getId()));
@@ -50,25 +57,27 @@ public class LotteryController {
     }
 
     @RequestMapping("lotteryFinish")
-    public String lotteryFinish(Model model, HttpServletRequest request) {
-        String luckyCouponTypeId = request.getParameter("luckyCouponTypeId");
+    public String lotteryFinish(@RequestParam("luckyCouponTypeId") String luckyCouponTypeId, Model model, HttpServletRequest request) {
         if (StringUtil.isBlank(luckyCouponTypeId)) {
             return "thanks";
         } else {
             Merchant merchant = (Merchant) request.getSession().getAttribute("merchant");
-            String couponTypeId = request.getParameter("couponTypeId");
 
-            List<DiscountProduct> discountProducts = discountProductDao.queryDiscountByCouponTypeId(Integer.valueOf(couponTypeId), merchant.getId());
+            List<DiscountProduct> discountProducts = discountProductDao.queryDiscountByCouponTypeId(Integer.valueOf(luckyCouponTypeId), merchant.getId());
             //奖项下有多个优惠，提供优惠选择
-            if (!ListUtil.isEmptyList(discountProducts) && discountProducts.size() > 1) {
-                model.addAttribute("disproducts", discountProducts);
-                return "toChoiceDiscount";
-            } else {
-                //TODO 生成优惠券并跳转到优惠券信息页
-                Coupon coupon = new Coupon();
-
+            if (ListUtil.isEmptyList(discountProducts)) {
+                logger.info("奖项下[id=" + luckyCouponTypeId + "]没有优惠产品");
+                return "thanks";
+            } else if (discountProducts.size() == 1) {
+                //生成优惠券并跳转到优惠券信息页
+                DiscountProduct discountProduct = discountProducts.get(0);
+                Coupon coupon = couponService.genCoupon(discountProduct);
                 model.addAttribute("coupon", coupon);
                 return "couponInfo";
+            } else {
+                //奖项下有多个优惠产品，提供选择页面
+                model.addAttribute("disproducts", discountProducts);
+                return "toChoiceDiscount";
             }
         }
     }

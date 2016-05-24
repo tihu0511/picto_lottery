@@ -1,8 +1,7 @@
 package com.picto.controller;
 
 import com.picto.constants.Constants;
-import com.picto.dao.MechantDao;
-import com.picto.dao.OperationRecordDao;
+import com.picto.dao.MerchantDao;
 import com.picto.entity.Merchant;
 import com.picto.service.StartLotteryService;
 import com.picto.util.WechatUtil;
@@ -26,7 +25,7 @@ import java.util.Map;
 @Controller
 public class StartLotteryController {
     @Autowired
-    private MechantDao mechantDao;
+    private MerchantDao mechantDao;
     @Autowired
     private StartLotteryService startLotteryService;
 

@@ -5,4 +5,14 @@ package com.picto.entity;
  */
 public class Coupon extends BaseEntity {
     //TODO 优惠券
+
+    private Integer merchantId;
+
+    public Integer getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Integer merchantId) {
+        this.merchantId = merchantId;
+    }
 }
