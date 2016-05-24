@@ -12,5 +12,9 @@ import java.util.List;
 public interface CouponTypeDao {
     List<CouponType> queryAllCouponTypes();
 
-    void updateCouponTypeRestNum(CouponType luckyCouponType);
+    void updateCouponTypeRestNum(CouponType luckyCouponType);// TODO mapper中添加
+
+    void updateCouponType(); //TODO mapper中添加
+
+    CouponType queryCouponTypeById(Integer couponTypeId); //TODO mapper中添加
 }
