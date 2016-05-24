@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.picto.dao.DiscountProductDao">
+    <sql id="queryDiscountProductColumn">
+        select ID AS id,
+        coupon_type_id AS couponTypeId,
+        mechant_id AS merchantId,
+        name AS name,
+        icon AS icon,
+        discount AS discount,
+        is_shared AS isShared,
+        use_msg AS useMsg,
+        limit_msg AS limitMsg,
+        validity AS validity,
+        store_name AS storeName,
+        state AS state,
+        create_time AS createTime,
+        update_time AS updateTime
+        from discount_product
+    </sql>
+
+    <select id="queryDiscountByCouponTypeId" resultType="com.picto.entity.DiscountProduct">
+        <include refid="queryDiscountProductColumn" />
+        where coupon_type_id = #{couponTypeId} and state = 1
+    </select>
+
+    <select id="queryDiscountById" resultType="com.picto.entity.DiscountProduct">
+        <include refid="queryDiscountProductColumn" />
+        where id = #{id} and state = 1
+    </select>
+</mapper>

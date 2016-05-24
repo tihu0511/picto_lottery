@@ -48,6 +48,7 @@ public class LotteryController {
             model.addAttribute("luckyCouponIcon", luckyIcon);
             model.addAttribute("showIcons", luckyIcon + ";" + luckyIcon + ";" + luckyIcon);
             model.addAttribute("luckyCouponTypeId", couponType.getId());
+            model.addAttribute("openid",openid);
         } else {
             //谢谢惠顾生成显示的奖项图标
             model.addAttribute("showIcons", lotteryService.getUnluckyShowIcons(merchant.getId()));
@@ -57,7 +58,8 @@ public class LotteryController {
     }
 
     @RequestMapping("lotteryFinish")
-    public String lotteryFinish(@RequestParam("luckyCouponTypeId") String luckyCouponTypeId, Model model, HttpServletRequest request) {
+    public String lotteryFinish(@RequestParam("luckyCouponTypeId") String luckyCouponTypeId, @RequestParam("openid") String openid,
+                                Model model, HttpServletRequest request) {
         if (StringUtil.isBlank(luckyCouponTypeId)) {
             return "front/thanks";
         } else {
@@ -71,7 +73,7 @@ public class LotteryController {
             } else if (discountProducts.size() == 1) {
                 //生成优惠券并跳转到优惠券信息页
                 DiscountProduct discountProduct = discountProducts.get(0);
-                Coupon coupon = couponService.genCoupon(discountProduct);
+                Coupon coupon = couponService.genCoupon(discountProduct, openid);
                 model.addAttribute("coupon", coupon);
                 return "front/couponInfo";
             } else {

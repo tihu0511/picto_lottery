@@ -8,4 +8,7 @@ public interface Constants {
     int OPERATION_TYPE_EXCHANGED = 2;//兑换
 
     String ENV_DEV = "dev";//测试环境
+
+    int COUPON_STATE_EFFECTED = 1;
+    int COUPON_STATE_EXCHANGED = 1;
 }

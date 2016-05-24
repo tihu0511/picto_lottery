@@ -55,14 +55,14 @@
                 $("#r1 img").attr("src", showIcons[0]);
             }, 7800);
             setTimeout(function(){
-                $("#rollImage2").attr("src", showIcons[1]);
+                $("#r2 img").attr("src", showIcons[1]);
             }, 9000);
             setTimeout(function(){
-                $("#rollImage3").attr("src", showIcons[2]);
+                $("#r3 img").attr("src", showIcons[2]);
             }, 10200);
 
             setTimeout(function(){
-                window.location.href = "/lotteryFinish.do?luckyCouponTypeId=" + '${luckyCouponTypeId}';
+                window.location.href = "/lotteryFinish.do?luckyCouponTypeId=" + '${luckyCouponTypeId}' + "&openid=${openid}";
             }, 13000);
         });
     </script>

@@ -12,9 +12,10 @@ public interface CouponService {
     /**
      * 生成优惠券
      * @param discountProduct
+     * @param openid
      * @return
      */
-    Coupon genCoupon(DiscountProduct discountProduct);
+    Coupon genCoupon(DiscountProduct discountProduct, String openid);
 
     /**
      * 查询openid下的所有优惠券，并按失效时间倒序排序

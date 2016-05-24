@@ -24,8 +24,27 @@
         where state = 1
     </select>
 
+    <select id="queryCouponTypeById" resultType="com.picto.entity.CouponType">
+        <include refid="queryCouponTypeColumn" />
+        where id = #{id} and state = 1
+    </select>
+
     <update id="updateCouponTypeRestNum">
         update coupon_type set rest_num = #{restNum},
+            version = #{version},
+            update_time = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="updateCouponType">
+        update coupon_type
+        set name = #{name},
+            icon = #{icon},
+            total_num = #{totalNum},
+            rest_num = #{restNum},
+            is_immediate = #{isImmediate},
+            reset_interval = #{resetInterval},
+            is_thanks = #{isThanks},
             version = #{version},
             update_time = #{updateTime}
         where id = #{id}

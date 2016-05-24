@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +35,10 @@ public class CouponSettingController {
 
     @RequestMapping("updateCouponType")
     public void updateCouponType(CouponType couponType) {
-        couponTypeDao.updateCouponType();
+        couponType.setRestNum(couponType.getTotalNum());
+        couponType.setVersion(couponType.getVersion() + 1);
+        couponType.setUpdateTime(new Date());
+        couponTypeDao.updateCouponType(couponType);
         //TODO 编辑奖项后的保存跳转
     }
 }

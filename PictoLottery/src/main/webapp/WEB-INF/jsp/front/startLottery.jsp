@@ -15,10 +15,10 @@
     <style type="text/css">
         body{margin:0}
         #startGif{
-            width: 30%;
+            width: 25%;
             position: absolute;
-            top: 25%;
-            left: 35%;
+            top: 30%;
+            left: 38%;
         }
         #curtain{
             display: none;

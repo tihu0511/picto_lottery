@@ -11,7 +11,8 @@ import java.util.List;
  */
 @Repository
 public interface DiscountProductDao {
-    List<DiscountProduct> queryDiscountByCouponTypeId(@Param("couponTypeId") Integer couponTypeId, @Param("merchantId") Integer merchantId); //TODO 添加mapper文件 通过奖项id查询优惠产品
+    List<DiscountProduct> queryDiscountByCouponTypeId(@Param("couponTypeId") Integer couponTypeId,
+        @Param("merchantId") Integer merchantId);
 
-    DiscountProduct queryDiscountById(Integer integer);//TODO 通过id查询优惠产品
+    DiscountProduct queryDiscountById(@Param("id") Integer id);
 }
