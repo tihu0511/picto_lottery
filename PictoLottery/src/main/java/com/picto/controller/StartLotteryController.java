@@ -53,11 +53,11 @@ public class StartLotteryController {
         String merchantId = request.getParameter("merchantId");
         String code = request.getParameter("code");
 
+        String openid = null;
         if (!StringUtils.hasLength(code)) {
             retMap.put("success", false);
             retMap.put("errorMsg", "请从微信公众号进入");
         } else {
-            String openid = null;
             //开发环境
             if (Constants.ENV_DEV.equalsIgnoreCase(environment)) {
                 openid = "TEST555511118888";
@@ -74,6 +74,7 @@ public class StartLotteryController {
         }
 
         retMap.put("success", "true");
+        retMap.put("openid", openid);
         return retMap;
     }
 }

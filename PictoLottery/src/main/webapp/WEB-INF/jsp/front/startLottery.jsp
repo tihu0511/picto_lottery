@@ -58,7 +58,7 @@
                 dataType: "json",
                 success: function(data, textStatus) {
                     if (textStatus == "success" && data.errorMsg == null) {
-                        alert("开始抽奖");
+                        window.location.href = "/lottery.do?openid=" + data.openid;
                     } else {
                         $("#errorMsg").html(data.errorMsg);
                         $("#curtainText").hide();

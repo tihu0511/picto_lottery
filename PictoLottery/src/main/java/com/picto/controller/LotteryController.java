@@ -53,13 +53,13 @@ public class LotteryController {
             model.addAttribute("showIcons", lotteryService.getUnluckyShowIcons(merchant.getId()));
         }
 
-        return "lottery";
+        return "front/lottery";
     }
 
     @RequestMapping("lotteryFinish")
     public String lotteryFinish(@RequestParam("luckyCouponTypeId") String luckyCouponTypeId, Model model, HttpServletRequest request) {
         if (StringUtil.isBlank(luckyCouponTypeId)) {
-            return "thanks";
+            return "front/thanks";
         } else {
             Merchant merchant = (Merchant) request.getSession().getAttribute("merchant");
 
@@ -67,17 +67,17 @@ public class LotteryController {
             //奖项下有多个优惠，提供优惠选择
             if (ListUtil.isEmptyList(discountProducts)) {
                 logger.info("奖项下[id=" + luckyCouponTypeId + "]没有优惠产品");
-                return "thanks";
+                return "front/thanks";
             } else if (discountProducts.size() == 1) {
                 //生成优惠券并跳转到优惠券信息页
                 DiscountProduct discountProduct = discountProducts.get(0);
                 Coupon coupon = couponService.genCoupon(discountProduct);
                 model.addAttribute("coupon", coupon);
-                return "couponInfo";
+                return "front/couponInfo";
             } else {
                 //奖项下有多个优惠产品，提供选择页面
                 model.addAttribute("disproducts", discountProducts);
-                return "toChoiceDiscount";
+                return "front/toChoiceDiscount";
             }
         }
     }
