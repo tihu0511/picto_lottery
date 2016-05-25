@@ -1,3 +1,4 @@
+<%@ page import="java.util.Random" %>
 <%--
   Created by IntelliJ IDEA.
   User: wujigang
@@ -9,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
 <html>
+<% String dateStr = String.valueOf((new Random()).nextInt(99999999)); %>
 <head>
     <title>${merchant.brand}</title>
     <script src="/js/jquery-2.2.4.min.js"></script>
@@ -75,7 +77,7 @@
     </script>
 </head>
 <body>
-    <div id="startGif"><img src="images/last5Second.gif" style="width: 100%;" onload="last5Second()" /></div>
+    <div id="startGif"><img src="images/last5Second.gif?time=<%=dateStr %>" style="width: 100%;" onload="last5Second()" /></div>
     <div id="curtain">
         <div id="curtainText">
             <img src="/images/curtain_Text.png" style="width:100%" onclick="startLottery()" />

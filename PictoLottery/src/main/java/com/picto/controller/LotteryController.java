@@ -7,6 +7,7 @@ import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
 import com.picto.service.CouponService;
 import com.picto.service.LotteryService;
+import com.picto.util.DateUtil;
 import com.picto.util.ListUtil;
 import com.picto.util.StringUtil;
 import org.apache.log4j.Logger;
@@ -46,7 +47,7 @@ public class LotteryController {
         } else if (!couponType.getIsThanks()) {
             String luckyIcon = couponType.getIcon();
             model.addAttribute("luckyCouponIcon", luckyIcon);
-            model.addAttribute("showIcons", luckyIcon + ";" + luckyIcon + ";" + luckyIcon);
+            model.addAttribute("showIcons", luckyIcon + "," + luckyIcon + "," + luckyIcon);
             model.addAttribute("luckyCouponTypeId", couponType.getId());
             model.addAttribute("openid",openid);
         } else {
@@ -75,6 +76,9 @@ public class LotteryController {
                 DiscountProduct discountProduct = discountProducts.get(0);
                 Coupon coupon = couponService.genCoupon(discountProduct, openid);
                 model.addAttribute("coupon", coupon);
+                String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")
+                        : DateUtil.formatDate(coupon.getCreateTime(), "MM/dd") + "-" + DateUtil.formatDate(coupon.getExpiredTime(), "MM/dd");
+                model.addAttribute("expireDateStr", expireDateStr);
                 return "front/couponInfo";
             } else {
                 //奖项下有多个优惠产品，提供选择页面

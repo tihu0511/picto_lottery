@@ -1,5 +1,6 @@
 package com.picto.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,5 +23,10 @@ public class DateUtil {
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, hours);
         return calendar.getTime();
+    }
+
+    public static String formatDate(Date date, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
     }
 }

@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/background.jpg);
+    background-size: 100% 100%;
+    color: white;
+}
+
+div#logo {
+    width: 100%;
+}
+#logo img { width: 100%; }
+
+div#top {
+    width: 100%;
+    background-image: url(/images/couponInfoBackground.jpg);
+    background-size: 100% 100%;
+    height: 9%;
+}
+
+div#merchantInfo {
+    float: left;
+    clear: none;
+    font-size: 2.3em;
+    width:60%;
+    height: 9%;
+}
+div#merchantInfo img{
+    width:7%
+}
+
+div#location {
+    margin: 3% 0 0 3%;
+}
+
+div#phone {
+    margin-left: 3%;
+}
+
+div#exchangeBtn {
+    float: right;
+    width: 10%;
+    height: 80%;
+}
+div#exchangeBtn img{
+    width:90%;
+    margin-top:25%;
+}
+
+div#exchangeText {
+    float: right;
+    font-size: 2em;
+    margin: 3% 3% 0 0;
+}

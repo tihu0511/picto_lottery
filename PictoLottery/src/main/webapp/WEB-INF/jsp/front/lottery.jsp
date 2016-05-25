@@ -1,3 +1,4 @@
+<%@ page import="java.util.Random" %>
 <%--
   Created by IntelliJ IDEA.
   User: wujigang
@@ -9,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
 <html>
+<% String str = String.valueOf((new Random()).nextInt(99999999)); %>
 <head>
     <title>${merchant.brand}</title>
     <script src="/js/jquery-2.2.4.min.js"></script>
@@ -50,7 +52,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             var showImages = '${showIcons}';
-            var showIcons = showImages.split(";");
+            var showIcons = showImages.split(",");
             setTimeout(function(){
                 $("#r1 img").attr("src", showIcons[0]);
             }, 7800);
@@ -70,9 +72,9 @@
 <body>
     <div id="mainAdvert"><img src="${merchant.mainAdvert}" /></div>
     <div id="roll">
-        <div id="r1"><img src="/images/lotteryRoll_a.gif"></div>
-        <div id="r2"><img src="/images/lotteryRoll_b.gif"></div>
-        <div id="r3"><img src="/images/lotteryRoll_c.gif"></div>
+        <div id="r1"><img src="/images/lotteryRoll_a.gif?time=<%=str %>"></div>
+        <div id="r2"><img src="/images/lotteryRoll_b.gif?time=<%=str %>"></div>
+        <div id="r3"><img src="/images/lotteryRoll_c.gif?time=<%=str %>"></div>
     </div>
     <div id="bannerAdvert"><img src="${merchant.bannerAdvert}" /></div>
 </body>
