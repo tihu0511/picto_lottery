@@ -64,4 +64,9 @@ public class TestController {
         System.out.println(testVo);
         return new TestVo(5, "huozhanbai");
     }
+
+    @RequestMapping("/toUpload")
+    public String toUpload() {
+        return "testUpload";
+    }
 }
