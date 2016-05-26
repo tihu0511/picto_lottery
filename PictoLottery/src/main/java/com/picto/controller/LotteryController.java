@@ -1,5 +1,6 @@
 package com.picto.controller;
 
+import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.entity.Coupon;
 import com.picto.entity.CouponType;
@@ -17,9 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wujigang on 2016/5/22.
@@ -34,6 +38,8 @@ public class LotteryController {
     private DiscountProductDao discountProductDao;
     @Autowired
     private CouponService couponService;
+    @Autowired
+    private CouponTypeDao couponTypeDao;
 
     @RequestMapping("/lottery")
     public String lottery(@RequestParam("openid") String openid, Model model, HttpServletRequest request) {
@@ -60,13 +66,14 @@ public class LotteryController {
 
     @RequestMapping("lotteryFinish")
     public String lotteryFinish(@RequestParam("luckyCouponTypeId") String luckyCouponTypeId, @RequestParam("openid") String openid,
-                                Model model, HttpServletRequest request) {
+        Model model, HttpServletRequest request) {
         if (StringUtil.isBlank(luckyCouponTypeId)) {
             return "front/thanks";
         } else {
             Merchant merchant = (Merchant) request.getSession().getAttribute("merchant");
 
             List<DiscountProduct> discountProducts = discountProductDao.queryDiscountByCouponTypeId(Integer.valueOf(luckyCouponTypeId), merchant.getId());
+            CouponType couponType = couponTypeDao.queryCouponTypeById(Integer.valueOf(luckyCouponTypeId));
             //奖项下有多个优惠，提供优惠选择
             if (ListUtil.isEmptyList(discountProducts)) {
                 logger.info("奖项下[id=" + luckyCouponTypeId + "]没有优惠产品");
@@ -83,8 +90,21 @@ public class LotteryController {
             } else {
                 //奖项下有多个优惠产品，提供选择页面
                 model.addAttribute("disproducts", discountProducts);
+                model.addAttribute("couponTypeName", couponType.getName());
                 return "front/toChoiceDiscount";
             }
         }
+    }
+
+    @RequestMapping("/exchangeCoupon")
+    @ResponseBody
+    public Map<String, Object> exchangeCoupon(HttpServletRequest request) {
+        Map<String, Object> retMap = new HashMap<String, Object>();
+        String couponIdStr = request.getParameter("couponId");
+        String msg = couponService.exchange(Integer.valueOf(couponIdStr));
+        if (!StringUtil.isBlank(msg)) {
+            retMap.put("errorMsg", msg);
+        }
+        return retMap;
     }
 }

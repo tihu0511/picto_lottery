@@ -10,5 +10,5 @@ public interface Constants {
     String ENV_DEV = "dev";//测试环境
 
     int COUPON_STATE_EFFECTED = 1;
-    int COUPON_STATE_EXCHANGED = 1;
+    int COUPON_STATE_EXCHANGED = 2;
 }

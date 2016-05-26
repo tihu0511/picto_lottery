@@ -30,4 +30,11 @@ public interface CouponService {
      * @return
      */
     Coupon queryCouponById(Integer selectedCouponId);
+
+    /**
+     * 兑换优惠券
+     * @param integer
+     * @return 兑换失败返回错误信息
+     */
+    String exchange(Integer integer);
 }

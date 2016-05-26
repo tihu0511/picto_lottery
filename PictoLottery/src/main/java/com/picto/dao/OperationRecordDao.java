@@ -15,7 +15,12 @@ public interface OperationRecordDao {
     List<OperationRecord> queryOperationRecords(@Param("openid") String openId, @Param("type") Integer type);
 
     List<OperationRecord> queryOperationRecordsToday(@Param("openid") String openid,
-        @Param("type") Integer operationTypeLottery, @Param("today") Date today);
+        @Param("type") Integer type, @Param("today") Date today);
 
     void addOperationRecord(OperationRecord operationRecord);
+
+    OperationRecord queryLatestOperToday(@Param("openid") String openid, @Param("type") int operationTypeLottery,
+                                         @Param("today") Date today);
+
+    void updateSerialNumber(@Param("id") Integer id, @Param("serialNumber") String serialNumber);
 }

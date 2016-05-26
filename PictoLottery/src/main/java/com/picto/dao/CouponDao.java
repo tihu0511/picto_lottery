@@ -18,4 +18,6 @@ public interface CouponDao {
     Coupon queryCouponBySerialNumber(@Param("serialNumber") String serialNumber);
 
     void addCoupon(Coupon coupon);
+
+    void updateCouponExchanged(Coupon coupon);
 }

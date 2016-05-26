@@ -3,9 +3,11 @@ package com.picto.service.impl;
 import com.picto.constants.Constants;
 import com.picto.dao.CouponDao;
 import com.picto.dao.CouponTypeDao;
+import com.picto.dao.OperationRecordDao;
 import com.picto.entity.Coupon;
 import com.picto.entity.CouponType;
 import com.picto.entity.DiscountProduct;
+import com.picto.entity.OperationRecord;
 import com.picto.service.CouponService;
 import com.picto.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class CouponServiceImpl implements CouponService {
     private CouponDao couponDao;
     @Autowired
     private CouponTypeDao couponTypeDao;
+    @Autowired
+    private OperationRecordDao operationRecordDao;
 
     public Coupon genCoupon(DiscountProduct discountProduct, String openid) {
         CouponType couponType = couponTypeDao.queryCouponTypeById(discountProduct.getCouponTypeId());
@@ -46,8 +50,13 @@ public class CouponServiceImpl implements CouponService {
         coupon.setStoreName(discountProduct.getStoreName());
         coupon.setState(Constants.COUPON_STATE_EFFECTED);
         coupon.setCreateTime(new Date());
-
         couponDao.addCoupon(coupon);
+
+        //更新抽奖记录的优惠券号
+        OperationRecord operationRecord = operationRecordDao.queryLatestOperToday(coupon.getOpenid(),
+                Constants.OPERATION_TYPE_LOTTERY, DateUtil.getToday());
+        operationRecord.setSerialNumber(coupon.getSerialNumber());
+        operationRecordDao.updateSerialNumber(operationRecord.getId(), operationRecord.getSerialNumber());
         return coupon;
     }
 
@@ -57,6 +66,37 @@ public class CouponServiceImpl implements CouponService {
 
     public Coupon queryCouponById(Integer selectedCouponId) {
         return couponDao.queryCouponById(selectedCouponId);
+    }
+
+    public String exchange(Integer couponId) {
+        Coupon coupon = couponDao.queryCouponById(couponId);
+        if (null == coupon) {
+            return "优惠券不存在";
+        }
+        if (coupon.getExpiredTime().compareTo(new Date()) < 0) {
+            return "优惠券已过期";
+        }
+        //即时优惠只能兑换一次
+        if (coupon.getIsImediate() && Constants.COUPON_STATE_EXCHANGED == coupon.getState().intValue()) {
+            return "优惠券已兑换过";
+        }
+
+        //更新优惠券状态
+        coupon.setState(Constants.COUPON_STATE_EXCHANGED);
+        coupon.setUpdateTime(new Date());
+        couponDao.updateCouponExchanged(coupon);
+
+        //生成兑换记录
+        OperationRecord operationRecord = new OperationRecord();
+        operationRecord.setOpenid(coupon.getOpenid());
+        operationRecord.setMerchantId(coupon.getMerchantId());
+        operationRecord.setSerialNumber(coupon.getSerialNumber());
+        operationRecord.setType(Constants.OPERATION_TYPE_EXCHANGED);
+        operationRecord.setOperationTime(new Date());
+        operationRecord.setCreateTime(new Date());
+        operationRecordDao.addOperationRecord(operationRecord);
+
+        return null;
     }
 
 

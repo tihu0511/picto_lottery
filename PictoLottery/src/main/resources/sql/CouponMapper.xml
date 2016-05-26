@@ -42,4 +42,10 @@
         values(#{discountProductId}, #{merchantId}, #{name}, #{serialNumber},#{icon}, #{openid}, #{isImmediate}, #{discount}, #{isShared}, #{useMsg}, #{limitMsg}, #{expiredTime}, #{storeName}, #{state}, #{createTime})
     </insert>
 
+    <update id="updateCouponExchanged" parameterType="com.picto.entity.Coupon">
+        update coupon
+        set state = #{state},
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
 </mapper>

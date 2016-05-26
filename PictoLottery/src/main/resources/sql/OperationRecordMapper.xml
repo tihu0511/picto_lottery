@@ -22,6 +22,12 @@
         where openid = #{openid} and type = #{type} and operation_time >= #{today}
     </select>
 
+    <select id="queryLatestOperToday" resultType="com.picto.entity.OperationRecord">
+        <include refid="queryOperationRecordColumn" />
+        where openid = #{openid} and type = #{type} and operation_time >= #{today}
+        order by operation_time desc limit 1
+    </select>
+
     <insert id="addOperationRecord" keyProperty="id" useGeneratedKeys="true" parameterType="com.picto.entity.OperationRecord">
         insert into operation_record(openid, merchant_id,
           <if test="serialNumber != null">
@@ -34,4 +40,10 @@
           </if>
         #{type}, #{operationTime}, #{createTime})
     </insert>
+
+    <update id="updateSerialNumber">
+        update operation_record
+        set serial_number = #{serialNumber}
+        where id = #{id}
+    </update>
 </mapper>
