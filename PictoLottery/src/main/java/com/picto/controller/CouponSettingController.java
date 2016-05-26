@@ -36,7 +36,6 @@ public class CouponSettingController {
     @RequestMapping("updateCouponType")
     public void updateCouponType(CouponType couponType) {
         couponType.setRestNum(couponType.getTotalNum());
-        couponType.setVersion(couponType.getVersion() + 1);
         couponType.setUpdateTime(new Date());
         couponTypeDao.updateCouponType(couponType);
         //TODO 编辑奖项后的保存跳转

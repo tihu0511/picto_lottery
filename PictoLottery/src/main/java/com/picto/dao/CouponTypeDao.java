@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CouponTypeDao {
     List<CouponType> queryAllCouponTypes();
-    void updateCouponTypeRestNum(CouponType luckyCouponType);
-    void updateCouponType(CouponType couponType);
+    Integer updateCouponTypeRestNum(CouponType luckyCouponType);
+    Integer updateCouponType(CouponType couponType);
     CouponType queryCouponTypeById(@Param("id") Integer id);
 }

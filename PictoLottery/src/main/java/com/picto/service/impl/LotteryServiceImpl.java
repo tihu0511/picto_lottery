@@ -68,7 +68,6 @@ public class LotteryServiceImpl implements LotteryService {
         } else {
             //更新奖项剩余数量-1
             luckyCouponType.setRestNum(luckyCouponType.getRestNum() - 1);
-            luckyCouponType.setVersion(luckyCouponType.getVersion() + 1);
             luckyCouponType.setUpdateTime(new Date());
             couponTypeDao.updateCouponTypeRestNum(luckyCouponType);
             return luckyCouponType;

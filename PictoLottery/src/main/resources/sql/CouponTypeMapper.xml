@@ -31,9 +31,9 @@
 
     <update id="updateCouponTypeRestNum">
         update coupon_type set rest_num = #{restNum},
-            version = #{version},
+            version = version + 1,
             update_time = #{updateTime}
-        where id = #{id}
+        where id = #{id} and version = #{version}
     </update>
 
     <update id="updateCouponType">
@@ -45,8 +45,8 @@
             is_immediate = #{isImmediate},
             reset_interval = #{resetInterval},
             is_thanks = #{isThanks},
-            version = #{version},
+            version = version + 1,
             update_time = #{updateTime}
-        where id = #{id}
+        where id = #{id} and version = #{version}
     </update>
 </mapper>
