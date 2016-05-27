@@ -25,13 +25,11 @@
               {
                   if (data.result == "success") {
                       $("#showImg").attr("src", data.filePath);
-                  } else {
-                      alert("failed");
                   }
               },
               error : function(data, status, e)//服务器响应失败处理函数
               {
-                    alert("error");
+                    alert("上传失败" + e.message);
               }
           });
       }
@@ -39,7 +37,7 @@
 </head>
 <body>
     <form action="/uploadImg.do" method="post" enctype="multipart/form-data">
-        请选择文件<input type="file" name="file"/>
+        请选择文件<input id="file" type="file" name="file"/>
         <input id="uploadBtn" type="button" value="upload" onclick="uploadImg()" />
     </form>
     <img id="showImg">

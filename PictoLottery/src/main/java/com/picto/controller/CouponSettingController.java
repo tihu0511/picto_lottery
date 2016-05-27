@@ -69,21 +69,18 @@ public class CouponSettingController {
             String suffix = fileName.substring(fileName.lastIndexOf("."));
             String path = path1 + fName + "_" + DateUtil.formatDate(new Date(), "yyyyMMddHHmmss") + suffix;
 
-            File localFile = new File(path);
-            if (!localFile.exists()) {
-                try {
-                    localFile.createNewFile();
-                } catch (IOException e) {
-                    logger.error("创建目录" + path + "失败");
-                    retMap.put("result", "failed");
-                    return retMap;
-                }
+            File directory = new File(path1);
+            if (!directory.exists()) {
+                directory.mkdirs();
             }
 
+            File localFile = new File(path);
             try {
                 file.transferTo(localFile);
                 retMap.put("result", "success");
-                retMap.put("filePath", path);
+
+                String projectDir = request.getSession().getServletContext().getRealPath("/");
+                retMap.put("filePath", path.replace(projectDir, File.separator));
             } catch (IOException e) {
                 logger.error("保存上传的文件[" + fileName + "]失败");
                 retMap.put("result", "failed");
