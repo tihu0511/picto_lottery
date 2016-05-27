@@ -20,6 +20,10 @@
             var vsImgs = $(".vsDiv");
             $(vsImgs[vsImgs.length - 1]).hide();
         });
+
+        function choiceDiscount(discountProductId){
+            window.location.href = "/choiceDiscount.do?selectedDiscountProductId=" + discountProductId + "&openid=" + '${openid}';
+        }
     </script>
 </head>
 <body>

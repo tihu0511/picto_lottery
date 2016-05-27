@@ -91,6 +91,7 @@ public class LotteryController {
                 //奖项下有多个优惠产品，提供选择页面
                 model.addAttribute("disproducts", discountProducts);
                 model.addAttribute("couponTypeName", couponType.getName());
+                model.addAttribute("openid", openid);
                 return "front/toChoiceDiscount";
             }
         }

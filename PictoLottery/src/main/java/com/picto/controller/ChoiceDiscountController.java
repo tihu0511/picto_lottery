@@ -5,6 +5,7 @@ import com.picto.entity.Coupon;
 import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
 import com.picto.service.CouponService;
+import com.picto.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,9 @@ public class ChoiceDiscountController {
         DiscountProduct discountProduct = discountProductDao.queryDiscountById(selectedDiscountProductId);
         Coupon coupon = couponService.genCoupon(discountProduct, openid);
         model.addAttribute("coupon", coupon);
-        return "couponInfo";
+        String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")
+                : DateUtil.formatDate(coupon.getCreateTime(), "MM/dd") + "-" + DateUtil.formatDate(coupon.getExpiredTime(), "MM/dd");
+        model.addAttribute("expireDateStr", expireDateStr);
+        return "front/couponInfo";
     }
 }

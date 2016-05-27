@@ -76,8 +76,8 @@ public class CouponServiceImpl implements CouponService {
         if (coupon.getExpiredTime().compareTo(new Date()) < 0) {
             return "优惠券已过期";
         }
-        //即时优惠只能兑换一次
-        if (coupon.getIsImediate() && Constants.COUPON_STATE_EXCHANGED == coupon.getState().intValue()) {
+        //不可重用的优惠只能兑换一次
+        if (!coupon.getIsShared() && Constants.COUPON_STATE_EXCHANGED == coupon.getState().intValue()) {
             return "优惠券已兑换过";
         }
 

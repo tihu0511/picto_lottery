@@ -26,7 +26,7 @@ public class QueryCouponController {
 
     @RequestMapping("queryCoupon")
     public String queryCoupon(@RequestParam("merchantId") Integer merchantId, @RequestParam("code") String code,
-                              @RequestParam("openid") String openid, Model model) {
+                              @RequestParam(value="openid", required = false) String openid, Model model) {
         String openId = "";
         if (null == code) {
             openId = openid;
