@@ -3,7 +3,6 @@
 <mapper namespace="com.picto.dao.DiscountProductDao">
     <sql id="queryDiscountProductColumn">
         select ID AS id,
-        coupon_type_id AS couponTypeId,
         mechant_id AS merchantId,
         name AS name,
         icon AS icon,
@@ -20,8 +19,21 @@
     </sql>
 
     <select id="queryDiscountByCouponTypeId" resultType="com.picto.entity.DiscountProduct">
-        <include refid="queryDiscountProductColumn" />
-        where coupon_type_id = #{couponTypeId} and state = 1
+        select a.ID AS id,
+        a.mechant_id AS merchantId,
+        a.name AS name,
+        a.icon AS icon,
+        a.discount AS discount,
+        a.is_shared AS isShared,
+        a.use_msg AS useMsg,
+        a.limit_msg AS limitMsg,
+        a.validity AS validity,
+        a.store_name AS storeName,
+        a.state AS state,
+        a.create_time AS createTime,
+        a.update_time AS updateTime
+        from discount_product AS a JOIN coupon_type_discount_rel AS b
+        where a.id = b.discount_product_id and b.coupon_type_id = #{couponTypeId} and a.state = 1
     </select>
 
     <select id="queryDiscountById" resultType="com.picto.entity.DiscountProduct">

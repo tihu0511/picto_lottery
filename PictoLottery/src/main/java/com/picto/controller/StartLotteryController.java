@@ -5,6 +5,7 @@ import com.picto.dao.MerchantDao;
 import com.picto.entity.Merchant;
 import com.picto.service.StartLotteryService;
 import com.picto.util.WechatUtil;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +49,7 @@ public class StartLotteryController {
 
     @RequestMapping(value = "/verifyLottery", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> verifyLottery(HttpServletRequest request) {
+    public Map<String, Object> verifyLottery(HttpServletRequest request) throws IOException, JSONException {
         Map<String, Object> retMap = new HashMap<String, Object>();
 
         String merchantId = request.getParameter("merchantId");

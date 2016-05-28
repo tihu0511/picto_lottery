@@ -22,7 +22,8 @@
         });
 
         function choiceDiscount(discountProductId){
-            window.location.replace("/choiceDiscount.do?selectedDiscountProductId=" + discountProductId + "&openid=" + '${openid}');
+            window.location.replace("/choiceDiscount.do?selectedDiscountProductId=" + discountProductId
+                    + "&couponTypeId=" + ${couponTypeId} + "&openid=" + '${openid}');
         }
     </script>
 </head>

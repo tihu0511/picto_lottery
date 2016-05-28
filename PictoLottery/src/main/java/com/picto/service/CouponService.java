@@ -13,11 +13,12 @@ import java.util.List;
 public interface CouponService {
     /**
      * 生成优惠券
+     * @param couponTypeId
      * @param discountProduct
      * @param openid
      * @return
      */
-    Coupon genCoupon(DiscountProduct discountProduct, String openid, Merchant merchant);
+    Coupon genCoupon(Integer couponTypeId, DiscountProduct discountProduct, String openid, Merchant merchant);
 
     /**
      * 查询openid下的所有优惠券，并按失效时间倒序排序
