@@ -13,6 +13,7 @@
 <html>
 <head>
     <title>${merchant.brand}</title>
+    <meta name = "format-detection" content = "telephone=no">
     <link rel="stylesheet" href="/css/front/couponInfo.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
@@ -55,7 +56,7 @@
                 <img src="/images/location.png" /><span>${merchant.address}</span>
             </div>
             <div id="phone">
-                <img src="/images/phone.png" /><span>${merchant.phone}</span>
+                <img src="/images/phone.png" /><a href="tel:${merchant.phone}"><span>${merchant.phone}</span></a>
             </div>
         </div>
         <div id="exchangeText">
@@ -73,7 +74,7 @@
         <div id="couponRight">
             <div id="name">${coupon.name}</div>
             <div id="discount">${coupon.discount}</div>
-            <div id="useMsg">${coupon.useMsg}</div>
+            <div id="useMsg">(${coupon.useMsg})</div>
         </div>
         <div style="clear:both;"></div>
     </div>

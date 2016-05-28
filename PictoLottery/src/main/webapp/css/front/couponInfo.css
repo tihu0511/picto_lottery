@@ -39,6 +39,11 @@ div#location {
 div#phone {
     margin-left: 3%;
 }
+#phone a{
+    text-decoration: underline;
+    color: white;
+}
+#phone a span{color:white;}
 
 div#exchangeBtn {
     float: right;
@@ -86,6 +91,14 @@ div#couponRight {
     font-size: 4em;
     color: #FFE59B;
     margin-top: 3%;
+    text-align: center;
+}
+#discount{
+    color: #FD3657;
+}
+#useMsg{
+    color: white;
+    font-size: 0.8em;
 }
 
 div#bannerAdvert {
@@ -103,6 +116,10 @@ div#bottom1 {
     font-size: 2.5em;
     margin: 7% 0 0 5%;
 }
+#expireDate{
+    color: #FD3657;
+    font-size: 1.3em;
+}
 
 div#msg1 {
     margin: 5% 0 -3% 0;
@@ -115,7 +132,7 @@ div#bottom2 {
     float: left;
     clear: none;
     width: 33%;
-    margin: 7% 0 0 2%;
+    margin: 8% 0 0 2%;
     font-size: 2em;
 }
 div#bottom2 img{ width: 90%; margin-top: 3%;}
