@@ -1,5 +1,7 @@
 package com.picto.entity;
 
+import com.picto.util.CouponUtil;
+
 import java.util.Date;
 
 /**
@@ -131,5 +133,9 @@ public class Coupon extends BaseEntity {
 
     public void setMerchantId(Integer merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public String getExpiredStr() {
+        return CouponUtil.getExpiredStr(this);
     }
 }

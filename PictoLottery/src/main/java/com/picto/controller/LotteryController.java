@@ -1,11 +1,35 @@
+////////////////////////////////////////////////////////////////////
+//                          _ooOoo_                               //
+//                         o8888888o                              //
+//                         88" . "88                              //
+//                         (| ^_^ |)                              //
+//                         O\  =  /O                              //
+//                      ____/`---'\____                           //
+//                    .'  \\|     |//  `.                         //
+//                   /  \\|||  :  |||//  \                        //
+//                  /  _||||| -:- |||||-  \                       //
+//                  |   | \\\  -  /// |   |                       //
+//                  | \_|  ''\---/''  |   |                       //
+//                  \  .-\__  `-`  ___/-. /                       //
+//                ___`. .'  /--.--\  `. . ___                     //
+//              ."" '<  `.___\_<|>_/___.'  >'"".                  //
+//            | | :  `- \`.;`\ _ /`;.`/ - ` : | |                 //
+//            \  \ `-.   \_ __\ /__ _/   .-` /  /                 //
+//      ========`-.____`-.___\_____/___.-`____.-'========         //
+//                           `=---='                              //
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //
+//         佛祖保佑            永无BUG              永不修改         //
+////////////////////////////////////////////////////////////////////
+
+
+
 package com.picto.controller;
 
+import com.picto.constants.Constants;
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
-import com.picto.entity.Coupon;
-import com.picto.entity.CouponType;
-import com.picto.entity.DiscountProduct;
-import com.picto.entity.Merchant;
+import com.picto.dao.OperationRecordDao;
+import com.picto.entity.*;
 import com.picto.service.CouponService;
 import com.picto.service.LotteryService;
 import com.picto.util.DateUtil;
@@ -13,6 +37,7 @@ import com.picto.util.ListUtil;
 import com.picto.util.StringUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -40,6 +65,10 @@ public class LotteryController {
     private CouponService couponService;
     @Autowired
     private CouponTypeDao couponTypeDao;
+    @Autowired
+    private OperationRecordDao operationRecordDao;
+    @Value("${validateOpenid}")
+    private String validateOpenid;
 
     @RequestMapping("/lottery")
     public String lottery(@RequestParam("openid") String openid, Model model, HttpServletRequest request) {
@@ -81,7 +110,7 @@ public class LotteryController {
             } else if (discountProducts.size() == 1) {
                 //生成优惠券并跳转到优惠券信息页
                 DiscountProduct discountProduct = discountProducts.get(0);
-                Coupon coupon = couponService.genCoupon(discountProduct, openid);
+                Coupon coupon = couponService.genCoupon(discountProduct, openid, merchant);
                 model.addAttribute("coupon", coupon);
                 String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")
                         : DateUtil.formatDate(coupon.getCreateTime(), "MM/dd") + "-" + DateUtil.formatDate(coupon.getExpiredTime(), "MM/dd");

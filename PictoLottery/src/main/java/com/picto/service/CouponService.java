@@ -2,7 +2,9 @@ package com.picto.service;
 
 import com.picto.entity.Coupon;
 import com.picto.entity.DiscountProduct;
+import com.picto.entity.Merchant;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,14 +17,14 @@ public interface CouponService {
      * @param openid
      * @return
      */
-    Coupon genCoupon(DiscountProduct discountProduct, String openid);
+    Coupon genCoupon(DiscountProduct discountProduct, String openid, Merchant merchant);
 
     /**
      * 查询openid下的所有优惠券，并按失效时间倒序排序
      * @param openId
      * @return
      */
-    List<Coupon> queryAllCouponsByOpenid(String openId);
+    List<Coupon> queryAllCouponsByOpenid(String openId, Date date);
 
     /**
      * 查询优惠券

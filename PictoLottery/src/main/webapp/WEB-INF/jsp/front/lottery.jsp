@@ -64,18 +64,26 @@
             }, 10200);
 
             setTimeout(function(){
-                window.location.href = "/lotteryFinish.do?luckyCouponTypeId=" + '${luckyCouponTypeId}' + "&openid=${openid}";
+                window.location.replace("/lotteryFinish.do?luckyCouponTypeId=" + '${luckyCouponTypeId}' + "&openid=${openid}");
             }, 13000);
         });
     </script>
 </head>
 <body>
-    <div id="mainAdvert"><img src="${merchant.mainAdvert}" /></div>
-    <div id="roll">
-        <div id="r1"><img src="/images/lotteryRoll_a.gif?time=<%=str %>"></div>
-        <div id="r2"><img src="/images/lotteryRoll_b.gif?time=<%=str %>"></div>
-        <div id="r3"><img src="/images/lotteryRoll_c.gif?time=<%=str %>"></div>
-    </div>
-    <div id="bannerAdvert"><img src="${merchant.bannerAdvert}" /></div>
+    <c:choose>
+        <c:when test="${errorMsg != null}">
+            <div style="position:absolute; width:100%;text-align:center;font-size:3em;color: red;
+                top:40%;left:0;">${errorMsg}</div>
+        </c:when>
+        <c:otherwise>
+            <div id="mainAdvert"><img src="${merchant.mainAdvert}" /></div>
+            <div id="roll">
+                <div id="r1"><img src="/images/lotteryRoll_a.gif?time=<%=str %>"></div>
+                <div id="r2"><img src="/images/lotteryRoll_b.gif?time=<%=str %>"></div>
+                <div id="r3"><img src="/images/lotteryRoll_c.gif?time=<%=str %>"></div>
+            </div>
+            <div id="bannerAdvert"><img src="${merchant.bannerAdvert}" /></div>
+        </c:otherwise>
+    </c:choose>
 </body>
 </html>

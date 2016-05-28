@@ -22,7 +22,7 @@
         });
 
         function choiceDiscount(discountProductId){
-            window.location.href = "/choiceDiscount.do?selectedDiscountProductId=" + discountProductId + "&openid=" + '${openid}';
+            window.location.replace("/choiceDiscount.do?selectedDiscountProductId=" + discountProductId + "&openid=" + '${openid}');
         }
     </script>
 </head>

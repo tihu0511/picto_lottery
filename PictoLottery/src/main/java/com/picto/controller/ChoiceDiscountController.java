@@ -31,7 +31,7 @@ public class ChoiceDiscountController {
 
         //根据选择的优惠产品生成优惠券并跳转到优惠券信息页
         DiscountProduct discountProduct = discountProductDao.queryDiscountById(selectedDiscountProductId);
-        Coupon coupon = couponService.genCoupon(discountProduct, openid);
+        Coupon coupon = couponService.genCoupon(discountProduct, openid, merchant);
         model.addAttribute("coupon", coupon);
         String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")
                 : DateUtil.formatDate(coupon.getCreateTime(), "MM/dd") + "-" + DateUtil.formatDate(coupon.getExpiredTime(), "MM/dd");

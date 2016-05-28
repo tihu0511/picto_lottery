@@ -29,7 +29,7 @@
 
     <select id="queryAllCouponsByOpenid" resultType="com.picto.entity.Coupon">
         <include refid="queryCouponColumn" />
-        where openid = #{openid} and state = 1
+        where openid = #{openid} and state = 1 and expired_time >= #{date} order by expired_time
     </select>
 
     <select id="queryCouponBySerialNumber" resultType="com.picto.entity.Coupon">

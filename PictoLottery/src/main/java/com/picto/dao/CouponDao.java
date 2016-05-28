@@ -4,6 +4,7 @@ import com.picto.entity.Coupon;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public interface CouponDao {
     Coupon queryCouponById(@Param("id") Integer id);
 
-    List<Coupon> queryAllCouponsByOpenid(@Param("openid") String openId);
+    List<Coupon> queryAllCouponsByOpenid(@Param("openid") String openId, @Param("date")Date date);
 
     Coupon queryCouponBySerialNumber(@Param("serialNumber") String serialNumber);
 

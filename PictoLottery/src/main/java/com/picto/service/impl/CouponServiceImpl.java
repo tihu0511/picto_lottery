@@ -4,12 +4,10 @@ import com.picto.constants.Constants;
 import com.picto.dao.CouponDao;
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.OperationRecordDao;
-import com.picto.entity.Coupon;
-import com.picto.entity.CouponType;
-import com.picto.entity.DiscountProduct;
-import com.picto.entity.OperationRecord;
+import com.picto.entity.*;
 import com.picto.service.CouponService;
 import com.picto.util.DateUtil;
+import com.picto.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,7 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     private OperationRecordDao operationRecordDao;
 
-    public Coupon genCoupon(DiscountProduct discountProduct, String openid) {
+    public Coupon genCoupon(DiscountProduct discountProduct, String openid, Merchant merchant) {
         CouponType couponType = couponTypeDao.queryCouponTypeById(discountProduct.getCouponTypeId());
         Coupon coupon = new Coupon();
         coupon.setMerchantId(discountProduct.getMerchantId());
@@ -47,7 +45,7 @@ public class CouponServiceImpl implements CouponService {
         coupon.setIsShared(discountProduct.getIsShared());
         coupon.setUseMsg(discountProduct.getUseMsg());
         coupon.setLimitMsg(discountProduct.getLimitMsg());
-        coupon.setStoreName(discountProduct.getStoreName());
+        coupon.setStoreName(StringUtil.isBlank(discountProduct.getStoreName()) ? merchant.getMechantName() : discountProduct.getStoreName());
         coupon.setState(Constants.COUPON_STATE_EFFECTED);
         coupon.setCreateTime(new Date());
         couponDao.addCoupon(coupon);
@@ -60,8 +58,8 @@ public class CouponServiceImpl implements CouponService {
         return coupon;
     }
 
-    public List<Coupon> queryAllCouponsByOpenid(String openId) {
-        return couponDao.queryAllCouponsByOpenid(openId);
+    public List<Coupon> queryAllCouponsByOpenid(String openId, Date date) {
+        return couponDao.queryAllCouponsByOpenid(openId, date);
     }
 
     public Coupon queryCouponById(Integer selectedCouponId) {
