@@ -3,7 +3,7 @@
 <mapper namespace="com.picto.dao.MerchantDao">
     <sql id="queryMechantColumn">
         select ID AS id,
-        merchant_name AS merchant_name,
+        merchant_name AS mechantName,
         brand AS brand,
         industry_type AS industryType,
         phone AS phone,
@@ -17,16 +17,23 @@
         query_link AS queryLink,
         main_advert AS mainAdvert,
         banner_advert AS bannerAdvert,
+        query_advert AS queryAdvert,
         lottery_channel AS lotteryChannel,
         mechant_qrcode AS mechantQrcode,
         state AS state,
         create_time AS createTime,
-        update_time AS updateTime
+        update_time AS updateTime,
+        save_type AS saveType
         from merchant
     </sql>
 
     <select id="queryMechantById" resultType="com.picto.entity.Merchant">
         <include refid="queryMechantColumn" />
-        where id = #{id}
+        where id = #{id} and state = 1
+    </select>
+
+    <select id="queryAllMerchants" resultType="com.picto.entity.Merchant">
+        <include refid="queryMechantColumn" />
+        where state = 1
     </select>
 </mapper>

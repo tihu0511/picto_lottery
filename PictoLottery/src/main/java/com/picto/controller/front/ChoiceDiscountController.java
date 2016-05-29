@@ -1,4 +1,4 @@
-package com.picto.controller;
+package com.picto.controller.front;
 
 import com.picto.dao.DiscountProductDao;
 import com.picto.entity.Coupon;

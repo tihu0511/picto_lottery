@@ -1,5 +1,7 @@
 package com.picto.entity;
 
+import com.picto.enums.CouponSaveTypeEnum;
+
 /**
  * Created by wujigang on 2016/5/22.
  */
@@ -18,9 +20,11 @@ public class Merchant extends BaseEntity {
     private String queryLink;
     private String mainAdvert;
     private String bannerAdvert;
+    private String queryAdvert;
     private Integer lotteryChannel;
     private String mechantQrcode;
     private Integer state;
+    private Integer saveType;
 
     public String getMechantName() {
         return mechantName;
@@ -156,5 +160,25 @@ public class Merchant extends BaseEntity {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getQueryAdvert() {
+        return queryAdvert;
+    }
+
+    public void setQueryAdvert(String queryAdvert) {
+        this.queryAdvert = queryAdvert;
+    }
+
+    public Integer getSaveType() {
+        return saveType;
+    }
+
+    public void setSaveType(Integer saveType) {
+        this.saveType = saveType;
+    }
+
+    public String getCouponSaveTypeDesc() {
+        return CouponSaveTypeEnum.getDescByCode(this.getSaveType());
     }
 }

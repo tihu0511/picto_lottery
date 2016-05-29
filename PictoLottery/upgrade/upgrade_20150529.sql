@@ -10,3 +10,10 @@ INSERT INTO `coupon_type_discount_rel` VALUES (1,1,1),(2,2,2),(3,3,3),(4,4,4),(5
 --删掉优惠产品的奖项id字段
 ALTER TABLE `test`.`discount_product` DROP COLUMN `coupon_type_id`;
 
+--商户信息增加查询广告位,奖券保存方式字段
+ALTER TABLE `test`.`merchant`
+ADD COLUMN `query_advert` VARCHAR(255) NULL AFTER `banner_advert`,
+ADD COLUMN `save_type` TINYINT(4) NULL AFTER `update_time`;
+
+
+

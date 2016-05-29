@@ -1,4 +1,4 @@
-package com.picto.controller;
+package com.picto.controller.operativeAdmin;
 
 import com.picto.dao.MerchantDao;
 import com.picto.entity.Merchant;
@@ -14,6 +14,7 @@ import java.util.List;
  * Created by BF100271 on 2016/5/24.
  */
 @Controller
+@RequestMapping("/admin")
 public class MerchantMngController {
     @Autowired
     private MerchantDao merchantDao;
@@ -22,7 +23,7 @@ public class MerchantMngController {
     public String getAllMerchant(Model model) {
         List<Merchant> merchants = merchantDao.queryAllMerchants();
         model.addAttribute("merchants", merchants);
-        return "merchantMng";
+        return "operativeAdmin/merchantMng";
     }
 
     @RequestMapping("editMerchant")

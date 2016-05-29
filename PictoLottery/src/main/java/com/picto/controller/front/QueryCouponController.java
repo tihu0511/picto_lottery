@@ -1,4 +1,4 @@
-package com.picto.controller;
+package com.picto.controller.front;
 
 import com.picto.constants.Constants;
 import com.picto.dao.MerchantDao;

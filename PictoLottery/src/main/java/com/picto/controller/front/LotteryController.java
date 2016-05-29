@@ -23,9 +23,8 @@
 
 
 
-package com.picto.controller;
+package com.picto.controller.front;
 
-import com.picto.constants.Constants;
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.dao.OperationRecordDao;
@@ -40,7 +39,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;

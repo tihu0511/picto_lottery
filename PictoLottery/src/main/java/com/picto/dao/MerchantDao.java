@@ -13,7 +13,7 @@ import java.util.List;
 public interface MerchantDao {
     Merchant queryMechantById(@Param("id") Integer id);
 
-    List<Merchant> queryAllMerchants();//TODO 查询所有商户信息
+    List<Merchant> queryAllMerchants();
 
     void updateMerchant(Merchant merchant);// TODO 更新商户信息
 }
