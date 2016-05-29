@@ -1,0 +1,6 @@
+修改config.properties中以下两项
+
+#环境
+environment=test
+#是否校验openid
+validateOpenid=true
