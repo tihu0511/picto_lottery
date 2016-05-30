@@ -1,5 +1,8 @@
 package com.picto.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 奖券保存方式
  * Created by wujigang on 2016/5/29.
@@ -29,5 +32,18 @@ public enum CouponSaveTypeEnum {
             }
         }
         return null;
+    }
+
+    public static List getCodeAndDesc() {
+        List list = new ArrayList(2);
+        List<Integer> codes = new ArrayList<Integer>();
+        List<String> descs = new ArrayList<String>();
+        for (CouponSaveTypeEnum value : CouponSaveTypeEnum.values()) {
+            codes.add(value.getCode());
+            descs.add(value.getDesc());
+        }
+        list.add(codes);
+        list.add(descs);
+        return list;
     }
 }

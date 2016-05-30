@@ -1,6 +1,6 @@
 h1 {
     width:90%;
-    margin : 5% auto 3% auto;
+    margin : 1% auto;
     text-align:center;
     color:blue;
 }
@@ -13,7 +13,7 @@ div#choiceMerchant {
 
 div#merchantInfo {
     width:90%;
-    margin:5% auto;
+    margin:1% auto 0 auto;
 }
 
 div#refresh {
@@ -41,3 +41,6 @@ table#merchants tr{
     border:solid 1px gray;
 }
 table#merchants tr:hover{background:gray;}
+#merchants tbody tr td img{
+    max-height:15%;
+}

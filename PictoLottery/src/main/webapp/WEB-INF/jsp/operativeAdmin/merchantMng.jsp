@@ -14,15 +14,31 @@
     <meta name = "format-detection" content = "telephone=no">
     <link rel="stylesheet" href="/css/oprativeAdmin/merchantMng.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript">
+        function choiceMerchant() {
+            var merchantId = $("select[name='merchantId']").val();
+            window.location.replace("/admin/getAllMerchant.do?merchantId=" + merchantId);
+        }
+        function editMerchant(merchantId){
+            window.open("/admin/editMerchant.do?merchantId=" + merchantId, "_blank", "height=500,width=800,top=100,left=200");
+        }
+    </script>
 </head>
 <body>
     <h1>店铺信息完善</h1>
     <div id="choiceMerchant">
         <div id="choice">店铺名&nbsp;&nbsp;
-            <select name="merchantId">
+            <select name="merchantId" onchange="choiceMerchant()">
                 <option value="0">---请选择---</option>
-                <c:forEach items="${merchants}" var="merchant">
-                    <option value="${merchant.id}">${merchant.mechantName}</option>
+                <c:forEach items="${allMerchants}" var="merchant">
+                    <c:choose>
+                        <c:when test="${selectedMerchantId != null and selectedMerchantId == merchant.id}">
+                            <option value="${merchant.id}" selected="true">${merchant.mechantName}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${merchant.id}">${merchant.mechantName}</option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select>
         </div>

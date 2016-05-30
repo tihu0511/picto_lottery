@@ -20,9 +20,11 @@
     <style type="text/css">
         div#main {
             width: 40%;
-            margin: 40% auto;
             text-align: center;
             font-size: 2em;
+            position: absolute;
+            top: 30%;
+            left: 30%;
         }
         #main a {
             text-decoration: underline;

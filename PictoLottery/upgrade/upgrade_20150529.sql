@@ -15,5 +15,9 @@ ALTER TABLE `test`.`merchant`
 ADD COLUMN `query_advert` VARCHAR(255) NULL AFTER `banner_advert`,
 ADD COLUMN `save_type` TINYINT(4) NULL AFTER `update_time`;
 
+ALTER TABLE `test`.`account`
+CHANGE COLUMN `mechant_id` `merchant_id` INT(11) NOT NULL ;
+
+
 
 
