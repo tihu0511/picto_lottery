@@ -15,5 +15,5 @@ public interface MerchantDao {
 
     List<Merchant> queryAllMerchants();
 
-    void updateMerchant(Merchant merchant);// TODO 更新商户信息
+    void updateMerchant(Merchant merchant);
 }

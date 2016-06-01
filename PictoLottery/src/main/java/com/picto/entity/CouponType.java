@@ -17,6 +17,25 @@ public class CouponType extends BaseEntity {
     private Integer version;
     private Integer state;
     private Boolean isThanks;
+    private Double percent;
+    private Integer type;//奖项类型： 普通奖项 谢谢惠顾 周边优惠
+    private String remark;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public Integer getMerchantId() {
         return merchantId;
@@ -104,5 +123,13 @@ public class CouponType extends BaseEntity {
 
     public void setIsThanks(Boolean isThanks) {
         this.isThanks = isThanks;
+    }
+
+    public Double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Double percent) {
+        this.percent = percent;
     }
 }

@@ -20,7 +20,8 @@
             window.location.replace("/admin/getAllMerchant.do?merchantId=" + merchantId);
         }
         function editMerchant(merchantId){
-            window.open("/admin/editMerchant.do?merchantId=" + merchantId, "_blank", "height=500,width=800,top=100,left=200");
+            window.location.href = "/admin/editMerchant.do?merchantId=" + merchantId;
+            //window.open("/admin/editMerchant.do?merchantId=" + merchantId, "_blank", "height=600,width=1000,top=50,left=200");
         }
     </script>
 </head>

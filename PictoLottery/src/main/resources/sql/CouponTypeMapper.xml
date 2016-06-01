@@ -29,6 +29,11 @@
         where id = #{id} and state = 1
     </select>
 
+    <select id="queryCouponTypeByMerchantId" resultType="com.picto.entity.CouponType">
+        <include refid="queryCouponTypeColumn" />
+        where merchant_id = #{merchantId} and state = 1
+    </select>
+
     <update id="updateCouponTypeRestNum">
         update coupon_type set rest_num = #{restNum},
             version = version + 1,

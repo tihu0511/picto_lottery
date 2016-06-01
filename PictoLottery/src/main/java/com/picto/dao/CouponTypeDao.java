@@ -15,4 +15,6 @@ public interface CouponTypeDao {
     Integer updateCouponTypeRestNum(CouponType luckyCouponType);
     Integer updateCouponType(CouponType couponType);
     CouponType queryCouponTypeById(@Param("id") Integer id);
+
+    CouponType queryCouponTypeByMerchantId(@Param("merchantId") Integer merchantId);
 }

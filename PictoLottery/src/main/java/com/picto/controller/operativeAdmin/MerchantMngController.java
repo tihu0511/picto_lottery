@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class MerchantMngController {
     @RequestMapping("getAllMerchant")
     public String getAllMerchant(@RequestParam(value = "merchantId", required = false) Integer merchantId, Model model) {
         List<Merchant> allMerchants = merchantDao.queryAllMerchants();
+        //TODO 查询账户
 
         List<Merchant> merchants = null;
         if (null != merchantId && 0 != merchantId.intValue()) {
@@ -52,8 +54,9 @@ public class MerchantMngController {
     }
 
     @RequestMapping("updateMerchant")
-    public void updateMerchant(Merchant merchant) {
+    public String updateMerchant(Merchant merchant) {
+        merchant.setUpdateTime(new Date());
         merchantDao.updateMerchant(merchant);
-        //TODO 编辑商户信息后保存跳转流程
+        return "redirect:/admin/getAllMerchant.do";
     }
 }

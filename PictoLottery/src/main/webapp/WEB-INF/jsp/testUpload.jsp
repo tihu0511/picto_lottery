@@ -36,10 +36,10 @@
   </script>
 </head>
 <body>
-    <form action="/uploadImg.do" method="post" enctype="multipart/form-data">
+    <%--<form method="post" enctype="multipart/form-data">--%>
         请选择文件<input id="file" type="file" name="file"/>
         <input id="uploadBtn" type="button" value="upload" onclick="uploadImg()" />
-    </form>
+    <%--</form>--%>
     <img id="showImg">
 </body>
 </html>
