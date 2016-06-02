@@ -16,5 +16,5 @@ public interface CouponTypeDao {
     Integer updateCouponType(CouponType couponType);
     CouponType queryCouponTypeById(@Param("id") Integer id);
 
-    CouponType queryCouponTypeByMerchantId(@Param("merchantId") Integer merchantId);
+    List<CouponType> queryCouponTypeByMerchantId(@Param("merchantId") Integer merchantId);
 }

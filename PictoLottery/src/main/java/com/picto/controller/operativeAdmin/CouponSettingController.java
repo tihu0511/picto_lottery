@@ -2,8 +2,10 @@ package com.picto.controller.operativeAdmin;
 
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.MerchantDao;
+import com.picto.entity.Coupon;
 import com.picto.entity.CouponType;
 import com.picto.entity.Merchant;
+import com.picto.util.ListUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,6 @@ public class CouponSettingController {
             merchants = new ArrayList<Merchant>(1);
             merchants.add(merchant);
             model.addAttribute("selectedMerchantId", merchant.getId());
-
         } else {
             merchants = allMerchants;
             model.addAttribute("selectedMerchantId", null);
@@ -47,9 +48,26 @@ public class CouponSettingController {
 
         List<CouponType> couponTypes = new ArrayList<CouponType>();
         if (null != merchant) {
-            couponTypes.add(couponTypeDao.queryCouponTypeByMerchantId(merchant.getId()));
+            couponTypes = couponTypeDao.queryCouponTypeByMerchantId(merchant.getId());
+            if (!ListUtil.isEmptyList(couponTypes)) {
+                int total = 0;
+                for (CouponType couponType : couponTypes) {
+                    total += couponType.getTotalNum();
+                }
+                double percent = 0.0;
+                for (int i = 0; i < couponTypes.size(); i++) {
+                    CouponType couponType = couponTypes.get(i);
+                    if (i == couponTypes.size() - 1) {
+                        couponType.setPercent(Math.round((100 - percent) * 10) / 10.0);
+                    } else {
+                        double p = Math.round(couponType.getTotalNum() * 1000.0 / total) / 10.0;
+                        couponType.setPercent(p);
+                        percent += p;
+                    }
+                }
+            }
         } else {
-            couponTypes.addAll(couponTypeDao.queryAllCouponTypes());
+            couponTypes = couponTypeDao.queryAllCouponTypes();
         }
         model.addAttribute("couponTypes", couponTypes);
         return "operativeAdmin/couponTypeList";

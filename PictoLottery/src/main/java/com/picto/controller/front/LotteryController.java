@@ -29,6 +29,7 @@ import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.dao.OperationRecordDao;
 import com.picto.entity.*;
+import com.picto.enums.CouponTypeEnum;
 import com.picto.service.CouponService;
 import com.picto.service.LotteryService;
 import com.picto.util.DateUtil;
@@ -77,7 +78,7 @@ public class LotteryController {
         if (null == couponType) {
             //谢谢惠顾生成显示的奖项图标
             model.addAttribute("showIcons", lotteryService.getUnluckyShowIcons(merchant.getId()));
-        } else if (!couponType.getIsThanks()) {
+        } else if (!CouponTypeEnum.THANKS.getCode().equals(couponType.getType())) {
             String luckyIcon = couponType.getIcon();
             model.addAttribute("luckyCouponIcon", luckyIcon);
             model.addAttribute("showIcons", luckyIcon + "," + luckyIcon + "," + luckyIcon);

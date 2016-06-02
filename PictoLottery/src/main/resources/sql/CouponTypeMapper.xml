@@ -15,7 +15,7 @@
         state AS state,
         create_time AS createTime,
         update_time AS updateTime,
-        is_thanks AS isThanks
+        type AS type
         from coupon_type
     </sql>
 
@@ -49,7 +49,7 @@
             rest_num = #{restNum},
             is_immediate = #{isImmediate},
             reset_interval = #{resetInterval},
-            is_thanks = #{isThanks},
+            type = #{type},
             version = version + 1,
             update_time = #{updateTime}
         where id = #{id} and version = #{version}

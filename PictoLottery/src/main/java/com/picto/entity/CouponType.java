@@ -1,5 +1,7 @@
 package com.picto.entity;
 
+import com.picto.enums.CouponTypeEnum;
+
 import java.util.Date;
 
 /**
@@ -16,7 +18,6 @@ public class CouponType extends BaseEntity {
     private Date lastResetTime;
     private Integer version;
     private Integer state;
-    private Boolean isThanks;
     private Double percent;
     private Integer type;//奖项类型： 普通奖项 谢谢惠顾 周边优惠
     private String remark;
@@ -117,19 +118,15 @@ public class CouponType extends BaseEntity {
         this.state = state;
     }
 
-    public Boolean getIsThanks() {
-        return isThanks;
-    }
-
-    public void setIsThanks(Boolean isThanks) {
-        this.isThanks = isThanks;
-    }
-
     public Double getPercent() {
         return percent;
     }
 
     public void setPercent(Double percent) {
         this.percent = percent;
+    }
+
+    public String getTypeName() {
+        return CouponTypeEnum.getName(this.type);
     }
 }

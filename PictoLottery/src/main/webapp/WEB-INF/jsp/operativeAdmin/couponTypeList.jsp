@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="/css/oprativeAdmin/couponTypeList.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
+        function choiceMerchant() {
+            var merchantId = $("select[name='merchantId']").val();
+            window.location.replace("/admin/getAllCouponTypes.do?merchantId=" + merchantId);
+        }
         function choiceCouponType(couponTypeId) {
             var $radio = $("#radio" + couponTypeId);
             if ($radio.attr("checked") == "checked") {
@@ -96,9 +100,9 @@
                             <td>${couponType.name}</td>
                             <td><img src="${couponType.icon}" /></td>
                             <td>${couponType.totalNum}</td>
-                            <td>${couponType.percent}</td>
+                            <td>${couponType.percent}%</td>
                             <td>${couponType.resetInterval}</td>
-                            <td>${couponType.type}</td>
+                            <td>${couponType.typeName}</td>
                             <td>${couponType.isImmediate ? "是" : "否"}</td>
                             <td>${couponType.remark}</td>
                         </tr>

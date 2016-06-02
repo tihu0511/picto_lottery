@@ -18,6 +18,14 @@ ADD COLUMN `save_type` TINYINT(4) NULL AFTER `update_time`;
 ALTER TABLE `test`.`account`
 CHANGE COLUMN `mechant_id` `merchant_id` INT(11) NOT NULL ;
 
+ALTER TABLE `test`.`coupon_type`
+CHANGE COLUMN `is_thanks` `type` TINYINT(4) NULL DEFAULT NULL ;
+UPDATE `test`.`coupon_type` SET `type`='1' WHERE `id`='1';
+UPDATE `test`.`coupon_type` SET `type`='1' WHERE `id`='2';
+UPDATE `test`.`coupon_type` SET `type`='1' WHERE `id`='3';
+UPDATE `test`.`coupon_type` SET `type`='1' WHERE `id`='4';
+UPDATE `test`.`coupon_type` SET `type`='2' WHERE `id`='5';
+
 
 
 

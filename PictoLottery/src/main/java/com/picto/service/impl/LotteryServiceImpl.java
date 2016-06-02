@@ -5,6 +5,7 @@ import com.picto.dao.CouponTypeDao;
 import com.picto.dao.OperationRecordDao;
 import com.picto.entity.CouponType;
 import com.picto.entity.OperationRecord;
+import com.picto.enums.CouponTypeEnum;
 import com.picto.service.LotteryService;
 import com.picto.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class LotteryServiceImpl implements LotteryService {
         operationRecordDao.addOperationRecord(operationRecord);
 
         //如果是谢谢惠顾或者剩余数量=0
-        if (luckyCouponType.getIsThanks() || luckyCouponType.getRestNum() <= 0) {
+        if (CouponTypeEnum.THANKS.getCode().equals(luckyCouponType.getType()) || luckyCouponType.getRestNum() <= 0) {
             return null;
         } else {
             //更新奖项剩余数量-1
@@ -84,7 +85,7 @@ public class LotteryServiceImpl implements LotteryService {
 
         List<CouponType> newCouponTypes = new ArrayList<CouponType>();
         for (CouponType couponType : couponTypes) {
-            if (!couponType.getIsThanks()) {
+            if (!CouponTypeEnum.THANKS.getCode().equals(couponType.getType())) {
                 newCouponTypes.add(couponType);
             }
         }
