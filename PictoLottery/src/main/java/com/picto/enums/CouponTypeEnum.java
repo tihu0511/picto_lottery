@@ -1,6 +1,7 @@
 package com.picto.enums;
 
-import com.picto.entity.CouponType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wujigang on 2016/6/2.
@@ -26,5 +27,17 @@ public enum CouponTypeEnum {
             }
         }
         return null;
+    }
+    public static List getCodeAndNames() {
+        List result = new ArrayList(2);
+        List codes = new ArrayList();
+        List names = new ArrayList();
+        for (CouponTypeEnum typeEnum : CouponTypeEnum.values()) {
+            codes.add(typeEnum.getCode());
+            names.add(typeEnum.getName());
+        }
+        result.add(codes);
+        result.add(names);
+        return result;
     }
 }

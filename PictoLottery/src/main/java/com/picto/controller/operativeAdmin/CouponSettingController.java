@@ -5,6 +5,8 @@ import com.picto.dao.MerchantDao;
 import com.picto.entity.Coupon;
 import com.picto.entity.CouponType;
 import com.picto.entity.Merchant;
+import com.picto.enums.CouponResetTimeEnum;
+import com.picto.enums.CouponTypeEnum;
 import com.picto.util.ListUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +90,32 @@ public class CouponSettingController {
         //TODO 编辑奖项后的保存跳转
     }
 
+    @RequestMapping("toAddCouponType")
+    public String toAddCouponType(@RequestParam("merchantId") Integer merchantId, Model model) {
+        Merchant merchant = merchantDao.queryMechantById(merchantId);
+        model.addAttribute("merchant", merchant);
 
+        List resetTimes = CouponResetTimeEnum.getDayAndNames();
+        model.addAttribute("resetTimeDays", resetTimes.get(0));
+        model.addAttribute("resetTimeNames", resetTimes.get(1));
+
+        List types = CouponTypeEnum.getCodeAndNames();
+        model.addAttribute("typeCodes", types.get(0));
+        model.addAttribute("typeNames", types.get(1));
+
+        return "operativeAdmin/addCouponType";
+    }
+
+    @RequestMapping("addCouponType")
+    public String addCouponType(CouponType couponType) {
+        if (couponType.getIsImmediate() == null) {
+            couponType.setIsImmediate(false);
+        }
+        couponType.setRestNum(couponType.getTotalNum());
+        couponType.setCreateTime(new Date());
+        couponType.setState(1);
+        couponType.setVersion(1);
+        couponTypeDao.addCouponType(couponType);
+        return "redirect:/admin/getAllCouponTypes.do?merchantId=" + couponType.getMerchantId();
+    }
 }

@@ -41,6 +41,14 @@
                $(tr).css("background", "none");
             });
         }
+        function addCouponType(){
+            var merchantId = $("select[name='merchantId']").val();
+            if (merchantId > 0) {
+                window.location.href = "/admin/toAddCouponType.do?merchantId=" + merchantId;
+            } else {
+                alert("请先选一家店铺");
+            }
+        }
     </script>
 </head>
 <body>
@@ -66,7 +74,7 @@
     <div id="main">
         <div id="top">
             <div id="tools">
-                <img src="/images/create.png" />
+                <img src="/images/create.png" onclick="addCouponType()" />
                 <img src="/images/refresh.png" />
                 <img src="/images/delete.png" />
             </div>

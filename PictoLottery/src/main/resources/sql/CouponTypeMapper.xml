@@ -54,4 +54,9 @@
             update_time = #{updateTime}
         where id = #{id} and version = #{version}
     </update>
+
+    <insert id="addCouponType" keyProperty="id" useGeneratedKeys="true" parameterType="com.picto.entity.CouponType">
+        insert into coupon_type(merchant_id, name, icon, total_num, rest_num, is_immediate, reset_interval, type, version, state, create_time)
+        values(#{merchantId}, #{name}, #{icon}, #{totalNum}, #{restNum}, #{isImmediate}, #{resetInterval}, #{type}, #{version}, #{state}, #{createTime})
+    </insert>
 </mapper>
