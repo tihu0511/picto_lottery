@@ -35,7 +35,7 @@
                 }
             });
         }
-        function addCouponType() {
+        function updateCouponType() {
             var couponTypeName = $("#name").val();
             if (!/^[a-zA-Z0-9\u4e00-\u9fa5]{0,8}$/.test(couponTypeName)) {
                 $("#nameMsg").show();
@@ -86,10 +86,10 @@
     </style>
 </head>
 <body>
-    <h1>新增奖项</h1>
+    <h1>编辑奖项</h1>
     <div id="main">
-        <form action="/admin/addCouponType.do" method="post">
-            <input type="hidden" name="merchantId" value="${merchant.id}">
+        <form action="/admin/updateCouponType.do" method="post">
+            <input type="hidden" name="id" value="${couponType.id}">
             <table cellspacing="0" cellpadding="5">
                 <tr>
                     <td width="20%">店铺名称</td>
@@ -98,18 +98,18 @@
                 </tr>
                 <tr>
                     <td>奖项名称</td>
-                    <td><input id="name" type="text" name="name" /></td>
+                    <td><input id="name" type="text" name="name" value="${couponType.name}" /></td>
                     <td><span id="nameMsg" class="message">*不多于8个汉字</span> </td>
                 </tr>
                 <tr>
                     <td>奖项数量</td>
-                    <td><input type="text" name="totalNum" /></td>
+                    <td><input type="text" name="totalNum" value="${couponType.totalNum}" /></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>奖项图标</td>
-                    <td><img id="iconImg">
-                        <input id="icon" type="hidden" name="icon" />
+                    <td><img id="iconImg" src="${couponType.icon}">
+                        <input id="icon" type="hidden" name="icon" value="${couponType.icon}" />
                         <input id="iconFile" type="file" name="file" />
                         <input type="button" value="上传" onclick="uploadImg('iconFile', 'iconImg', 'icon')" /></td>
                     <td></td>
@@ -119,7 +119,14 @@
                     <td>
                         <select id="resetTime" name="resetInterval">
                             <c:forEach var="i" begin="0" end="${resetTimeDays.size() - 1}" varStatus="status">
-                                <option value="${resetTimeDays.get(i)}">${resetTimeNames.get(i)}</option>
+                                <c:choose>
+                                    <c:when test="${couponType.resetInterval == resetTimeDays.get(i)}">
+                                        <option value="${resetTimeDays.get(i)}" selected="selected">${resetTimeNames.get(i)}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${resetTimeDays.get(i)}">${resetTimeNames.get(i)}</option>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:forEach>
                         </select>
                     </td>
@@ -130,7 +137,14 @@
                     <td>
                         <select id="type" name="type">
                             <c:forEach var="i" begin="0" end="${typeCodes.size() - 1}" varStatus="status">
-                                <option value="${typeCodes.get(i)}">${typeNames.get(i)}</option>
+                                <c:choose>
+                                    <c:when test="${couponType.type == typeCodes.get(i)}">
+                                        <option selected="selected" value="${typeCodes.get(i)}">${typeNames.get(i)}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${typeCodes.get(i)}">${typeNames.get(i)}</option>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:forEach>
                         </select>
                     </td>
@@ -138,11 +152,19 @@
                 </tr>
                 <tr>
                     <td>是否即时生效</td>
-                    <td><input id="isImmediate" type="checkbox" name="isImmediate" /></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${couponType.isImmediate}">
+                                <input id="isImmediate" type="checkbox" name="isImmediate" checked="checked" /></td>
+                            </c:when>
+                            <c:otherwise>
+                                <input id="isImmediate" type="checkbox" name="isImmediate" /></td>
+                            </c:otherwise>
+                        </c:choose>
                     <td></td>
                 </tr>
             </table>
-            <div id="bottom"><input type="submit" value="" onclick="return addCouponType()"></div>
+            <div id="bottom"><input type="submit" value="" onclick="return updateCouponType()"></div>
         </form>
     </div>
 </body>

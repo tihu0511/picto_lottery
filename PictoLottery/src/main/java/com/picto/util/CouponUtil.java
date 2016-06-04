@@ -31,4 +31,8 @@ public class CouponUtil {
         }
         return 0;
     }
+
+    public static boolean getBooleanValue(Boolean b){
+        return b != null && b;
+    }
 }

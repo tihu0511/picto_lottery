@@ -26,6 +26,10 @@ UPDATE `test`.`coupon_type` SET `type`='1' WHERE `id`='3';
 UPDATE `test`.`coupon_type` SET `type`='1' WHERE `id`='4';
 UPDATE `test`.`coupon_type` SET `type`='2' WHERE `id`='5';
 
+ALTER TABLE `test`.`discount_product`
+ADD COLUMN `is_sendout` TINYINT(4) NULL DEFAULT 0 AFTER `update_time`;
+
+
 
 
 

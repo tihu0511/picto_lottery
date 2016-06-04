@@ -196,7 +196,7 @@
                     <td></td>
                 </tr>
             </table>
-            <div id="submitDiv"><input type="submit" id="submit" value="" onclick="validateMerchant()" /></div>
+            <div id="submitDiv"><input type="submit" id="submit" value="" onclick="return validateMerchant()" /></div>
         </form>
     </div>
 </body>

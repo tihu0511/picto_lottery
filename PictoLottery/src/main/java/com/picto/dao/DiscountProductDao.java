@@ -11,8 +11,20 @@ import java.util.List;
  */
 @Repository
 public interface DiscountProductDao {
-    List<DiscountProduct> queryDiscountByCouponTypeId(@Param("couponTypeId") Integer couponTypeId,
-        @Param("merchantId") Integer merchantId);
+    List<DiscountProduct> queryDiscountByCouponTypeId(@Param("couponTypeId") Integer couponTypeId);
 
     DiscountProduct queryDiscountById(@Param("id") Integer id);
+
+    void deleteById(@Param("id") Integer id);
+
+    List<DiscountProduct> queryDiscountByMerchantId(@Param("merchantId") Integer merchantId);
+
+    List<DiscountProduct> queryAllDiscounts();
+
+    void add(DiscountProduct discountProduct);
+
+    void deleteRelByDiscountId(@Param("discountProductId") Integer discountProductId);
+
+    void updateDiscount(DiscountProduct discountProduct);
+
 }

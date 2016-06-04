@@ -4,7 +4,6 @@ package com.picto.entity;
  * Created by BF100271 on 2016/5/24.
  */
 public class DiscountProduct extends BaseEntity {
-    private Integer couponTypeId;
     private Integer merchantId;
     private String name;
     private String icon;
@@ -14,14 +13,8 @@ public class DiscountProduct extends BaseEntity {
     private String limitMsg;
     private Integer validity;
     private String storeName;
-
-    public Integer getCouponTypeId() {
-        return couponTypeId;
-    }
-
-    public void setCouponTypeId(Integer couponTypeId) {
-        this.couponTypeId = couponTypeId;
-    }
+    private Boolean isSendout;//是否可外发
+    private Integer state;
 
     public Integer getMerchantId() {
         return merchantId;
@@ -93,5 +86,21 @@ public class DiscountProduct extends BaseEntity {
 
     public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public Boolean getIsSendout() {
+        return isSendout;
+    }
+
+    public void setIsSendout(Boolean isSendout) {
+        this.isSendout = isSendout;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

@@ -1,5 +1,3 @@
-<%@ page import="com.picto.util.DateUtil" %>
-<%@ page import="com.picto.entity.Coupon" %>
 <%--
   Created by IntelliJ IDEA.
   User: wujigang
@@ -14,68 +12,64 @@
 <head>
     <title>彼可托运营后台</title>
     <meta name = "format-detection" content = "telephone=no">
-    <link rel="stylesheet" href="/css/oprativeAdmin/couponTypeList.css" />
+    <link rel="stylesheet" href="/css/oprativeAdmin/discountProductList.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
         function choiceMerchant() {
             var merchantId = $("select[name='merchantId']").val();
-            window.location.replace("/admin/getAllCouponTypes.do?merchantId=" + merchantId);
+            window.location.replace("/admin/getAllDiscounts.do?merchantId=" + merchantId);
         }
-        function choiceCouponType(couponTypeId) {
-            var $radio = $("#radio" + couponTypeId);
+        function choiceDiscountProduct(discountProductId) {
+            var $radio = $("#radio" + discountProductId);
             if ($radio.attr("checked") == "checked") {
                 return ;
             }
             $radio.attr("checked", "checked");
             $radio.click();
-            var $radios = $("input[name='couponTypeId']");
+            var $radios = $("input[name='discountProductId']");
             $radios.each(function(i, r){
-               if ($(r).attr("id") != $radio.attr("id")) {
-                   $(r).removeAttr("checked");
-               }
+                if ($(r).attr("id") != $radio.attr("id")) {
+                    $(r).removeAttr("checked");
+                }
             });
             var $currTr = $($radio.parent("td").parent("tr"));
             $currTr.css("background", "gray");
             var trs = $currTr.siblings("tr");
             $(trs).each(function(i, tr){
-               $(tr).css("background", "none");
+                $(tr).css("background", "none");
             });
         }
-        function addCouponType(){
+        function addDiscountProduct(){
             var merchantId = $("select[name='merchantId']").val();
             if (merchantId > 0) {
-                window.location.href = "/admin/toAddCouponType.do?merchantId=" + merchantId;
+                window.location.href = "/admin/toAddDiscountProduct.do?merchantId=" + merchantId;
             } else {
                 alert("请先选一家店铺");
             }
         }
-        function deleteCouponType() {
-            var couponTypeId = null;
-            var $radios = $("input[name='couponTypeId']");
+        function deleteDiscountProduct() {
+            var discountProductId = null;
+            var $radios = $("input[name='discountProductId']");
             $radios.each(function(i, radio){
                 if ($(radio).attr("checked") == "checked") {
-                    couponTypeId = $(radio).val();
+                    discountProductId = $(radio).val();
                 }
             });
-            if (null != couponTypeId) {
-                if (confirm("确定删除奖项？")){
-                    window.location.href = "/admin/deleteCouponType.do?couponTypeId=" + couponTypeId + "&merchantId=" + '${selectedMerchantId}';
+            if (null != discountProductId) {
+                if (confirm("确定删除优惠？")){
+                    window.location.href = "/admin/deleteDiscount.do?discountProductId=" + discountProductId + "&merchantId=" + '${selectedMerchantId}';
                 }
             } else {
                 alert("请选择一个奖项");
             }
         }
-        function editCouponType(couponTypeId) {
-            if (null != couponTypeId) {
-                window.location.href = "/admin/editCouponType.do?couponTypeId=" + couponTypeId;
-            } else {
-                alert("请选择一个奖项");
-            }
+        function editDiscountProduct(discountProductId) {
+            window.location.href = "/admin/editDiscountProduct.do?discountProductId=" + discountProductId;
         }
     </script>
 </head>
 <body>
-<h1>店铺信息完善</h1>
+<h1>优惠产品管理</h1>
     <div id="choiceMerchant">
         <div id="choice">店铺名&nbsp;&nbsp;
             <select name="merchantId" onchange="choiceMerchant()">
@@ -97,9 +91,9 @@
     <div id="main">
         <div id="top">
             <div id="tools">
-                <img src="/images/create.png" onclick="addCouponType()" />
+                <img src="/images/create.png" onclick="addDiscountProduct()" />
                 <img src="/images/refresh.png" />
-                <img src="/images/delete.png" onclick="deleteCouponType()" />
+                <img src="/images/delete.png" onclick="deleteDiscountProduct()" />
             </div>
             <div id="typeOrDiscount">
                 <c:choose>
@@ -115,34 +109,36 @@
             </div>
             <div style="clear:both;"></div>
         </div>
-        <div id="couponTypes">
+        <div id="discountProducts">
             <table cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
                         <td width="5%"></td>
                         <td width="5%">商户Id</td>
-                        <td width="10%">奖项名称</td>
-                        <td width="10%">奖项图标</td>
-                        <td width="10%">奖项数量</td>
-                        <td width="10%">奖项占比</td>
-                        <td width="5%">重置时间</td>
-                        <td width="10%">奖项类型</td>
-                        <td width="10%">是否即时优惠</td>
-                        <td width="25%">备注</td>
+                        <td width="10%">优惠名称</td>
+                        <td width="10%">优惠图标</td>
+                        <td width="10%">优惠力度</td>
+                        <td width="10%">重要信息</td>
+                        <td width="10%">限制信息</td>
+                        <td width="10%">有效期(小时)</td>
+                        <td width="5%">是否可重用</td>
+                        <td width="5%">是否可外发</td>
+                        <td width="10%">备注</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${couponTypes}" var="couponType">
-                        <tr onclick="choiceCouponType(${couponType.id})" ondblclick="editCouponType(${couponType.id})">
-                            <td><input id="radio${couponType.id}" type="radio" name="couponTypeId" value="${couponType.id}" /></td>
-                            <td>${couponType.merchantId}</td>
-                            <td>${couponType.name}</td>
-                            <td><img src="${couponType.icon}" /></td>
-                            <td>${couponType.totalNum}</td>
-                            <td>${couponType.percent}%</td>
-                            <td>${couponType.resetInterval}</td>
-                            <td>${couponType.typeName}</td>
-                            <td>${couponType.isImmediate ? "是" : "否"}</td>
+                    <c:forEach items="${discountProducts}" var="discountProduct">
+                        <tr onclick="choiceDiscountProduct(${discountProduct.id})" ondblclick="editDiscountProduct(${discountProduct.id})">
+                            <td><input id="radio${discountProduct.id}" type="radio" name="discountProductId" value="${discountProduct.id}" /></td>
+                            <td>${discountProduct.merchantId}</td>
+                            <td>${discountProduct.name}</td>
+                            <td><img src="${discountProduct.icon}" /></td>
+                            <td>${discountProduct.discount}</td>
+                            <td>${discountProduct.useMsg}</td>
+                            <td>${discountProduct.limitMsg}</td>
+                            <td>${discountProduct.validity}</td>
+                            <td>${discountProduct.isShared ? "是" : "否"}</td>
+                            <td>${discountProduct.isSendout ? "是" : "否"}</td>
                             <td>${couponType.remark}</td>
                         </tr>
                     </c:forEach>

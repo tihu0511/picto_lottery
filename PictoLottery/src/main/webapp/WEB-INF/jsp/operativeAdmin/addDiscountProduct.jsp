@@ -35,10 +35,21 @@
                 }
             });
         }
-        function addCouponType() {
-            var couponTypeName = $("#name").val();
-            if (!/^[a-zA-Z0-9\u4e00-\u9fa5]{0,8}$/.test(couponTypeName)) {
-                $("#nameMsg").show();
+        function addDiscountProduct() {
+            var b1 = validateDiscount("name", /^[a-zA-Z0-9\u4e00-\u9fa5]{0,8}$/, "nameMsg");
+            var b2 = validateDiscount("discount", /^[a-zA-Z0-9\u4e00-\u9fa5]{0,8}$/, "discountMsg");
+            var b3 = validateDiscount("useMsg", /^[a-zA-Z0-9\u4e00-\u9fa5]{0,10}$/, "usgMsgText");
+            var limitMsg = $("#limitMsg").val();
+            var b4 = true;
+            if (limitMsg != null && limitMsg.length > 0){
+                b4 = validateDiscount("limitMsg",
+                        /^[a-zA-Z0-9\u4e00-\u9fa5]{1,12},[a-zA-Z0-9\u4e00-\u9fa5]{1,12},[a-zA-Z0-9\u4e00-\u9fa5]{1,12}$/, "limitMsgText");
+            }
+            return b1 && b2 && b3 && b4;
+        }
+        function validateDiscount(validId, reg, msgId) {
+            if (!reg.test($("#" + validId).val())) {
+                $("#" + msgId).show();
                 return false;
             }
             return true;
@@ -86,9 +97,9 @@
     </style>
 </head>
 <body>
-    <h1>新增奖项</h1>
+    <h1>新增优惠产品</h1>
     <div id="main">
-        <form action="/admin/addCouponType.do" method="post">
+        <form action="/admin/addDiscountProduct.do" method="post">
             <input type="hidden" name="merchantId" value="${merchant.id}">
             <table cellspacing="0" cellpadding="5">
                 <tr>
@@ -97,17 +108,17 @@
                     <td width="20%"></td>
                 </tr>
                 <tr>
-                    <td>奖项名称</td>
+                    <td>优惠名称</td>
                     <td><input id="name" type="text" name="name" /></td>
                     <td><span id="nameMsg" class="message">*不多于8个汉字</span> </td>
                 </tr>
                 <tr>
-                    <td>奖项数量</td>
-                    <td><input type="text" name="totalNum" /></td>
-                    <td></td>
+                    <td>优惠力度</td>
+                    <td><input id="discount" type="text" name="discount" /></td>
+                    <td><span id="discountMsg" class="message">*不多于8个汉字</span> </td>
                 </tr>
                 <tr>
-                    <td>奖项图标</td>
+                    <td>优惠图标</td>
                     <td><img id="iconImg">
                         <input id="icon" type="hidden" name="icon" />
                         <input id="iconFile" type="file" name="file" />
@@ -115,34 +126,32 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>重置时间</td>
-                    <td>
-                        <select id="resetTime" name="resetInterval">
-                            <c:forEach var="i" begin="0" end="${resetTimeDays.size() - 1}" varStatus="status">
-                                <option value="${resetTimeDays.get(i)}">${resetTimeNames.get(i)}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
+                    <td>重要信息</td>
+                    <td><input id="useMsg" type="text" name="useMsg" /></td>
+                    <td><span id="useMsgText" class="message">*不多于10个汉字</span> </td>
+                </tr>
+                <tr>
+                    <td>限制信息</td>
+                    <td><textarea id="limitMsg" name="limitMsg"></textarea></td>
+                    <td><span id="limitMsgText" class="message">*每行不多于12个汉字,以","号隔开</span> </td>
+                </tr>
+                <tr>
+                    <td>有效期(小时)</td>
+                    <td><input id="validity" type="text" name="validity" /></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>奖项类型</td>
-                    <td>
-                        <select id="type" name="type">
-                            <c:forEach var="i" begin="0" end="${typeCodes.size() - 1}" varStatus="status">
-                                <option value="${typeCodes.get(i)}">${typeNames.get(i)}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
+                    <td>是否可重用</td>
+                    <td><input id="isShared" type="checkbox" name="isShared" /></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>是否即时生效</td>
-                    <td><input id="isImmediate" type="checkbox" name="isImmediate" /></td>
+                    <td>是否可外发</td>
+                    <td><input id="isSendout" type="checkbox" name="isSendout" /></td>
                     <td></td>
                 </tr>
             </table>
-            <div id="bottom"><input type="submit" value="" onclick="return addCouponType()"></div>
+            <div id="bottom"><input type="submit" value="" onclick="return addDiscountProduct()"></div>
         </form>
     </div>
 </body>

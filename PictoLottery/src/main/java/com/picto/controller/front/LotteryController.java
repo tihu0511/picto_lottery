@@ -100,7 +100,7 @@ public class LotteryController {
         } else {
             Merchant merchant = (Merchant) request.getSession().getAttribute("merchant");
 
-            List<DiscountProduct> discountProducts = discountProductDao.queryDiscountByCouponTypeId(Integer.valueOf(luckyCouponTypeId), merchant.getId());
+            List<DiscountProduct> discountProducts = discountProductDao.queryDiscountByCouponTypeId(Integer.valueOf(luckyCouponTypeId));
             Integer couponTypeId = Integer.valueOf(luckyCouponTypeId);
             CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
             //奖项下有多个优惠，提供优惠选择

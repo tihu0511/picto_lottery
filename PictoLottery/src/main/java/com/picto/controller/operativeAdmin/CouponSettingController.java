@@ -4,9 +4,12 @@ import com.picto.dao.CouponTypeDao;
 import com.picto.dao.MerchantDao;
 import com.picto.entity.Coupon;
 import com.picto.entity.CouponType;
+import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
 import com.picto.enums.CouponResetTimeEnum;
 import com.picto.enums.CouponTypeEnum;
+import com.picto.service.CouponSettingService;
+import com.picto.util.CouponUtil;
 import com.picto.util.ListUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class CouponSettingController {
     private CouponTypeDao couponTypeDao;
     @Autowired
     private MerchantDao merchantDao;
+    @Autowired
+    private CouponSettingService couponSettingService;
 
     @RequestMapping("getAllCouponTypes")
     public String getAllCouponTypes(@RequestParam(value = "merchantId", required = false) Integer merchantId, Model model) {
@@ -75,21 +80,6 @@ public class CouponSettingController {
         return "operativeAdmin/couponTypeList";
     }
 
-    @RequestMapping("editCouponType")
-    public String editCouponType(@RequestParam("couponTypeId") Integer couponTypeId, Model model) {
-        CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
-        model.addAttribute("couponType", couponType);
-        return "editCouponType";
-    }
-
-    @RequestMapping("updateCouponType")
-    public void updateCouponType(CouponType couponType) {
-        couponType.setRestNum(couponType.getTotalNum());
-        couponType.setUpdateTime(new Date());
-        couponTypeDao.updateCouponType(couponType);
-        //TODO 编辑奖项后的保存跳转
-    }
-
     @RequestMapping("toAddCouponType")
     public String toAddCouponType(@RequestParam("merchantId") Integer merchantId, Model model) {
         Merchant merchant = merchantDao.queryMechantById(merchantId);
@@ -118,4 +108,50 @@ public class CouponSettingController {
         couponTypeDao.addCouponType(couponType);
         return "redirect:/admin/getAllCouponTypes.do?merchantId=" + couponType.getMerchantId();
     }
+
+    @RequestMapping("deleteCouponType")
+    public String deleteCouponType(@RequestParam("couponTypeId") Integer couponTypeId, @RequestParam("merchantId") Integer merchantId) {
+        couponSettingService.deleteCouponType(couponTypeId);
+        if (null != merchantId) {
+            return "redirect:/admin/getAllCouponTypes.do?merchantId=" + merchantId;
+        } else {
+            return "redirect:/admin/getAllCouponTypes.do";
+        }
+    }
+
+    @RequestMapping("editCouponType")
+    public String editCouponType(@RequestParam("couponTypeId") Integer couponTypeId, Model model){
+        CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
+        model.addAttribute("couponType", couponType);
+
+        Merchant merchant = merchantDao.queryMechantById(couponType.getMerchantId());
+        model.addAttribute("merchant", merchant);
+
+        List resetTimes = CouponResetTimeEnum.getDayAndNames();
+        model.addAttribute("resetTimeDays", resetTimes.get(0));
+        model.addAttribute("resetTimeNames", resetTimes.get(1));
+
+        List types = CouponTypeEnum.getCodeAndNames();
+        model.addAttribute("typeCodes", types.get(0));
+        model.addAttribute("typeNames", types.get(1));
+
+        return "operativeAdmin/editCouponType";
+    }
+
+    @RequestMapping("updateCouponType")
+    public String updateCouponType(CouponType cType) {
+        CouponType couponType = couponTypeDao.queryCouponTypeById(cType.getId());
+        couponType.setName(cType.getName());
+        couponType.setTotalNum(cType.getTotalNum());
+        couponType.setRestNum(cType.getTotalNum());
+        couponType.setIcon(cType.getIcon());
+        couponType.setResetInterval(cType.getResetInterval());
+        couponType.setType(cType.getType());
+        couponType.setIsImmediate(CouponUtil.getBooleanValue(cType.getIsImmediate()));
+        couponType.setUpdateTime(new Date());
+        couponTypeDao.updateCouponType(couponType);
+
+        return "redirect:/admin/getAllCouponTypes.do?merchantId=" + couponType.getMerchantId();
+    }
+
 }

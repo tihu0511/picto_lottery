@@ -14,7 +14,8 @@
         store_name AS storeName,
         state AS state,
         create_time AS createTime,
-        update_time AS updateTime
+        update_time AS updateTime,
+        is_sendout AS isSendout
         from discount_product
     </sql>
 
@@ -31,7 +32,8 @@
         a.store_name AS storeName,
         a.state AS state,
         a.create_time AS createTime,
-        a.update_time AS updateTime
+        a.update_time AS updateTime,
+        a.is_sendout AS isSendout
         from discount_product AS a JOIN coupon_type_discount_rel AS b
         where a.id = b.discount_product_id and b.coupon_type_id = #{couponTypeId} and a.state = 1
     </select>
@@ -40,4 +42,41 @@
         <include refid="queryDiscountProductColumn" />
         where id = #{id} and state = 1
     </select>
+
+    <delete id="deleteById">
+        delete from discount_product where id = #{id}
+    </delete>
+
+    <select id="queryDiscountByMerchantId" resultType="com.picto.entity.DiscountProduct">
+        <include refid="queryDiscountProductColumn" />
+        where mechant_id = #{merchantId} and state = 1
+    </select>
+
+    <select id="queryAllDiscounts" resultType="com.picto.entity.DiscountProduct">
+        <include refid="queryDiscountProductColumn" />
+        where state = 1
+    </select>
+
+    <insert id="add" keyProperty="id" useGeneratedKeys="true" parameterType="com.picto.entity.DiscountProduct">
+        insert into discount_product(mechant_id, name, icon, discount, is_shared, use_msg, limit_msg, validity, store_name, state, create_time, update_time, is_sendout)
+        values(#{merchantId}, #{name}, #{icon}, #{discount}, #{isShared}, #{useMsg}, #{limitMsg}, #{validity}, #{storeName}, #{state}, #{createTime}, #{updateTime}, #{isSendout})
+    </insert>
+
+    <delete id="deleteRelByDiscountId">
+        delete from coupon_type_discount_rel where discount_product_id = #{discountProductId}
+    </delete>
+
+    <update id="updateDiscount" parameterType="com.picto.entity.DiscountProduct">
+        update discount_product
+        set name = #{name},
+        discount = #{discount},
+        icon = #{icon},
+        use_msg = #{useMsg},
+        limit_msg = #{limitMsg},
+        validity = #{validity},
+        is_shared = #{isShared},
+        is_sendout = #{isSendout},
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
 </mapper>

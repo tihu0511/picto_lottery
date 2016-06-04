@@ -19,6 +19,13 @@
         from coupon_type
     </sql>
 
+    <sql id="queryRelsColumn">
+        select ID AS id,
+        coupon_type_id AS couponTypeId,
+        discount_product_id AS discountProductId
+        from coupon_type_discount_rel
+    </sql>
+
     <select id="queryAllCouponTypes" resultType="com.picto.entity.CouponType">
         <include refid="queryCouponTypeColumn" />
         where state = 1
@@ -59,4 +66,12 @@
         insert into coupon_type(merchant_id, name, icon, total_num, rest_num, is_immediate, reset_interval, type, version, state, create_time)
         values(#{merchantId}, #{name}, #{icon}, #{totalNum}, #{restNum}, #{isImmediate}, #{resetInterval}, #{type}, #{version}, #{state}, #{createTime})
     </insert>
+
+    <delete id="deleteRelByCouponTypeId">
+        delete from coupon_type_discount_rel where coupon_type_id = #{couponTypeId}
+    </delete>
+
+    <delete id="deleteById">
+        delete from coupon_type where id = #{id}
+    </delete>
 </mapper>

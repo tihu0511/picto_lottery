@@ -1,6 +1,7 @@
 package com.picto.dao;
 
 import com.picto.entity.CouponType;
+import com.picto.entity.CouponTypeDiscountRel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,10 @@ public interface CouponTypeDao {
     List<CouponType> queryCouponTypeByMerchantId(@Param("merchantId") Integer merchantId);
 
     void addCouponType(CouponType couponType);
+
+    List<CouponTypeDiscountRel> queryRels(@Param("couponTypeId") Integer couponTypeId);
+
+    void deleteRelByCouponTypeId(@Param("couponTypeId") Integer couponTypeId);
+
+    void deleteById(@Param("id") Integer id);
 }
