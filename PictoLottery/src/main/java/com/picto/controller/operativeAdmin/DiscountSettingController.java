@@ -1,11 +1,14 @@
 package com.picto.controller.operativeAdmin;
 
+import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.dao.MerchantDao;
+import com.picto.entity.CouponType;
 import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
 import com.picto.service.CouponSettingService;
 import com.picto.util.CouponUtil;
+import com.picto.util.ListUtil;
 import com.picto.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +33,8 @@ public class DiscountSettingController {
     private DiscountProductDao discountProductDao;
     @Autowired
     private CouponSettingService couponSettingService;
+    @Autowired
+    private CouponTypeDao couponTypeDao;
 
     @RequestMapping("getAllDiscounts")
     public String getAllDiscounts(@RequestParam(value = "merchantId", required = false) Integer merchantId, Model model) {
@@ -114,4 +119,31 @@ public class DiscountSettingController {
 
         return "redirect:/admin/getAllDiscounts.do?merchantId=" + newDiscount.getMerchantId();
     }
+
+    @RequestMapping("toBindDiscount")
+    public String toBindDiscount(@RequestParam("couponTypeId") Integer couponTypeId, @RequestParam("isSelfMerchant") Boolean isSelfMerchant, Model model) {
+        CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
+        Integer merchantId = couponType.getMerchantId();
+
+        List<DiscountProduct> hadDiscounts = discountProductDao.queryDiscountByCouponTypeId(couponTypeId);
+        model.addAttribute("hadDiscounts", hadDiscounts);
+
+        List<DiscountProduct> choiceDiscounts = new ArrayList<DiscountProduct>();
+        if (isSelfMerchant) {
+            choiceDiscounts.addAll(discountProductDao.queryDiscountByMerchantId(merchantId));
+        } else {
+            List<DiscountProduct> otherMerDiscounts = discountProductDao.querySendoutDisOtherMerchant(merchantId);
+            if (!ListUtil.isEmptyList(hadDiscounts) && !ListUtil.isEmptyList(otherMerDiscounts)) {
+                for (DiscountProduct dis : hadDiscounts) {
+                    if (otherMerDiscounts.contains(dis)) {
+                        otherMerDiscounts.remove(dis);
+                    }
+                }
+            }
+            choiceDiscounts.addAll(otherMerDiscounts);
+        }
+        model.addAttribute("choiceDiscounts", choiceDiscounts);
+        return "operativeAdmin/bindDiscount";
+    }
+
 }

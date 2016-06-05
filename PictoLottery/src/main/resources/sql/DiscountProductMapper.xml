@@ -79,4 +79,9 @@
         update_time = #{updateTime}
         where id = #{id}
     </update>
+
+    <select id="querySendoutDisOtherMerchant" resultType="com.picto.entity.DiscountProduct">
+        <include refid="queryDiscountProductColumn" />
+        where is_sendout = 1 and mechant_id &lt;&gt; #{merchantId} and state = 1
+    </select>
 </mapper>

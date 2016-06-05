@@ -27,4 +27,5 @@ public interface DiscountProductDao {
 
     void updateDiscount(DiscountProduct discountProduct);
 
+    List<DiscountProduct> querySendoutDisOtherMerchant(@Param("merchantId") Integer merchantId);
 }

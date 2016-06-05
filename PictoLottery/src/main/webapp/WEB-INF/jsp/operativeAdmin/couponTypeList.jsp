@@ -72,6 +72,20 @@
                 alert("请选择一个奖项");
             }
         }
+        function toBindDiscount(isSelfMerchant) {
+            var couponTypeId = null;
+            var $radios = $("input[name='couponTypeId']");
+            $radios.each(function(i, radio){
+                if ($(radio).attr("checked") == "checked") {
+                    couponTypeId = $(radio).val();
+                }
+            });
+            if (null == couponTypeId) {
+                window.location.href = "/admin/toBindDiscount.do?couponTypeId=" + couponTypeId + "&isSelfMerchant=" + isSelfMerchant;
+            } else {
+                alert("请选择一个奖项");
+            }
+        }
     </script>
 </head>
 <body>
@@ -110,6 +124,8 @@
                     <c:otherwise>
                         <div id="type"><a href="/admin/getAllCouponTypes.do">奖项</a></div>
                         <div id="discount"><a href="/admin/getAllDiscounts.do">优惠</a></div>
+                        <div id="bindDiscount"><a onclick="toBindDiscount(true)">关联本店优惠</a></div>
+                        <div id="bindOtherDiscount"><a onclick="toBindDiscount(false)">引用周边优惠</a></div>
                     </c:otherwise>
                 </c:choose>
             </div>
