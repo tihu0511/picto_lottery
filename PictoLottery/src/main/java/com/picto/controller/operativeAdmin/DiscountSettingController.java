@@ -16,10 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wujigang on 2016/6/4.
@@ -121,9 +118,12 @@ public class DiscountSettingController {
     }
 
     @RequestMapping("toBindDiscount")
-    public String toBindDiscount(@RequestParam("couponTypeId") Integer couponTypeId, @RequestParam("isSelfMerchant") Boolean isSelfMerchant, Model model) {
+    public String toBindDiscount(@RequestParam("couponTypeId") Integer couponTypeId, @RequestParam("isSelfMerchant") Boolean isSelfMerchant,
+                                 Model model) {
         CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
         Integer merchantId = couponType.getMerchantId();
+
+        model.addAttribute("isSelfMerchant", isSelfMerchant);
 
         List<DiscountProduct> hadDiscounts = discountProductDao.queryDiscountByCouponTypeId(couponTypeId);
         model.addAttribute("hadDiscounts", hadDiscounts);
@@ -141,6 +141,21 @@ public class DiscountSettingController {
                 }
             }
             choiceDiscounts.addAll(otherMerDiscounts);
+
+            //设置店铺名称
+            Map<Integer, Merchant> merchantMap = new HashMap<Integer, Merchant>();
+            if (!ListUtil.isEmptyList(otherMerDiscounts)) {
+                List<String> merchantNames = new ArrayList<String>();
+                for (DiscountProduct dis : otherMerDiscounts) {
+                    Merchant merchant = merchantMap.get(dis.getMerchantId());
+                    if (null == merchant) {
+                        merchant = merchantDao.queryMechantById(dis.getMerchantId());
+                        merchantMap.put(dis.getMerchantId(), merchant);
+                    }
+                    merchantNames.add(merchant.getMechantName());
+                }
+                model.addAttribute("merchantNames", merchantNames);
+            }
         }
         model.addAttribute("choiceDiscounts", choiceDiscounts);
         return "operativeAdmin/bindDiscount";
