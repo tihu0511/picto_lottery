@@ -57,6 +57,42 @@
     </div>
     <div id="main">
         <div id="mainTitle">选择其它优惠</div>
+        <div id="choiceDiscounts">
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <td width="5%"></td>
+                    <td width="5%">商户Id</td>
+                    <td width="10%">优惠名称</td>
+                    <td width="10%">优惠图标</td>
+                    <td width="10%">优惠力度</td>
+                    <td width="10%">重要信息</td>
+                    <td width="10%">限制信息</td>
+                    <td width="10%">有效期(小时)</td>
+                    <td width="5%">是否可重用</td>
+                    <td width="5%">是否可外发</td>
+                    <td width="10%">备注</td>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${choiceDiscounts}" var="discountProduct" varStatus="status">
+                    <tr onclick="choiceDiscountProduct(${discountProduct.id})" ondblclick="editDiscountProduct(${discountProduct.id})">
+                        <td><input id="radio${discountProduct.id}" type="radio" name="discountProductId" value="${discountProduct.id}" /></td>
+                        <td>${merchantNames.get(status.index)}</td>
+                        <td>${discountProduct.name}</td>
+                        <td><img src="${discountProduct.icon}" /></td>
+                        <td>${discountProduct.discount}</td>
+                        <td>${discountProduct.useMsg}</td>
+                        <td>${discountProduct.limitMsg}</td>
+                        <td>${discountProduct.validity}</td>
+                        <td>${discountProduct.isShared ? "是" : "否"}</td>
+                        <td>${discountProduct.isSendout ? "是" : "否"}</td>
+                        <td>${couponType.remark}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 
