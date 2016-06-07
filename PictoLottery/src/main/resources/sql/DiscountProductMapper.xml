@@ -84,4 +84,9 @@
         <include refid="queryDiscountProductColumn" />
         where is_sendout = 1 and mechant_id &lt;&gt; #{merchantId} and state = 1
     </select>
+
+    <insert id="addCouponTypeDiscountRel" keyProperty="id" useGeneratedKeys="true" parameterType="com.picto.entity.CouponTypeDiscountRel">
+        insert into coupon_type_discount_rel(coupon_type_id, discount_product_id)
+        values(#{couponTypeId}, #{discountProductId})
+    </insert>
 </mapper>

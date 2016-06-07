@@ -4,6 +4,7 @@ import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.dao.MerchantDao;
 import com.picto.entity.CouponType;
+import com.picto.entity.CouponTypeDiscountRel;
 import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
 import com.picto.service.CouponSettingService;
@@ -122,8 +123,11 @@ public class DiscountSettingController {
                                  Model model) {
         CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
         Integer merchantId = couponType.getMerchantId();
+        Merchant selfMerchant = merchantDao.queryMechantById(merchantId);
 
+        model.addAttribute("couponType", couponType);
         model.addAttribute("isSelfMerchant", isSelfMerchant);
+        model.addAttribute("selfMerchantName", selfMerchant.getMechantName());
 
         List<DiscountProduct> hadDiscounts = discountProductDao.queryDiscountByCouponTypeId(couponTypeId);
         model.addAttribute("hadDiscounts", hadDiscounts);
@@ -161,4 +165,14 @@ public class DiscountSettingController {
         return "operativeAdmin/bindDiscount";
     }
 
+    @RequestMapping("bindDiscount")
+    public String bindDiscount(@RequestParam("discountProductId") Integer discountProductId, @RequestParam("couponTypeId") Integer couponTypeId) {
+        CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
+        CouponTypeDiscountRel rel = new CouponTypeDiscountRel();
+        rel.setCouponTypeId(couponTypeId);
+        rel.setDiscountProductId(discountProductId);
+        discountProductDao.addCouponTypeDiscountRel(rel);
+
+        return "redirect:/admin/getAllCouponTypes.do?merchantId=" + couponType.getMerchantId();
+    }
 }

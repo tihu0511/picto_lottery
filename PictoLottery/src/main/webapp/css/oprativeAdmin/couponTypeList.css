@@ -32,12 +32,16 @@ div#tools img{
 div#typeOrDiscount {
     float:right;
     clear:none;
-    width:20%
+    width:30%
 }
 div#typeOrDiscount div{
     float:left;
     margin:0 3%;
     font-size:1.5em;
+}
+div#typeOrDiscount div a{
+    text-decoration: underline;
+    color: blue;
 }
 
 div#couponTypes {

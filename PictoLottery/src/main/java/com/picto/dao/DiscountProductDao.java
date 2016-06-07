@@ -1,5 +1,6 @@
 package com.picto.dao;
 
+import com.picto.entity.CouponTypeDiscountRel;
 import com.picto.entity.DiscountProduct;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,6 @@ public interface DiscountProductDao {
     void updateDiscount(DiscountProduct discountProduct);
 
     List<DiscountProduct> querySendoutDisOtherMerchant(@Param("merchantId") Integer merchantId);
+
+    void addCouponTypeDiscountRel(CouponTypeDiscountRel couponTypeDiscountRel);
 }

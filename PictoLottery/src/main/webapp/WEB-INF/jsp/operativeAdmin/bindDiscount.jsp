@@ -12,12 +12,54 @@
 <head>
     <title>彼可托运营后台</title>
     <meta name = "format-detection" content = "telephone=no">
+    <link rel="stylesheet" href="/css/oprativeAdmin/bindDiscount.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
+        function choiceDiscountProduct(discountProductId) {
+            var $radio = $("#radio" + discountProductId);
+            if ($radio.attr("checked") == "checked") {
+                return ;
+            }
+            $radio.attr("checked", "checked");
+            $radio.click();
+            var $radios = $("input[name='discountProductId']");
+            $radios.each(function(i, r){
+                if ($(r).attr("id") != $radio.attr("id")) {
+                    $(r).removeAttr("checked");
+                }
+            });
+            var $currTr = $($radio.parent("td").parent("tr"));
+            $currTr.css("background", "gray");
+            var trs = $currTr.siblings("tr");
+            $(trs).each(function(i, tr){
+                $(tr).css("background", "none");
+            });
+        }
+        function bindDiscount() {
+            var discountProductId = null;
+            var $radios = $("input[name='discountProductId']");
+            $radios.each(function(i, radio){
+                if ($(radio).attr("checked") == "checked") {
+                    discountProductId = $(radio).val();
+                }
+            });
+            if (null != discountProductId) {
+               window.location.href = "/admin/bindDiscount.do?discountProductId=" + discountProductId + "&couponTypeId=" + ${couponType.id};
+            } else {
+                alert("请选择一个优惠");
+                return false;
+            }
+        }
     </script>
 </head>
 <body>
-    <h1>绑定优惠</h1>
+    <h1>
+        <c:choose>
+            <c:when test="${isSelfMerchant}">关联本店优惠</c:when>
+            <c:otherwise>绑定周边优惠</c:otherwise>
+        </c:choose>
+        (奖项：${couponType.name}，店铺：${selfMerchantName})
+    </h1>
     <div id="top">
         <div id="topTitle">已有优惠</div>
         <div id="hadDiscounts">
@@ -56,13 +98,18 @@
         </div>
     </div>
     <div id="main">
-        <div id="mainTitle">选择其它优惠</div>
+        <div id="mainTitle">
+            <c:choose>
+                <c:when test="${isSelfMerchant}">选择其它优惠</c:when>
+                <c:otherwise>选择周边优惠</c:otherwise>
+            </c:choose>
+        </div>
         <div id="choiceDiscounts">
             <table cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
                     <td width="5%"></td>
-                    <td width="5%">商户Id</td>
+                    <td width="5%">商户名称</td>
                     <td width="10%">优惠名称</td>
                     <td width="10%">优惠图标</td>
                     <td width="10%">优惠力度</td>
@@ -76,9 +123,14 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${choiceDiscounts}" var="discountProduct" varStatus="status">
-                    <tr onclick="choiceDiscountProduct(${discountProduct.id})" ondblclick="editDiscountProduct(${discountProduct.id})">
+                    <tr onclick="choiceDiscountProduct(${discountProduct.id})">
                         <td><input id="radio${discountProduct.id}" type="radio" name="discountProductId" value="${discountProduct.id}" /></td>
-                        <td>${merchantNames.get(status.index)}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${isSelfMerchant}">${selfMerchantName}</c:when>
+                                <c:otherwise>${merchantNames.get(status.index)}</c:otherwise>
+                            </c:choose>
+                        </td>
                         <td>${discountProduct.name}</td>
                         <td><img src="${discountProduct.icon}" /></td>
                         <td>${discountProduct.discount}</td>
@@ -93,6 +145,7 @@
                 </tbody>
             </table>
         </div>
+        <div id="bottom"><input type="button" value="" onclick="return bindDiscount()"></div>
     </div>
 </body>
 
