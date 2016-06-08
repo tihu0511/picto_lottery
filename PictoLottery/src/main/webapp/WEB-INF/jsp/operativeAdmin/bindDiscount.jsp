@@ -98,7 +98,7 @@
         (奖项：${couponType.name}，店铺：${selfMerchantName})
     </h1>
     <div id="top">
-        <div id="topTitle">已有优惠<span style="margin-left:2%;"><a href="" onclick="deleteRel()">删除关联</a></span></div>
+        <div id="topTitle">已有优惠<span style="margin-left:2%; text-decoration: underline;"><a onclick="deleteRel()">删除关联</a></span></div>
         <div id="hadDiscounts">
             <table cellpadding="0" cellspacing="0">
                 <thead>

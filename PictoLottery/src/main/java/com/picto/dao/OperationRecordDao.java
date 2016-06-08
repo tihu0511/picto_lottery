@@ -23,4 +23,7 @@ public interface OperationRecordDao {
                                          @Param("today") Date today);
 
     void updateSerialNumber(@Param("id") Integer id, @Param("serialNumber") String serialNumber);
+
+    List<OperationRecord> queryAllOpersByTime(@Param("type") Integer type, @Param("merchantId") Integer merchantId,
+                                              @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }
