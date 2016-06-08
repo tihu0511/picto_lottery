@@ -50,14 +50,14 @@
                 return false;
             }
         }
-        function choiceHadDiscount(hadDiscountId) {
-            var $radio = $("#radio_had" + hadDiscountId);
+        function choiceHadDiscount(relId) {
+            var $radio = $("#radio_had" + relId);
             if ($radio.attr("checked") == "checked") {
                 return ;
             }
             $radio.attr("checked", "checked");
             $radio.click();
-            var $radios = $("input[name='hadDiscountId']");
+            var $radios = $("input[name='relId']");
             $radios.each(function(i, r){
                 if ($(r).attr("id") != $radio.attr("id")) {
                     $(r).removeAttr("checked");
@@ -71,17 +71,16 @@
             });
         }
         function deleteRel() {
-            var hadDiscountId = null;
-            var $radios = $("input[name='hadDiscountId']");
+            var relId = null;
+            var $radios = $("input[name='relId']");
             $radios.each(function(i, radio){
                 if ($(radio).attr("checked") == "checked") {
-                    hadDiscountId = $(radio).val();
+                    relId = $(radio).val();
                 }
             });
-            if (null != hadDiscountId) {
+            if (null != relId) {
                 if (confirm("确定解除与该优惠的关联吗?")) {
-                    var url = "/admin/deleteRel.do?discountProductId=" + hadDiscountId + "&couponTypeId=" + '${couponType.id}'
-                            +"&isSelfMerchant=" + '${isSelfMerchant}';
+                    var url = "/admin/deleteRel.do?relId=" + relId +"&isSelfMerchant=" + '${isSelfMerchant}';
                     window.location.href = url;
                 }
             } else {
@@ -119,8 +118,8 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${hadDiscounts}" var="discountProduct">
-                    <tr onclick="choiceHadDiscount(${discountProduct.id})">
-                        <td><input id="radio_had${discountProduct.id}" type="radio" name="hadDiscountId" value="${discountProduct.id}" /></td>
+                    <tr onclick="choiceHadDiscount(${discountProduct.relId})">
+                        <td><input id="radio_had${discountProduct.relId}" type="radio" name="relId" value="${discountProduct.relId}" /></td>
                         <td>${discountProduct.merchantId}</td>
                         <td>${discountProduct.name}</td>
                         <td><img src="${discountProduct.icon}" /></td>

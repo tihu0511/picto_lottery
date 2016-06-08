@@ -15,6 +15,7 @@ public class DiscountProduct extends BaseEntity {
     private String storeName;
     private Boolean isSendout;//是否可外发
     private Integer state;
+    private Integer relId;//优惠奖项关联id
 
     public Integer getMerchantId() {
         return merchantId;
@@ -103,4 +104,6 @@ public class DiscountProduct extends BaseEntity {
     public void setState(Integer state) {
         this.state = state;
     }
+    public Integer getRelId() { return relId; }
+    public void setRelId(Integer relId) { this.relId = relId; }
 }

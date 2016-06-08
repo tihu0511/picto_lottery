@@ -19,6 +19,13 @@
         from discount_product
     </sql>
 
+    <sql id="queryRelAllColumn">
+        select id AS id,
+        coupon_type_id AS couponTypeId,
+        discount_product_id AS discountProductId
+        from coupon_type_discount_rel
+    </sql>
+
     <select id="queryDiscountByCouponTypeId" resultType="com.picto.entity.DiscountProduct">
         select a.ID AS id,
         a.mechant_id AS merchantId,
@@ -33,10 +40,12 @@
         a.state AS state,
         a.create_time AS createTime,
         a.update_time AS updateTime,
-        a.is_sendout AS isSendout
+        a.is_sendout AS isSendout,
+        b.id AS relId
         from discount_product AS a JOIN coupon_type_discount_rel AS b
         where a.id = b.discount_product_id and b.coupon_type_id = #{couponTypeId} and a.state = 1
     </select>
+
 
     <select id="queryDiscountById" resultType="com.picto.entity.DiscountProduct">
         <include refid="queryDiscountProductColumn" />
@@ -91,6 +100,11 @@
     </insert>
 
     <delete id="deleteRel">
-        delete from coupon_type_discount_rel where coupon_type_id = #{couponTypeId} and discount_product_id = #{discountProductId}
+        delete from coupon_type_discount_rel where id = #{relId}
     </delete>
+
+    <select id="queryRelByRelId" resultType="com.picto.entity.CouponTypeDiscountRel">
+        <include refid="queryRelAllColumn" />
+        where id = #{relId}
+    </select>
 </mapper>

@@ -177,11 +177,10 @@ public class DiscountSettingController {
     }
 
     @RequestMapping("deleteRel")
-    public String deleteCouponTypeDisRel(@RequestParam("discountProductId") Integer discountProductId,
-         @RequestParam("couponTypeId") Integer couponTypeId, @RequestParam("isSelfMerchant") Boolean isSelfMerchant) {
+    public String deleteRel(@RequestParam("relId") Integer relId, @RequestParam("isSelfMerchant") Boolean isSelfMerchant) {
+        CouponTypeDiscountRel rel = discountProductDao.queryRelByRelId(relId);
+        discountProductDao.deleteRel(relId);
 
-        discountProductDao.deleteRel(couponTypeId, discountProductId);
-
-        return "redirect:/admin/toBindDiscount.do?couponTypeId=" + couponTypeId + "&isSelfMerchant=" + isSelfMerchant;
+        return "redirect:/admin/toBindDiscount.do?couponTypeId=" + rel.getCouponTypeId() + "&isSelfMerchant=" + isSelfMerchant;
     }
 }
