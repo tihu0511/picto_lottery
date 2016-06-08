@@ -31,4 +31,6 @@ public interface DiscountProductDao {
     List<DiscountProduct> querySendoutDisOtherMerchant(@Param("merchantId") Integer merchantId);
 
     void addCouponTypeDiscountRel(CouponTypeDiscountRel couponTypeDiscountRel);
+
+    void deleteRel(@Param("couponTypeId") Integer couponTypeId, @Param("discountProductId") Integer discountProductId);
 }

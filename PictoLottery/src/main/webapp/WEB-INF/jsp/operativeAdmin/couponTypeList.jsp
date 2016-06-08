@@ -89,7 +89,7 @@
     </script>
 </head>
 <body>
-<h1>店铺信息完善</h1>
+<h1>奖项管理</h1>
     <div id="choiceMerchant">
         <div id="choice">店铺名&nbsp;&nbsp;
             <select name="merchantId" onchange="choiceMerchant()">

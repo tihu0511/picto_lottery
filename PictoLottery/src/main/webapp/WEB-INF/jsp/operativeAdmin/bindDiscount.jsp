@@ -50,6 +50,44 @@
                 return false;
             }
         }
+        function choiceHadDiscount(hadDiscountId) {
+            var $radio = $("#radio_had" + hadDiscountId);
+            if ($radio.attr("checked") == "checked") {
+                return ;
+            }
+            $radio.attr("checked", "checked");
+            $radio.click();
+            var $radios = $("input[name='hadDiscountId']");
+            $radios.each(function(i, r){
+                if ($(r).attr("id") != $radio.attr("id")) {
+                    $(r).removeAttr("checked");
+                }
+            });
+            var $currTr = $($radio.parent("td").parent("tr"));
+            $currTr.css("background", "gray");
+            var trs = $currTr.siblings("tr");
+            $(trs).each(function(i, tr){
+                $(tr).css("background", "none");
+            });
+        }
+        function deleteRel() {
+            var hadDiscountId = null;
+            var $radios = $("input[name='hadDiscountId']");
+            $radios.each(function(i, radio){
+                if ($(radio).attr("checked") == "checked") {
+                    hadDiscountId = $(radio).val();
+                }
+            });
+            if (null != hadDiscountId) {
+                if (confirm("确定解除与该优惠的关联吗?")) {
+                    var url = "/admin/deleteRel.do?discountProductId=" + hadDiscountId + "&couponTypeId=" + '${couponType.id}'
+                            +"&isSelfMerchant=" + '${isSelfMerchant}';
+                    window.location.href = url;
+                }
+            } else {
+                alert("请选择一个优惠");
+            }
+        }
     </script>
 </head>
 <body>
@@ -61,11 +99,12 @@
         (奖项：${couponType.name}，店铺：${selfMerchantName})
     </h1>
     <div id="top">
-        <div id="topTitle">已有优惠</div>
+        <div id="topTitle">已有优惠<span style="margin-left:2%;"><a href="" onclick="deleteRel()">删除关联</a></span></div>
         <div id="hadDiscounts">
             <table cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
+                    <td></td>
                     <td width="5%">商户Id</td>
                     <td width="10%">优惠名称</td>
                     <td width="10%">优惠图标</td>
@@ -80,7 +119,8 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${hadDiscounts}" var="discountProduct">
-                    <tr>
+                    <tr onclick="choiceHadDiscount(${discountProduct.id})">
+                        <td><input id="radio_had${discountProduct.id}" type="radio" name="hadDiscountId" value="${discountProduct.id}" /></td>
                         <td>${discountProduct.merchantId}</td>
                         <td>${discountProduct.name}</td>
                         <td><img src="${discountProduct.icon}" /></td>
@@ -145,7 +185,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="bottom"><input type="button" value="" onclick="return bindDiscount()"></div>
+        <div id="bottom"><input type="button" value="" onclick="bindDiscount()"></div>
     </div>
 </body>
 
