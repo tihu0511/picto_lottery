@@ -6,6 +6,7 @@ import com.picto.entity.DiscountProduct;
 import com.picto.entity.Merchant;
 import com.picto.service.CouponService;
 import com.picto.util.DateUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class ChoiceDiscountController {
+    private static final Logger logger = Logger.getLogger(ChoiceDiscountController.class);
+
     @Autowired
     private DiscountProductDao discountProductDao;
     @Autowired
@@ -27,6 +30,8 @@ public class ChoiceDiscountController {
     @RequestMapping("/choiceDiscount")
     public String choiceDiscount(@RequestParam("selectedDiscountProductId") Integer selectedDiscountProductId,
         @RequestParam("couponTypeId") Integer couponTypeId, @RequestParam("openid") String openid, Model model, HttpServletRequest request) {
+        logger.info("选择优惠产品selectedDiscountProductId=" + selectedDiscountProductId + ",couponTypeId=" + couponTypeId
+                + ",openid=" + openid);
         Merchant merchant = (Merchant) request.getSession().getAttribute("merchant");
 
         //根据选择的优惠产品生成优惠券并跳转到优惠券信息页

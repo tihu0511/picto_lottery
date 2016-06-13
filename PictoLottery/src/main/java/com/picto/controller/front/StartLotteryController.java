@@ -5,6 +5,8 @@ import com.picto.dao.MerchantDao;
 import com.picto.entity.Merchant;
 import com.picto.service.StartLotteryService;
 import com.picto.util.WechatUtil;
+import org.apache.commons.logging.Log;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,8 @@ import java.util.Map;
  */
 @Controller
 public class StartLotteryController {
+    private static final Logger logger = Logger.getLogger(StartLotteryController.class);
+
     @Autowired
     private MerchantDao mechantDao;
     @Autowired
@@ -39,6 +43,7 @@ public class StartLotteryController {
     @RequestMapping(value = "/startLottery", method = RequestMethod.GET)
     public String startLottery(@RequestParam("merchantId") Integer merchantId, @RequestParam("code") String code,
                                Model model, HttpServletRequest request) {
+        logger.info("进入买单先生页面merchantId=" + merchantId + ",code=" + code);
         Merchant merchant = mechantDao.queryMechantById(merchantId);
 //        model.addAttribute("merchant", merchant);
         model.addAttribute("merchantId", merchantId);
@@ -50,10 +55,12 @@ public class StartLotteryController {
     @RequestMapping(value = "/verifyLottery", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> verifyLottery(HttpServletRequest request) throws IOException, JSONException {
+        logger.info("校验抽奖");
         Map<String, Object> retMap = new HashMap<String, Object>();
 
         String merchantId = request.getParameter("merchantId");
         String code = request.getParameter("code");
+        logger.info("merchantId=" + merchantId + ",code=" + code);
 
         String openid = null;
         if (!StringUtils.hasLength(code)) {
@@ -67,6 +74,7 @@ public class StartLotteryController {
                 openid = WechatUtil.getOpenIdByCode(code);
             }
 
+            logger.info("openId=" + openid);
             boolean hadLottery = startLotteryService.judgeHadLottery(openid);
             if (hadLottery && "true".equalsIgnoreCase(isValidateOpenid)) {
                 retMap.put("success", false);
