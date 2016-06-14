@@ -30,7 +30,7 @@ public class LotteryServiceImpl implements LotteryService {
     @Transactional
     public CouponType lotyCouponType(String openid, Integer merchantId) {
         //查询所有的奖项
-        List<CouponType> couponTypes = couponTypeDao.queryAllCouponTypes();
+        List<CouponType> couponTypes = couponTypeDao.queryAllCouponTypesByMerchantId(merchantId);
         if (ListUtil.isEmptyList(couponTypes)) {
             return null;
         }
