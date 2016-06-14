@@ -74,4 +74,9 @@
     <delete id="deleteById">
         delete from coupon_type where id = #{id}
     </delete>
+
+    <select id="queryAllCouponTypesByMerchantId" resultType="com.picto.entity.CouponType">
+        <include refid="queryCouponTypeColumn" />
+        where merchant_id = #{merchantId} and state = 1
+    </select>
 </mapper>

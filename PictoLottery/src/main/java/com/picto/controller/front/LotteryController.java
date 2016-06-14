@@ -75,10 +75,10 @@ public class LotteryController {
         Merchant merchant = (Merchant)request.getSession().getAttribute("merchant");
         //生成中奖的奖项
         CouponType couponType = lotteryService.lotyCouponType(openid, merchant.getId());
-        logger.info("抽到奖项name=" + couponType.getName() + ",icon=" + couponType.getIcon());
+        logger.info("抽到奖项couponType=" + couponType);
 
         String showIcons = null;
-        if (null == couponType && !CouponTypeEnum.THANKS.getCode().equals(couponType.getType())) {
+        if (null != couponType && !CouponTypeEnum.THANKS.getCode().equals(couponType.getType())) {
             String luckyIcon = couponType.getIcon();
             model.addAttribute("luckyCouponIcon", luckyIcon);
             showIcons = luckyIcon + "," + luckyIcon + "," + luckyIcon;

@@ -129,4 +129,23 @@ public class CouponType extends BaseEntity {
     public String getTypeName() {
         return CouponTypeEnum.getName(this.type);
     }
+
+    @Override
+    public String toString() {
+        return "CouponType{" +
+                "merchantId=" + merchantId +
+                ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
+                ", totalNum=" + totalNum +
+                ", restNum=" + restNum +
+                ", isImmediate=" + isImmediate +
+                ", resetInterval=" + resetInterval +
+                ", lastResetTime=" + lastResetTime +
+                ", version=" + version +
+                ", state=" + state +
+                ", percent=" + percent +
+                ", type=" + type +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

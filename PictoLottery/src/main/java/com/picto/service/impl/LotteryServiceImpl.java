@@ -75,10 +75,10 @@ public class LotteryServiceImpl implements LotteryService {
         }
     }
 
-    public String getUnluckyShowIcons(Integer id) {
+    public String getUnluckyShowIcons(Integer merchantId) {
         //生成不完全相同的3个图标
         //查询所有的奖项
-        List<CouponType> couponTypes = couponTypeDao.queryAllCouponTypes();
+        List<CouponType> couponTypes = couponTypeDao.queryAllCouponTypesByMerchantId(merchantId);
         if (ListUtil.isEmptyList(couponTypes)) {
             return null;
         }

@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface CouponTypeDao {
     List<CouponType> queryAllCouponTypes();
+    List<CouponType> queryAllCouponTypesByMerchantId(@Param("merchantId") Integer merchantId);
     Integer updateCouponTypeRestNum(CouponType luckyCouponType);
     Integer updateCouponType(CouponType couponType);
     CouponType queryCouponTypeById(@Param("id") Integer id);
