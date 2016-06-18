@@ -32,7 +32,7 @@ public class TestController {
     private TestService testService;
 
     @RequestMapping("/test")
-    public String test(TestVo testVo, TestVo1 testVo1, Model model) {
+    public String test(TestVo testVo, TestVo1 testVo1, Model model, HttpServletRequest request) {
         System.out.println(testVo);
         TestEntity t1 = new TestEntity();
         t1.setName(testVo.getName());
