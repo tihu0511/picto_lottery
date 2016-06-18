@@ -15,7 +15,16 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
     <!-- 定义受环境影响易变的变量 -->
-    <context:property-placeholder location="classpath:config.properties"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="locations">
+            <list>
+                <!-- 标准配置 -->
+                <value>file:/data/resource/picto_lottery/config.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <import resource="spring-mvc.xml" />
 
