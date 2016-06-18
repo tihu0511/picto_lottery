@@ -69,4 +69,13 @@ public class TestController {
     public String toUpload() {
         return "testUpload";
     }
+
+    @RequestMapping("testGif")
+    public String testGif() {
+        return "testGif";
+    }
+    @RequestMapping("testGif1")
+    public String testGif1() {
+        return "testGif1";
+    }
 }
