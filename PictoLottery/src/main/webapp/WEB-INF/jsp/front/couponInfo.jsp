@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="/css/front/couponInfo.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            $("#couponIcon").height($("#couponIcon").width() * 0.75);
+        });
         function toggleExchangeInfo(){
             $("#wrapper").toggle();
         }
@@ -68,8 +71,8 @@
     </div>
     <div id="couponInfo">
         <div id="couponLeft">
-            <img src="${coupon.icon}" /> <br />
-            ${coupon.storeName}
+            <img id="couponIcon" src="${coupon.icon}" /> <br />
+            <span id="storeName">${coupon.storeName}</span>
         </div>
         <div id="couponRight">
             <div id="name">${coupon.name}</div>

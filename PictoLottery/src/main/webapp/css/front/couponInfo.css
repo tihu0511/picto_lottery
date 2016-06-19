@@ -18,7 +18,7 @@ div#top {
     width: 99%;
     background-image: url(/images/couponInfoBackground.jpg);
     background-size: 100% 100%;
-    height: 9%;
+    height: 7%;
 }
 
 div#merchantInfo {
@@ -29,7 +29,8 @@ div#merchantInfo {
     height: 9%;
 }
 div#merchantInfo img{
-    width:7%
+    width: 5%;
+    margin-right: 2%;
 }
 
 div#location {
@@ -52,7 +53,7 @@ div#exchangeBtn {
 }
 div#exchangeBtn img{
     width:90%;
-    margin-top:25%;
+    margin-top:20%;
 }
 
 div#exchangeText {
@@ -79,9 +80,15 @@ div#couponLeft img {
     width: 100%;
     border: solid 2px white;
 }
+#storeName{
+    font-size: 0.8em;
+    white-space: nowrap;
+    margin-top: 2%;
+    display: block;
+}
 
 div#couponInfo {
-    height: 30%;
+    height: 25%;
     margin-top: 10%;
 }
 
@@ -93,12 +100,19 @@ div#couponRight {
     margin-top: 3%;
     text-align: center;
 }
+#name{
+    font-size: 1.2em;
+    font-weight: bold;
+}
 #discount{
     color: #FD3657;
+    font-size: 1.1em;
+    margin: 3% auto;
+    font-weight: bold;
 }
 #useMsg{
     color: white;
-    font-size: 0.8em;
+    font-size: 0.6em;
 }
 
 div#bannerAdvert {
@@ -114,11 +128,16 @@ div#bottom1 {
     width: 60%;
     text-align: left;
     font-size: 2.5em;
-    margin: 7% 0 0 5%;
+    margin: 10% 0 0 5%;
 }
 #expireDate{
     color: #FD3657;
     font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 3%;
+}
+#limigMsg0, #limigMsg1, #limigMsg2 {
+    font-size: 0.8em;
 }
 
 div#msg1 {
