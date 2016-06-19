@@ -32,13 +32,6 @@ public class StartLotteryController {
 
     @Autowired
     private MerchantDao mechantDao;
-    @Autowired
-    private StartLotteryService startLotteryService;
-
-    @Value("${environment}")
-    private String environment;
-    @Value("${validateOpenid}")
-    private String isValidateOpenid;
 
     @RequestMapping(value = "/startLottery", method = RequestMethod.GET)
     public String startLottery(@RequestParam("merchantId") Integer merchantId, @RequestParam("code") String code,
@@ -52,39 +45,4 @@ public class StartLotteryController {
         return "front/startLottery";
     }
 
-    @RequestMapping(value = "/verifyLottery", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> verifyLottery(HttpServletRequest request) throws IOException, JSONException {
-        logger.info("校验抽奖");
-        Map<String, Object> retMap = new HashMap<String, Object>();
-
-        String merchantId = request.getParameter("merchantId");
-        String code = request.getParameter("code");
-        logger.info("merchantId=" + merchantId + ",code=" + code);
-
-        String openid = null;
-        if (!StringUtils.hasLength(code)) {
-            retMap.put("success", false);
-            retMap.put("errorMsg", "请从微信公众号进入");
-        } else {
-            //开发环境
-            if (Constants.ENV_DEV.equalsIgnoreCase(environment)) {
-                openid = "TEST555511118888";
-            } else {
-                openid = WechatUtil.getOpenIdByCode(code);
-            }
-
-            logger.info("openId=" + openid);
-            boolean hadLottery = startLotteryService.judgeHadLottery(openid);
-            if (hadLottery && "true".equalsIgnoreCase(isValidateOpenid)) {
-                retMap.put("success", false);
-                retMap.put("errorMsg", "今日已抽过奖，请明日再来");
-                return retMap;
-            }
-        }
-
-        retMap.put("success", "true");
-        retMap.put("openid", openid);
-        return retMap;
-    }
 }

@@ -16,14 +16,7 @@
     <script src="/js/jquery-2.2.4.min.js"></script>
     <style type="text/css">
         body{margin:0}
-        #startGif{
-            width: 25%;
-            position: absolute;
-            top: 30%;
-            left: 38%;
-        }
         #curtain{
-            display: none;
             width: 100%;
             height: 100%;
             background-image: url(/images/curtain.jpg);
@@ -44,40 +37,12 @@
         }
     </style>
     <script type="text/javascript">
-        function last5Second() {
-            setTimeout(function(){
-                $("#startGif").hide();
-                $("#curtain").show();
-            }, 5000);
-        }
         function startLottery() {
-            var code = '${code}';
-            var merchantId = '${merchantId}';
-            $.ajax({
-                type: "POST",
-                url: "/verifyLottery.do",
-                data: {"merchantId":merchantId, "code":code},
-                dataType: "json",
-                success: function(data, textStatus) {
-                    if (textStatus == "success" && data.errorMsg == null) {
-                        window.location.href = "/lottery.do?openid=" + data.openid;
-                    } else {
-                        $("#errorMsg").html(data.errorMsg);
-                        $("#curtainText").hide();
-                        $("#curtain").css("background-image", "none");
-                    }
-                },
-                error: function(){
-                    $("#errorMsg").html("系统错误");
-                    $("#curtainText").hide();
-                    $("#curtain").css("background-image", "none");
-                }
-            });
+            window.location.href = "/lottery.do?code=" + '${code}';
         }
     </script>
 </head>
 <body>
-    <div id="startGif"><img src="images/last5Second.gif?time=<%=dateStr %>" style="width: 100%;" onload="last5Second()" /></div>
     <div id="curtain">
         <div id="curtainText">
             <img src="/images/curtain_Text.png" style="width:100%" onclick="startLottery()" />

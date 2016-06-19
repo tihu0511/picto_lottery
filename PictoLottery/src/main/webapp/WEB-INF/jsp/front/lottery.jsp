@@ -51,6 +51,10 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function(){
+            var timestamp=new Date().getTime();
+            $("#r1 img").attr("src", "/images/lotteryRoll_a.gif?time=" + timestamp);
+            $("#r2 img").attr("src", "/images/lotteryRoll_b.gif?time=" + timestamp);
+            $("#r3 img").attr("src", "/images/lotteryRoll_c.gif?time=" + timestamp);
             var showImages = '${showIcons}';
             var showIcons = showImages.split(",");
             setTimeout(function(){
@@ -78,9 +82,9 @@
         <c:otherwise>
             <div id="mainAdvert"><img src="${merchant.mainAdvert}" /></div>
             <div id="roll">
-                <div id="r1"><img src="/images/lotteryRoll_a.gif?time=<%=str %>"></div>
-                <div id="r2"><img src="/images/lotteryRoll_b.gif?time=<%=str %>"></div>
-                <div id="r3"><img src="/images/lotteryRoll_c.gif?time=<%=str %>"></div>
+                <div id="r1"><img ></div>
+                <div id="r2"><img ></div>
+                <div id="r3"><img ></div>
             </div>
             <div id="bannerAdvert"><img src="${merchant.bannerAdvert}" /></div>
         </c:otherwise>

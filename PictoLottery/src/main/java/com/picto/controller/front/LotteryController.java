@@ -25,6 +25,7 @@
 
 package com.picto.controller.front;
 
+import com.picto.constants.Constants;
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.dao.OperationRecordDao;
@@ -32,19 +33,24 @@ import com.picto.entity.*;
 import com.picto.enums.CouponTypeEnum;
 import com.picto.service.CouponService;
 import com.picto.service.LotteryService;
+import com.picto.service.StartLotteryService;
 import com.picto.util.DateUtil;
 import com.picto.util.ListUtil;
 import com.picto.util.StringUtil;
+import com.picto.util.WechatUtil;
 import org.apache.log4j.Logger;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,32 +72,70 @@ public class LotteryController {
     private CouponTypeDao couponTypeDao;
     @Autowired
     private OperationRecordDao operationRecordDao;
+    @Autowired
+    private StartLotteryService startLotteryService;
+
     @Value("${validateOpenid}")
     private String validateOpenid;
+    @Value("${environment}")
+    private String environment;
 
-    @RequestMapping("/lottery")
-    public String lottery(@RequestParam("openid") String openid, Model model, HttpServletRequest request) {
-        logger.info("开始抽奖openid=" + openid);
-        Merchant merchant = (Merchant)request.getSession().getAttribute("merchant");
-        //生成中奖的奖项
-        CouponType couponType = lotteryService.lotyCouponType(openid, merchant.getId());
-        logger.info("抽到奖项couponType=" + couponType);
+    @RequestMapping("lottery")
+    public String lottery(@RequestParam("code") String code, Model model, HttpServletRequest request)
+            throws IOException, JSONException {
+        logger.info("校验抽奖");
+        Merchant merchant = (Merchant) request.getSession().getAttribute("merchant");
+        logger.info("merchantId=" + merchant.getId() + ",code=" + code);
 
-        String showIcons = null;
-        if (null != couponType && !CouponTypeEnum.THANKS.getCode().equals(couponType.getType())) {
-            String luckyIcon = couponType.getIcon();
-            model.addAttribute("luckyCouponIcon", luckyIcon);
-            showIcons = luckyIcon + "," + luckyIcon + "," + luckyIcon;
-            model.addAttribute("luckyCouponTypeId", couponType.getId());
-            model.addAttribute("openid",openid);
+        String openid = null;
+        boolean success = false;
+        String errorMsg = null;
+        if (!StringUtils.hasLength(code)) {
+            errorMsg = "请从微信公众号进入";
         } else {
-            //谢谢惠顾生成显示的奖项图标
-            showIcons = lotteryService.getUnluckyShowIcons(merchant.getId());
+            //开发环境
+            if (Constants.ENV_DEV.equalsIgnoreCase(environment)) {
+                openid = "TEST555511118888";
+            } else {
+                openid = WechatUtil.getOpenIdByCode(code);
+            }
+
+            logger.info("openId=" + openid);
+            boolean hadLottery = startLotteryService.judgeHadLottery(openid);
+            if (hadLottery && "true".equalsIgnoreCase(validateOpenid)) {
+                errorMsg = "今日已抽过奖，请明日再来";
+            } else {
+                success = true;//校验成功,开始抽奖
+
+                logger.info("开始抽奖openid=" + openid);
+                //生成中奖的奖项
+                CouponType couponType = lotteryService.lotyCouponType(openid, merchant.getId());
+                logger.info("抽到奖项couponType=" + couponType);
+
+                String showIcons = null;
+                if (null != couponType && !CouponTypeEnum.THANKS.getCode().equals(couponType.getType())) {
+                    String luckyIcon = couponType.getIcon();
+                    model.addAttribute("luckyCouponIcon", luckyIcon);
+                    showIcons = luckyIcon + "," + luckyIcon + "," + luckyIcon;
+                    model.addAttribute("luckyCouponTypeId", couponType.getId());
+                    model.addAttribute("openid",openid);
+                } else {
+                    //谢谢惠顾生成显示的奖项图标
+                    showIcons = lotteryService.getUnluckyShowIcons(merchant.getId());
+                }
+
+                model.addAttribute("showIcons", showIcons);
+                logger.info("showIcons=" + showIcons);
+            }
         }
 
-        model.addAttribute("showIcons", showIcons);
-        logger.info("showIcons=" + showIcons);
-        return "front/lottery";
+        if (success) {
+            return "front/lottery";
+        } else {
+            model.addAttribute("errorMsg", errorMsg);
+            model.addAttribute("merchant", merchant);
+            return "front/startLotteryError";
+        }
     }
 
     @RequestMapping("lotteryFinish")
