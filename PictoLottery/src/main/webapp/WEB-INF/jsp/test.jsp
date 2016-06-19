@@ -50,6 +50,6 @@
   <input type="text" id="keya" /><br />
   <input type="text" id="keyb" /><br />
   <input type="button" id="button" value="click here" /><br />
-    <img src="/uploads/1/vs.png" />
+    <img src="/upload/1/vs.png" />
 </body>
 </html>
