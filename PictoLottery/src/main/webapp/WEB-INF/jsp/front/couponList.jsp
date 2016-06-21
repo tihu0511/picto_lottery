@@ -12,7 +12,14 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>${merchant.brand}</title>
+    <title>
+        <c:choose>
+            <c:when test="${merchant == null}">
+                买单先生
+            </c:when>
+            <c:otherwise>${merchant.brand}</c:otherwise>
+        </c:choose>
+    </title>
     <link rel="stylesheet" href="/css/front/couponList1.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript">
@@ -56,7 +63,16 @@
             </div>
         </c:forEach>
     </div>
-    <div id="queryAdvert"><img src="/images/advert_bottom.jpg" /></div>
+    <div id="queryAdvert">
+        <c:choose>
+            <c:when test="${merchant == null}">
+                <img src="/images/queryAdvert.jpg" />
+            </c:when>
+            <c:otherwise>
+                <img src="${merchant.queryAdvert}" />
+            </c:otherwise>
+        </c:choose>
+    </div>
 </body>
 
 </html>
