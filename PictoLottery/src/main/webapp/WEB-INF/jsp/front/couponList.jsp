@@ -31,8 +31,7 @@
             $couponImgs.each(function(i, couponImg){
                 $(couponImg).height($(couponImg).width() * 0.75);
             });
-
-            $("#main").css("padding-bottom", $("#queryAdvert").height());
+            $("#space").height($("#queryAdvert").height());
         });
 
 
@@ -62,6 +61,7 @@
                 <div style="clear:both"></div>
             </div>
         </c:forEach>
+        <div id="space"></div>
     </div>
     <div id="queryAdvert">
         <c:choose>
