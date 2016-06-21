@@ -37,7 +37,7 @@ div#name {
 }
 
 div#message {
-    padding-top: 6.5%;
+    padding-top: 4.5%;
 }
 
 .productDiv {
@@ -73,12 +73,12 @@ div#discountProducts {
     font-weight: bold;
 }
 
-.use {font-size: 0.8em;margin-top: 3%;}
+.use {font-size: 0.8em;margin-top: 2%;}
 
 .productName {
     color: #FFE59B;
     font-size: 1.2em;
-    margin: 2% auto;
+    margin: 1% auto;
 }
 .productDiscount{
     font-size: 1.2em;

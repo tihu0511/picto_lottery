@@ -95,7 +95,7 @@
         </div>
         <div id="bottom2">
             优惠码：${coupon.serialNumber} <br />
-            <img src="/images/mr-prize_qrcode.png" />
+            <img src="${merchant.mechantQrcode}" />
         </div>
     </div>
 </div>
