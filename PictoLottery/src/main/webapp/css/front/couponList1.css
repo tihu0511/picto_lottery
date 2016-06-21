@@ -9,20 +9,22 @@ body {
 }
 div#logo {
     width: 100%;
-    height: 4%;
+    height: 5%;
 }
 #logo img { width: 100%; height : 100%;}
 div#main {
     border: 3px solid white;
     width: 99.5%;
-    height: 80%;
+    height: 95%;
     overflow: scroll;
     -webkit-overflow-scrolling : touch;
 }
 
 div#queryAdvert{
     height:16%;
-    width:100%
+    width:100%;
+    position: fixed;
+    bottom: 0;
 }
 div#queryAdvert img{width:100%;height:100%;}
 
@@ -32,9 +34,10 @@ div#queryAdvert img{width:100%;height:100%;}
     clear: none;
     text-align: center;
     width: 30%;
-    margin: 4% 0 5% 6%;
-    font-size: 2em;
-    height:15%;
+    margin: 4% 0 3% 6%;
+    font-size: 1.7em;
+    height: 15%;
+    white-space: nowrap;
 }
 .left img{
     width:100%;
@@ -54,7 +57,7 @@ div#right {
     width: 60%;
     text-align: center;
     font-size: 3em;
-    margin-top: 3%;
+    margin-top: 5%;
 }
 
 div#useMsg {
@@ -62,12 +65,20 @@ div#useMsg {
 
 div#name {
     color: #FFE59B;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 div#discount {
     color: #FD3657;
+    font-weight: bold;
+    margin: 3% auto;
+    font-size: 1.1em;
 }
 div#discount span{
     font-size:0.7em;
     border:solid 2px white;
+}
+#useMsg{
+    font-size:0.8em;
 }

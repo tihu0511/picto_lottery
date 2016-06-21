@@ -21,4 +21,7 @@ public interface CouponDao {
     void addCoupon(Coupon coupon);
 
     void updateCouponExchanged(Coupon coupon);
+
+    List<Coupon> queryAllCouponsByOpenidAndMerId(@Param("merchantId") Integer merchantId, @Param("openId") String openId,
+                                                 @Param("date") Date date);
 }

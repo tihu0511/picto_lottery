@@ -40,4 +40,13 @@ public interface CouponService {
      * @return 兑换失败返回错误信息
      */
     String exchange(Integer integer);
+
+    /**
+     * 查询openid在店铺merchantId下的所有优惠券，并按失效时间倒序排序
+     * @param merchantId
+     * @param openId
+     * @param date
+     * @return
+     */
+    List<Coupon> queryAllCouponsByOpenidAndMerId(Integer merchantId, String openId, Date date);
 }

@@ -19,7 +19,15 @@
         $(document).ready(function(){
             var couponDivs = $(".couponDiv");
             $(couponDivs[couponDivs.length - 1]).css("border-bottom", "none");
+
+            var $couponImgs = $(".couponDiv .left img");
+            $couponImgs.each(function(i, couponImg){
+                $(couponImg).height($(couponImg).width() * 0.75);
+            });
+
+            $("#main").css("padding-bottom", $("#queryAdvert").height());
         });
+
 
         function viewCoupon(couponId) {
             window.location.href = "/viewCoupon.do?couponId=" + couponId;

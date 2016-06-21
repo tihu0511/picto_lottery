@@ -24,7 +24,7 @@
         }
         div#title {
             margin: 0 auto;
-            width: 35%;
+            width: 45%;
             position: relative;
             top: 5%;
         }

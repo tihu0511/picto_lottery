@@ -48,4 +48,9 @@
         update_time = #{updateTime}
         where id = #{id}
     </update>
+
+    <select id="queryAllCouponsByOpenidAndMerId" resultType="com.picto.entity.Coupon">
+        <include refid="queryCouponColumn" />
+        where merchant_id = #{merchantId} and openid = #{openId} and state = 1 and expired_time >= #{date} order by expired_time
+    </select>
 </mapper>

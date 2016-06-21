@@ -24,8 +24,13 @@ public class WechatController {
     }
 
     @RequestMapping("toQuery")
-    public String toQuery() {
+    public String toQuery(@RequestParam(value = "merchantId", required = false) Integer merchantId) {
         String redirectUrl = "http%3a%2f%2fwww.mr-prize.com%2fqueryCoupon.do";
+
+        if (null != merchantId) {
+            redirectUrl += "%3fmerchantId%3d" + merchantId;
+        }
+
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri="
                 + redirectUrl + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
     }

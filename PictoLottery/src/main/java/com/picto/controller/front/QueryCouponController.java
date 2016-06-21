@@ -35,7 +35,9 @@ public class QueryCouponController {
 
     @RequestMapping("queryCoupon")
     public String queryCoupon(@RequestParam(value = "code", required = false) String code,
-                              @RequestParam(value="openid", required = false) String openid, Model model) throws IOException, JSONException {
+                              @RequestParam(value="openid", required = false) String openid,
+                              @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                              Model model) throws IOException, JSONException {
         String openId = "";
         if (Constants.ENV_DEV.equals(environment)) {
             openId = "TEST555511118888";
@@ -46,7 +48,12 @@ public class QueryCouponController {
             openId = StringUtil.isBlank(openId) ? openid : openId;
         }
 
-        List<Coupon> coupons = couponService.queryAllCouponsByOpenid(openId, new Date());
+        List<Coupon> coupons = null;
+        if (null != merchantId) {
+            coupons = couponService.queryAllCouponsByOpenidAndMerId(merchantId, openId, new Date());
+        } else {
+            coupons = couponService.queryAllCouponsByOpenid(openId, new Date());
+        }
         model.addAttribute("coupons", coupons);
 
         return "front/couponList";

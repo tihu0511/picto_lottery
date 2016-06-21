@@ -97,6 +97,10 @@ public class CouponServiceImpl implements CouponService {
         return null;
     }
 
+    public List<Coupon> queryAllCouponsByOpenidAndMerId(Integer merchantId, String openId, Date date) {
+        return couponDao.queryAllCouponsByOpenidAndMerId(merchantId, openId, date);
+    }
+
 
     /**
      * 生成不唯一的优惠券号
