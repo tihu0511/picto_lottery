@@ -18,7 +18,7 @@
     <script src="/js/ajaxfileupload.js"></script>
     <script type="text/javascript">
         function validateMerchant() {
-            var b1 = validate($("#merchantName"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,20}$/);
+            var b1 = validate($("#merchantName"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5\(\)·]{0,20}$/);
             var b2 = validate($("#brand"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,8}$/);
             var b3 = validate($("#address"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,20}$/);
             var b4 = validate($("#phone"), /^[0-9\-]{0,15}$/);
