@@ -81,6 +81,12 @@
         <if test="saveType != null">
             , save_type = #{saveType}
         </if>
+        <if test="lotteryLink != null">
+            , lottery_link = #{lotteryLink}
+        </if>
+        <if test="lotteryQrcode != null">
+            , lottery_qrcode = #{lotteryQrcode}
+        </if>
         where id = #{id}
     </update>
 </mapper>
