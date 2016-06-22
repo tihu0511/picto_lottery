@@ -44,6 +44,9 @@
     <update id="updateCouponTypeRestNum">
         update coupon_type set rest_num = #{restNum},
             version = version + 1,
+            <if test="lastResetTime != null">
+                last_reset_time = #{lastResetTime},
+            </if>
             update_time = #{updateTime}
         where id = #{id} and version = #{version}
     </update>
