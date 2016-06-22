@@ -15,7 +15,7 @@ public class WechatController {
 
     @RequestMapping("welcome")
     public String welcomeToMrPrize(@RequestParam("merchantId") Integer merchantId) {
-        String redirectUrl = "http%3a%2f%2fwww.mr-prize.com%2fstartLottery.do%3fmerchantId%3d1";
+        String redirectUrl = "http%3a%2f%2fwww.mr-prize.com%2fstartLottery.do%3fmerchantId%3d" + merchantId;
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri="
                 + redirectUrl + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 
