@@ -16,4 +16,6 @@ public interface MerchantDao {
     List<Merchant> queryAllMerchants();
 
     void updateMerchant(Merchant merchant);
+
+    void addMerchant(Merchant merchant);
 }

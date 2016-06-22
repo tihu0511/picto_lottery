@@ -154,7 +154,7 @@ div#bottom2 {
     margin: 8% 0 0 2%;
     font-size: 2em;
 }
-div#bottom2 img{ width: 90%; margin-top: 3%;}
+div#bottom2 img{ width: 90%; margin-top: 3%; max-height: 18%;}
 
 #wrapper{
     display:none;

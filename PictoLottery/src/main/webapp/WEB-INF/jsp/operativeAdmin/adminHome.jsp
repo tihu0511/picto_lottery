@@ -37,7 +37,7 @@
 </head>
 <body>
     <div id="main">
-        <div><a>店铺注册</a></div>
+        <div><a href="/merchantRegister.do">店铺注册</a></div>
         <div><a href="/admin/getAllMerchant.do">店铺信息完善</a></div>
         <div><a href="/admin/getAllCouponTypes.do">店铺奖项配置</a></div>
         <div><a href="/admin/getReportData.do">运营数据统计</a></div>

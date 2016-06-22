@@ -32,6 +32,11 @@
         where id = #{id} and state = 1
     </select>
 
+    <insert id="addMerchant" keyProperty="id" useGeneratedKeys="true" parameterType="com.picto.entity.Merchant">
+        insert into merchant(merchant_name, brand, industry_type, phone, mobile, address, volumn, main_business, remark, lottery_link, lottery_qrcode, query_link, banner_advert, query_advert, lottery_channel, mechant_qrcode, state, create_time, update_time, save_type)
+        values(#{mechantName}, #{brand}, #{industryType}, #{phone}, #{mobile}, #{address}, #{volumn}, #{mainBusiness}, #{remark}, #{lotteryLink}, #{lotteryQrcode}, #{queryLink}, #{bannerAdvert}, #{queryAdvert}, #{lotteryChannel}, #{mechantQrcode}, #{state}, #{createTime}, #{updateTime}, #{saveType})
+    </insert>
+
     <select id="queryAllMerchants" resultType="com.picto.entity.Merchant">
         <include refid="queryMechantColumn" />
         where state = 1
@@ -66,6 +71,9 @@
         </if>
         <if test="bannerAdvert != null">
             , banner_advert = #{bannerAdvert}
+        </if>
+        <if test="queryAdvert != null">
+            , query_advert = #{queryAdvert}
         </if>
         <if test="mechantQrcode != null">
             , mechant_qrcode = #{mechantQrcode}

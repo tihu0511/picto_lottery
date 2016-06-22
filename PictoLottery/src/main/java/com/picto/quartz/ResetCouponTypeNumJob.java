@@ -28,7 +28,7 @@ public class ResetCouponTypeNumJob {
             for (CouponType couponType : couponTypes) {
                 Integer resetInterval = couponType.getResetInterval();
                 if (couponType.getLastResetTime() == null
-                        || current.compareTo(DateUtil.addHours(couponType.getLastResetTime(), resetInterval)) > 0) {
+                        || current.compareTo(DateUtil.addDays(couponType.getLastResetTime(), resetInterval)) > 0) {
                     couponType.setRestNum(couponType.getTotalNum());
                     couponType.setLastResetTime(current);
                     couponType.setUpdateTime(current);

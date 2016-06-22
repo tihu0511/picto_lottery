@@ -23,7 +23,7 @@
     <bean id="job1Trigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="job1"/>
         <property name="cronExpression">
-            <value>0 * * * * ?</value>
+            <value>0 0 5 * * ?</value>
         </property>
     </bean>
     <bean id="startQuartz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

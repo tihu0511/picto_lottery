@@ -65,4 +65,11 @@ public class DateUtil {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
+
+    public static Date addDays(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, days);
+        return calendar.getTime();
+    }
 }
