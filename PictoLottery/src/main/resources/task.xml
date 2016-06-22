@@ -14,21 +14,23 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-    <!-- 定义受环境影响易变的变量 -->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="locations">
+    <bean id="resetCouponTypeNumJob" class="com.picto.quartz.ResetCouponTypeNumJob" />
+
+    <bean id="job1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="resetCouponTypeNumJob"/>
+        <property name="targetMethod" value="execute"/>
+    </bean>
+    <bean id="job1Trigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="job1"/>
+        <property name="cronExpression">
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+    <bean id="startQuartz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
             <list>
-                <!-- 标准配置 -->
-                <value>file:/data/resource/picto_lottery/config.properties</value>
+                <ref bean="job1Trigger"/>
             </list>
         </property>
     </bean>
-
-    <import resource="spring-mvc.xml" />
-
-    <import resource="spring-db.xml" />
-
-    <import resource="task.xml" />
 </beans>
