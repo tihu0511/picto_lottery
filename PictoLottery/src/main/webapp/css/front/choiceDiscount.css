@@ -37,7 +37,7 @@ div#name {
 }
 
 div#message {
-    padding-top: 4.5%;
+    padding-top: 3%;
 }
 
 .productDiv {
@@ -65,7 +65,7 @@ div#discountProducts {
 .productInfo {
     float: left;
     clear: none;
-    margin: 5% 0;
+    margin-top: 3%;
     text-align: center;
     width: 56%;
     font-size: 3em;
@@ -78,7 +78,6 @@ div#discountProducts {
 .productName {
     color: #FFE59B;
     font-size: 1.2em;
-    margin: 1% auto;
 }
 .productDiscount{
     font-size: 1.2em;
@@ -96,8 +95,9 @@ div#discountProducts {
 }
 
 div#banner {
-    width: 100%;
-    position:absolute;
-    bottom:0;
+    bottom: 3px;
+    left: 3px;
+    position: fixed;
+    width: 99.5%;
 }
 div#banner img{width:100%;}
