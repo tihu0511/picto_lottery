@@ -41,10 +41,9 @@ public class QueryCouponController {
         String openId = "";
         if (Constants.ENV_DEV.equals(environment)) {
             openId = "TEST555511118888";
-        }else if (null == code) {
-            openId = openid;
-        } else {
+        }else if (code != code) {
             openId = WechatUtil.getOpenIdByCode(code);
+        } else {
             openId = StringUtil.isBlank(openId) ? openid : openId;
         }
 
