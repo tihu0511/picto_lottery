@@ -8,6 +8,7 @@ import com.picto.entity.*;
 import com.picto.service.CouponService;
 import com.picto.util.DateUtil;
 import com.picto.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ import java.util.Random;
  */
 @Service
 public class CouponServiceImpl implements CouponService {
+    private static final Logger logger = Logger.getLogger(CouponServiceImpl.class);
+
     public static final char[] CHAR_ARR = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
             'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
@@ -31,6 +34,7 @@ public class CouponServiceImpl implements CouponService {
     private OperationRecordDao operationRecordDao;
 
     public Coupon genCoupon(Integer couponTypeId, DiscountProduct discountProduct, String openid, Merchant merchant) {
+        logger.info("开始生成优惠券couponTypeId=" + couponTypeId + ",discountProductId=" + discountProduct.getId() + ",openid=" + openid);
         CouponType couponType = couponTypeDao.queryCouponTypeById(couponTypeId);
         Coupon coupon = new Coupon();
         coupon.setMerchantId(discountProduct.getMerchantId());
