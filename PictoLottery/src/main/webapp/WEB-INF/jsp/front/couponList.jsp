@@ -29,7 +29,7 @@
 
             var $couponImgs = $(".couponDiv .left img");
             $couponImgs.each(function(i, couponImg){
-                $(couponImg).height($(couponImg).width() * 0.75);
+                $(couponImg).height($(couponImg).width() * 0.65);
             });
             $("#space").height($("#queryAdvert").height());
         });

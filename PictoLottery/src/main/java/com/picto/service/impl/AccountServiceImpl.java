@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
 		merchantDao.addMerchant(merchant);
 		
 		// 更新抽奖链接地址
-		merchant.setLotteryLink("www.mr-prize.com/welcome.do?merchantId=" + merchant.getId());
+		merchant.setLotteryLink("http://www.mr-prize.com/welcome.do?merchantId=" + merchant.getId());
 		merchant.setMainAdvert("/images/advert_top.jpg");
 		merchant.setBannerAdvert("/images/advert_bottom.jpg");
 		merchant.setQueryAdvert("/images/advert_bottom.jpg");
