@@ -9,6 +9,7 @@ import com.picto.util.DateUtil;
 import com.picto.util.ListUtil;
 import com.picto.util.StringUtil;
 import com.picto.util.WechatUtil;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,8 @@ import java.util.List;
  */
 @Controller
 public class QueryCouponController {
+    private static final Logger logger = Logger.getLogger(QueryCouponController.class);
+
     @Autowired
     private CouponService couponService;
     @Autowired
@@ -41,11 +44,12 @@ public class QueryCouponController {
         String openId = "";
         if (Constants.ENV_DEV.equals(environment)) {
             openId = "TEST555511118888";
-        }else if (code != code) {
+        }else if (code != null) {
             openId = WechatUtil.getOpenIdByCode(code);
-        } else {
-            openId = StringUtil.isBlank(openId) ? openid : openId;
         }
+
+        openId = StringUtil.isBlank(openId) ? openid : openId;
+        logger.info("openId=" + openId);
 
         List<Coupon> coupons = null;
         Merchant merchant = null;
