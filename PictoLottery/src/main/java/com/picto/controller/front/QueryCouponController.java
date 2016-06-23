@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -38,9 +39,8 @@ public class QueryCouponController {
 
     @RequestMapping("queryCoupon")
     public String queryCoupon(@RequestParam(value = "code", required = false) String code,
-                              @RequestParam(value="openid", required = false) String openid,
                               @RequestParam(value = "merchantId", required = false) Integer merchantId,
-                              Model model) throws IOException, JSONException {
+                              Model model, HttpServletRequest request) throws IOException, JSONException {
         String openId = "";
         if (Constants.ENV_DEV.equals(environment)) {
             openId = "TEST555511118888";
@@ -48,7 +48,10 @@ public class QueryCouponController {
             openId = WechatUtil.getOpenIdByCode(code);
         }
 
-        openId = StringUtil.isBlank(openId) ? openid : openId;
+        if (StringUtil.isBlank(openId)) {
+            openId = (String) request.getSession().getAttribute("openid");
+        }
+        request.getSession().setAttribute("openid", openId);
         logger.info("openId=" + openId);
 
         List<Coupon> coupons = null;
