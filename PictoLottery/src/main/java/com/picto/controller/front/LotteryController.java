@@ -75,8 +75,6 @@ public class LotteryController {
     @Autowired
     private StartLotteryService startLotteryService;
 
-    @Value("${validateOpenid}")
-    private String validateOpenid;
     @Value("${environment}")
     private String environment;
 
@@ -102,7 +100,7 @@ public class LotteryController {
 
             logger.info("openId=" + openid);
             boolean hadLottery = startLotteryService.judgeHadLottery(openid);
-            if (hadLottery && "true".equalsIgnoreCase(validateOpenid)) {
+            if (hadLottery && merchant.getIsValidateOpenid()) {
                 errorMsg = "今日已抽过奖，请明日再来";
             } else {
                 success = true;//校验成功,开始抽奖

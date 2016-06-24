@@ -25,6 +25,7 @@ public class Merchant extends BaseEntity {
     private String mechantQrcode;
     private Integer state;
     private Integer saveType;
+    private Boolean isValidateOpenid;
 
     public String getMechantName() {
         return mechantName;
@@ -180,5 +181,13 @@ public class Merchant extends BaseEntity {
 
     public String getCouponSaveTypeDesc() {
         return CouponSaveTypeEnum.getDescByCode(this.getSaveType());
+    }
+
+    public Boolean getIsValidateOpenid() {
+        return isValidateOpenid;
+    }
+
+    public void setIsValidateOpenid(Boolean validateOpenid) {
+        isValidateOpenid = validateOpenid;
     }
 }

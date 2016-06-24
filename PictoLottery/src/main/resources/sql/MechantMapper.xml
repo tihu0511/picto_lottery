@@ -23,7 +23,8 @@
         state AS state,
         create_time AS createTime,
         update_time AS updateTime,
-        save_type AS saveType
+        save_type AS saveType,
+        is_validate_openid AS isValidateOpenid
         from merchant
     </sql>
 
