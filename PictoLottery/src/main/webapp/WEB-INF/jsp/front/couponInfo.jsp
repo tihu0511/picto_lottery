@@ -16,9 +16,14 @@
     <meta name = "format-detection" content = "telephone=no">
     <link rel="stylesheet" href="/css/front/couponInfo.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/js/wxOper.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#couponIcon").height($("#couponIcon").width() * 0.75);
+
+            //隐藏公众号右上角菜单
+            $.hideMenus(window.location.href);
         });
         function toggleExchangeInfo(){
             $("#wrapper").toggle();

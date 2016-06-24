@@ -14,6 +14,8 @@
 <head>
     <title>${merchant.brand}</title>
     <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/js/wxOper.js"></script>
     <style type="text/css">
         body{margin:0}
         div#mainAdvert {
@@ -70,6 +72,9 @@
             setTimeout(function(){
                 window.location.replace("/lotteryFinish.do?luckyCouponTypeId=" + '${luckyCouponTypeId}' + "&openid=${openid}");
             }, 13000);
+
+            //隐藏公众号右上角菜单
+            $.hideMenus(window.location.href);
         });
     </script>
 </head>

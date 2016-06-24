@@ -40,14 +40,8 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function(){
-            var url = window.location.href;
-
-            //微信jsapi验证
-            wxConfig(url);
-            wx.ready(function(){
-                //隐藏右上角菜单
-                wx.hideOptionMenu();
-            });
+            //隐藏公众号右上角菜单
+            $.hideMenus(window.location.href);
         });
         function startLottery() {
             window.location.href = "/lottery.do?code=" + '${code}';

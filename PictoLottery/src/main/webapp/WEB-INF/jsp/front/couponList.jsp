@@ -22,6 +22,8 @@
     </title>
     <link rel="stylesheet" href="/css/front/couponList1.css" />
     <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/js/wxOper.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             var couponDivs = $(".couponDiv");
@@ -32,6 +34,9 @@
                 $(couponImg).height($(couponImg).width() * 0.65);
             });
             $("#space").height($("#queryAdvert").height());
+
+            //隐藏公众号右上角菜单
+            $.hideMenus(window.location.href);
         });
 
 
