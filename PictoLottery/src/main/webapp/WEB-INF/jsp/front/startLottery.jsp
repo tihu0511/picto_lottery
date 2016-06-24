@@ -14,6 +14,8 @@
 <head>
     <title>${merchant.brand}</title>
     <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/js/wxOper.js"></script>
     <style type="text/css">
         body{margin:0}
         #curtain{
@@ -37,6 +39,16 @@
         }
     </style>
     <script type="text/javascript">
+        $(document).ready(function(){
+            var url = window.location.href;
+
+            //微信jsapi验证
+            wxConfig(url);
+            wx.ready(function(){
+                //隐藏右上角菜单
+                wx.hideOptionMenu();
+            });
+        });
         function startLottery() {
             window.location.href = "/lottery.do?code=" + '${code}';
         }

@@ -11,4 +11,6 @@ public interface Constants {
 
     int COUPON_STATE_EFFECTED = 1;
     int COUPON_STATE_EXCHANGED = 2;
+
+    String CHARSET = "UTF-8";
 }
