@@ -19,7 +19,7 @@
     <script type="text/javascript">
         function validateMerchant() {
             var b1 = validate($("#merchantName"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5\(\)·]{0,20}$/);
-            var b2 = validate($("#brand"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,8}$/);
+            var b2 = validate($("#brand"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,10}$/);
             var b3 = validate($("#address"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,20}$/);
             var b4 = validate($("#phone"), /^[0-9\-]{0,15}$/);
             var b5 = validate($("#mainBusiness"), /^[\-\.a-zA-Z0-9\u4e00-\u9fa5]{0,10}$/);
@@ -120,7 +120,7 @@
                 <tr>
                     <td>品牌名称</td>
                     <td><input id="brand" type="text" name="brand" value="${merchant.brand}" /></td>
-                    <td><span class="message">*不多于8个汉字</span></td>
+                    <td><span class="message">*不多于10个汉字</span></td>
                 </tr>
                 <tr>
                     <td>奖券保存方式</td>
