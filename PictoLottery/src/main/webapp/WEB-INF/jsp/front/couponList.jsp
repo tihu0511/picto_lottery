@@ -14,10 +14,10 @@
 <head>
     <title>
         <c:choose>
-            <c:when test="${merchant == null}">
+            <c:when test="${queryMerchant == null}">
                 买单先生
             </c:when>
-            <c:otherwise>${merchant.brand}</c:otherwise>
+            <c:otherwise>${queryMerchant.brand}</c:otherwise>
         </c:choose>
     </title>
     <link rel="stylesheet" href="/css/front/couponList1.css" />

@@ -171,6 +171,16 @@
                     <td></td>
                 </tr>
                 <tr>
+                    <td>查询广告位</td>
+                    <td class="advert">
+                        <img id="queryAdvertImg" src="${merchant.bannerAdvert}" />
+                        <input id="queryAdvert" type="hidden" name="queryAdvert" value="${merchant.queryAdvert}" />
+                        <input id="queryAdvertFile" name="file" type="file" />
+                        <input type="button" value="上传" onclick="uploadImg('queryAdvertFile', 'queryAdvertImg', 'queryAdvert')" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>月均人流量</td>
                     <td><input type="text" name="volumn" value="${merchant.volumn}" /></td>
                     <td></td>
