@@ -55,15 +55,15 @@ public class QueryCouponController {
         logger.info("openId=" + openId);
 
         List<Coupon> coupons = null;
-        Merchant merchant = null;
+        Merchant queryMerchant = null;
         if (null != merchantId) {
-            merchant = merchantDao.queryMechantById(merchantId);
+            queryMerchant = merchantDao.queryMechantById(merchantId);
             coupons = couponService.queryAllCouponsByOpenidAndMerId(merchantId, openId, new Date());
         } else {
             coupons = couponService.queryAllCouponsByOpenid(openId, new Date());
         }
         model.addAttribute("coupons", coupons);
-        model.addAttribute("merchant", merchant);
+        model.addAttribute("merchant", queryMerchant);
 
         return "front/couponList";
     }

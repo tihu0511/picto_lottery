@@ -70,11 +70,11 @@
     </div>
     <div id="queryAdvert">
         <c:choose>
-            <c:when test="${merchant == null}">
+            <c:when test="${queryMerchant == null}">
                 <img src="/images/queryAdvert.jpg" />
             </c:when>
             <c:otherwise>
-                <img src="${merchant.queryAdvert}" />
+                <img src="${queryMerchant.queryAdvert}" />
             </c:otherwise>
         </c:choose>
     </div>
