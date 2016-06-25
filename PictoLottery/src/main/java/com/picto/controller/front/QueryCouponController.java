@@ -40,6 +40,7 @@ public class QueryCouponController {
     @RequestMapping("queryCoupon")
     public String queryCoupon(@RequestParam(value = "code", required = false) String code,
                               @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                              @RequestParam(value = "isQuery", required = false) Integer isQuery,
                               Model model, HttpServletRequest request) throws IOException, JSONException {
         String openId = "";
         if (Constants.ENV_DEV.equals(environment)) {
@@ -64,13 +65,17 @@ public class QueryCouponController {
         }
         model.addAttribute("coupons", coupons);
         model.addAttribute("queryMerchant", queryMerchant);
+        if (null != isQuery) {
+            model.addAttribute("isQueury", isQuery);
+        }
         logger.info("查询商家 " + queryMerchant.toString());
 
         return "front/couponList";
     }
 
     @RequestMapping("viewCoupon")
-    public String viewCoupon(@RequestParam("couponId") Integer couponId, Model model) {
+    public String viewCoupon(@RequestParam("couponId") Integer couponId,
+                             @RequestParam(value = "isQuery", required = false) Integer isQuery, Model model) {
         Coupon coupon = couponService.queryCouponById(couponId);
         model.addAttribute("coupon", coupon);
         String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")
@@ -79,6 +84,9 @@ public class QueryCouponController {
 
         Merchant merchant = merchantDao.queryMechantById(coupon.getMerchantId());
         model.addAttribute("merchant", merchant);
+        if (null != isQuery) {
+            model.addAttribute("isQuery", isQuery);
+        }
 
         return "front/couponInfo";
     }

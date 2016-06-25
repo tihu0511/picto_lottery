@@ -86,7 +86,19 @@
         </div>
         <div style="clear:both;"></div>
     </div>
-    <div id="bannerAdvert"><img src="${merchant.bannerAdvert}" /></div>
+    <div id="bannerAdvert">
+        <c:choose>
+            <c:when test="${isQuery == 1}">
+                <img src="${merchant.queryAdvert}" />
+            </c:when>
+            <c:otherwise>
+                <img src="${merchant.bannerAdvert}" />
+            </c:otherwise>
+        </c:choose>
+    </div>
+
+
+
     <div id="bottom">
         <div id="bottom1">
             <div id="expireDate">有效期：${expireDateStr}</div>

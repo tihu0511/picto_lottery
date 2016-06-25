@@ -25,15 +25,6 @@
             text-align: center;
             font-family: "Microsoft YaHei" ! important;
         }
-        div#title {
-            margin: 0 auto;
-            width: 35%;
-            position: relative;
-            top: 5%;
-        }
-        div#title img{
-            width: 100%;
-        }
         div#middleText1 {
             margin: 0 auto;
             font-size: 3.5em;
@@ -68,7 +59,6 @@
     </script>
 </head>
 <body>
-    <div id="title"><img src="/images/thanks_title.png" /></div>
     <div id="middleText1">${errorMsg}</div>
     <div id="qrcode"><img src="${merchant.mechantQrcode}" /></div>
     <div id="bottomText1">如何查询已有优惠？</div>
