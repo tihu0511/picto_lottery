@@ -173,7 +173,7 @@
                 <tr>
                     <td>查询广告位</td>
                     <td class="advert">
-                        <img id="queryAdvertImg" src="${merchant.bannerAdvert}" />
+                        <img id="queryAdvertImg" src="${merchant.queryAdvert}" />
                         <input id="queryAdvert" type="hidden" name="queryAdvert" value="${merchant.queryAdvert}" />
                         <input id="queryAdvertFile" name="file" type="file" />
                         <input type="button" value="上传" onclick="uploadImg('queryAdvertFile', 'queryAdvertImg', 'queryAdvert')" />
