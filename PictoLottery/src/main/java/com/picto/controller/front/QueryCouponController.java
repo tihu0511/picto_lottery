@@ -68,7 +68,7 @@ public class QueryCouponController {
         if (null != isQuery) {
             model.addAttribute("isQueury", isQuery);
         }
-        logger.info("查询商家 " + queryMerchant.toString());
+        logger.info("查询商家 " + queryMerchant);
 
         return "front/couponList";
     }
