@@ -39,7 +39,7 @@ public class ChoiceDiscountController {
         Coupon coupon = couponService.genCoupon(couponTypeId, discountProduct, openid, merchant);
         model.addAttribute("coupon", coupon);
         String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")
-                : DateUtil.formatDate(coupon.getCreateTime(), "MM/dd") + "-" + DateUtil.formatDate(coupon.getExpiredTime(), "MM/dd");
+                : DateUtil.formatDate(DateUtil.addDays(coupon.getCreateTime(), 1), "MM/dd") + "-" + DateUtil.formatDate(coupon.getExpiredTime(), "MM/dd");
         model.addAttribute("expireDateStr", expireDateStr);
         return "front/couponInfo";
     }

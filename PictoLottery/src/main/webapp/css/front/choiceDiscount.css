@@ -29,11 +29,12 @@ div#top {
 
 div#name {
     margin-top: 2%;
-    color: red;
+    color: #800f10;
     width: 35%;
     margin: 2% auto;
     background: white;
     padding: 1% 0;
+    font-weight:bold;
 }
 
 div#message {
