@@ -63,7 +63,7 @@ public class QueryCouponController {
             coupons = couponService.queryAllCouponsByOpenid(openId, new Date());
         }
         model.addAttribute("coupons", coupons);
-        model.addAttribute("merchant", queryMerchant);
+        model.addAttribute("queryMerchant", queryMerchant);
         logger.info("查询商家 " + queryMerchant.toString());
 
         return "front/couponList";
