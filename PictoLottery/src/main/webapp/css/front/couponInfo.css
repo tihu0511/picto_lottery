@@ -197,3 +197,6 @@ div#info3 {
     margin: -3% -2%;
 }
 div#info3 img{width:100%;}
+#msg1,#msg2 {
+    color: #eacf89;
+}
