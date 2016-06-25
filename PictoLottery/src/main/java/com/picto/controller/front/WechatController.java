@@ -37,8 +37,18 @@ public class WechatController {
         String redirectUrl = "http%3a%2f%2fwww.mr-prize.com%2fqueryCoupon.do";
 
         //TODO 可以直接写正常的url地址,通过URLEncoder.encode()编码
-        redirectUrl += "%3fmerchantId%3d" + merchantId;
-        redirectUrl += "%26isQuery%3d" + isQuery;
+        int num = 0;
+        if (null != merchantId || null != isQuery) {
+            redirectUrl += "%3f";
+        }
+
+        if (null != merchantId) {
+            redirectUrl += "merchantId%3d" + merchantId;
+            num++;
+        }
+        if (null != isQuery) {
+            redirectUrl += num > 0 ? "%26isQuery%3d" + isQuery : "isQuery%3d" + isQuery;
+        }
 
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri="
                 + redirectUrl + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
