@@ -80,7 +80,7 @@
     <div id="title"><img src="/images/thanks_title.png" /></div>
     <div id="middleText1">帘子后面还有什么？</div>
     <div id="middleText2">敬请期待...</div>
-    <div id="qrcode"><img src="${merchant.queryAdvert}" /></div>
+    <div id="qrcode"><img src="${merchant.mechantQrcode}" /></div>
     <div id="bottomText1">如何查询已有优惠？</div>
     <div id="bottomText2">长按上图「识别二维码」</div>
 </body>
