@@ -19,7 +19,7 @@
 
     <select id="queryOperationRecordsToday" resultType="com.picto.entity.OperationRecord">
         <include refid="queryOperationRecordColumn" />
-        where openid = #{openid} and type = #{type} and operation_time &gt;= #{today}
+        where merchant_id = #{merchantId} and openid = #{openid} and type = #{type} and operation_time &gt;= #{today}
     </select>
 
     <select id="queryLatestOperToday" resultType="com.picto.entity.OperationRecord">

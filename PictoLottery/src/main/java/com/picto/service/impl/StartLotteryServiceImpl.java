@@ -20,8 +20,8 @@ public class StartLotteryServiceImpl implements StartLotteryService {
     @Autowired
     private OperationRecordDao operationRecordDao;
 
-    public boolean judgeHadLottery(String openid) {
-        List<OperationRecord> operationRecords = operationRecordDao.queryOperationRecordsToday(
+    public boolean judgeHadLottery(String openid, Integer merchantId) {
+        List<OperationRecord> operationRecords = operationRecordDao.queryOperationRecordsToday(merchantId,
                 openid, Constants.OPERATION_TYPE_LOTTERY, DateUtil.getToday());
         if (ListUtil.isEmptyList(operationRecords)) {
             return false;

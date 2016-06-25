@@ -99,7 +99,7 @@ public class LotteryController {
             }
 
             logger.info("openId=" + openid);
-            boolean hadLottery = startLotteryService.judgeHadLottery(openid);
+            boolean hadLottery = startLotteryService.judgeHadLottery(openid, merchant.getId());
             if (hadLottery && merchant.getIsValidateOpenid()) {
                 errorMsg = "今日已抽过奖，请明日再来";
             } else {

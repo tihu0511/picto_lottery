@@ -52,7 +52,7 @@ public class QueryCouponController {
             openId = (String) request.getSession().getAttribute("openid");
         }
         request.getSession().setAttribute("openid", openId);
-        logger.info("openId=" + openId);
+        logger.info("merchantId=" + merchantId + ",openId=" + openId);
 
         List<Coupon> coupons = null;
         Merchant queryMerchant = null;
@@ -64,6 +64,7 @@ public class QueryCouponController {
         }
         model.addAttribute("coupons", coupons);
         model.addAttribute("merchant", queryMerchant);
+        logger.info("查询商家 " + queryMerchant.toString());
 
         return "front/couponList";
     }

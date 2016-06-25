@@ -14,7 +14,7 @@ import java.util.List;
 public interface OperationRecordDao {
     List<OperationRecord> queryOperationRecords(@Param("openid") String openId, @Param("type") Integer type);
 
-    List<OperationRecord> queryOperationRecordsToday(@Param("openid") String openid,
+    List<OperationRecord> queryOperationRecordsToday(@Param("merchantId") Integer merchantId, @Param("openid") String openid,
         @Param("type") Integer type, @Param("today") Date today);
 
     void addOperationRecord(OperationRecord operationRecord);

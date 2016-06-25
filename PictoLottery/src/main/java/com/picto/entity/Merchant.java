@@ -190,4 +190,30 @@ public class Merchant extends BaseEntity {
     public void setIsValidateOpenid(Boolean validateOpenid) {
         isValidateOpenid = validateOpenid;
     }
+
+    @Override
+    public String toString() {
+        return "Merchant{" +
+                "mechantName='" + mechantName + '\'' +
+                ", brand='" + brand + '\'' +
+                ", industryType=" + industryType +
+                ", phone='" + phone + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", address='" + address + '\'' +
+                ", volumn=" + volumn +
+                ", mainBusiness='" + mainBusiness + '\'' +
+                ", remark='" + remark + '\'' +
+                ", lotteryLink='" + lotteryLink + '\'' +
+                ", lotteryQrcode='" + lotteryQrcode + '\'' +
+                ", queryLink='" + queryLink + '\'' +
+                ", mainAdvert='" + mainAdvert + '\'' +
+                ", bannerAdvert='" + bannerAdvert + '\'' +
+                ", queryAdvert='" + queryAdvert + '\'' +
+                ", lotteryChannel=" + lotteryChannel +
+                ", mechantQrcode='" + mechantQrcode + '\'' +
+                ", state=" + state +
+                ", saveType=" + saveType +
+                ", isValidateOpenid=" + isValidateOpenid +
+                '}';
+    }
 }
