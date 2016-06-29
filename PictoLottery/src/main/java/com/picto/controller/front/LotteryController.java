@@ -96,8 +96,13 @@ public class LotteryController {
                 openid = "TEST555511118888";
             } else {
                 openid = WechatUtil.getOpenIdByCode(code);
+                //防止页面返回键时获取不到openid而报错
+                if (null == openid) {
+                    openid = (String) request.getSession().getAttribute("openid");
+                }
             }
 
+            request.getSession().setAttribute("openid", openid);
             logger.info("openId=" + openid);
             boolean hadLottery = startLotteryService.judgeHadLottery(openid, merchant.getId());
             if (hadLottery && merchant.getIsValidateOpenid()) {
