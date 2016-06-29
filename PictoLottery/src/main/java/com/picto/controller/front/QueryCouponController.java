@@ -76,6 +76,7 @@ public class QueryCouponController {
     @RequestMapping("viewCoupon")
     public String viewCoupon(@RequestParam("couponId") Integer couponId,
                              @RequestParam(value = "isQuery", required = false) Integer isQuery, Model model) {
+        logger.info("查看优惠券couponId=" + couponId + ", isQuery=" + isQuery);
         Coupon coupon = couponService.queryCouponById(couponId);
         model.addAttribute("coupon", coupon);
         String expireDateStr = coupon.getIsImediate() ? DateUtil.formatDate(coupon.getExpiredTime(), "yyyy/MM/dd")

@@ -68,8 +68,15 @@
             </div>
         </div>
         <div id="exchangeText">
-            <div>兑换时</div>
-            <div>由店员点击</div>
+            <c:choose>
+                <c:when test="${coupon.state == 3}">
+                    <span style=\"border:solid 2px white;padding: 2px;margin-top:15%;display:block;\">已兑换</span>
+                </c:when>
+                <c:otherwise>
+                    <div>兑换时</div>
+                    <div>由店员点击</div>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div id="exchangeBtn" onclick="toggleExchangeInfo()"><img src="/images/exchangeBtn.png" /></div>
         <div style="clear:both;" ></div>
