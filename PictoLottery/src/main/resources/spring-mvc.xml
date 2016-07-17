@@ -20,12 +20,17 @@
     <!-- 默认的注解映射的支持 -->
     <mvc:annotation-driven />
 
+	<!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
+	<mvc:default-servlet-handler/>
+	
     <!-- 视图解释类 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
     </bean>
+    
+	<mvc:view-controller path="/verifyImage.do" view-name="verifyImage"/>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8" />

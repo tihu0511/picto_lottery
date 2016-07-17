@@ -7,10 +7,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.picto.constants.Constants;
+import com.picto.dao.CouponDao;
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.entity.*;
 import com.picto.util.SecurityUtil;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,8 @@ public class AccountServiceImpl implements AccountService {
 	private MerchantDao merchantDao;
 	@Autowired
 	private CouponTypeDao couponTypeDao;
+	@Autowired
+	private CouponDao couponDao;
 	@Autowired
 	private DiscountProductDao discountProductDao;
 
@@ -189,5 +194,79 @@ public class AccountServiceImpl implements AccountService {
 			rel.setDiscountProductId(d.getId());
 			discountProductDao.addCouponTypeDiscountRel(rel);
 		}
+	}
+
+	@Transactional
+	public void login(HttpServletRequest request) {
+		checkValidCode(request);
+		String accountName = request.getParameter("accountName");
+		if(StringUtils.isBlank(accountName))
+			throw new RuntimeException("用户名为空");
+		String accountPwd = request.getParameter("accountPwd");
+		if(StringUtils.isBlank(accountPwd))
+			throw new RuntimeException("密码为空");
+		try {
+			accountPwd = SecurityUtil.getMD5Code(accountPwd);
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("md5加密失败");
+		}
+		// 更新
+		Account account = accountDao.queryAccountByNamePwd(accountName, accountPwd);
+		if(null == account){
+			throw new RuntimeException("登录失败，用户名或密码错误");
+		}
+		Date now = new Date();
+		account.setUpdateTime(now);
+		account.setLastLoginTime(now);
+		accountDao.updateAccount(account);
+		request.getSession().setAttribute(Constants.SESSION_ACCOUNT, account);
+	}
+
+	@Transactional
+	public void modifyPwd(HttpServletRequest request) {
+		Account account = (Account) request.getSession().getAttribute(Constants.SESSION_ACCOUNT);
+		if(null == account)
+			throw new RuntimeException("尚未登录");
+		checkValidCode(request);
+		String accountPwd = request.getParameter("accountPwd");
+		if(StringUtils.isBlank(accountPwd))
+			throw new RuntimeException("原密码为空");
+		String newPwd = request.getParameter("newPwd");
+		if(StringUtils.isBlank(newPwd))
+			throw new RuntimeException("新密码为空");
+		String confirmPwd = request.getParameter("newPwd");
+		if(StringUtils.isBlank(newPwd))
+			throw new RuntimeException("新密码为空");
+		if(!newPwd.equals(confirmPwd))
+			throw new RuntimeException("两次密码不一致");
+		
+		try {
+			accountPwd = SecurityUtil.getMD5Code(accountPwd);
+			newPwd = SecurityUtil.getMD5Code(newPwd);
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("md5加密失败");
+		}		
+		// 判断密码是否正确
+		account = accountDao.queryAccountByNamePwd(account.getAccountName(), accountPwd);
+		if(null == account)
+			throw new RuntimeException("原密码错误");
+		
+		account.setAccountPwd(newPwd);
+		account.setUpdateTime(new Date());
+		accountDao.updateAccount(account);
+	}
+	
+	/**
+	 * 判断验证码是否正确
+	 * @param request
+	 */
+	private void checkValidCode(HttpServletRequest request) {
+		// 会话中的code
+		String sessionValidCode = (String) request.getSession().getAttribute(Constants.SESSION_VERICODE);
+		// 传过来的code
+		String validCode = request.getParameter("validCode");
+		// 验证参数
+		if(StringUtils.isBlank(validCode) || !validCode.equalsIgnoreCase(sessionValidCode))
+			throw new RuntimeException("验证码错误");
 	}
 }

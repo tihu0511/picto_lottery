@@ -19,7 +19,7 @@
         banner_advert AS bannerAdvert,
         query_advert AS queryAdvert,
         lottery_channel AS lotteryChannel,
-        mechant_qrcode AS mechantQrcode,
+        merchant_qrcode AS mechantQrcode,
         state AS state,
         create_time AS createTime,
         update_time AS updateTime,
@@ -77,7 +77,7 @@
             , query_advert = #{queryAdvert}
         </if>
         <if test="mechantQrcode != null">
-            , mechant_qrcode = #{mechantQrcode}
+            , merchant_qrcode = #{mechantQrcode}
         </if>
         <if test="saveType != null">
             , save_type = #{saveType}

@@ -1,5 +1,7 @@
 package com.picto.util;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,4 +74,16 @@ public class DateUtil {
         calendar.add(Calendar.DAY_OF_MONTH, days);
         return calendar.getTime();
     }
+
+	public static Date parseDate(String strDate, String format) {
+		if (strDate == null || strDate.length() == 0)
+			return null;
+		DateFormat df = new SimpleDateFormat(format);
+		try {
+			return df.parse(strDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
