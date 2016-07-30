@@ -69,18 +69,18 @@ public class AccountMngController {
 	@RequestMapping("doLogin")
 	public String doLogin(HttpServletRequest request){
 		accountService.login(request);
-		return "redirect:merchantDetail.do";
+		return "redirect:account/merchantDetail.do";
 	}
 	
 	/**
 	 * 修改密码（页面）
 	 * @return
 	 */
-	@RequestMapping("modifyPwd")
+	@RequestMapping("account/modifyPwd")
 	public String modifyPwd(HttpServletRequest request){
 		Account account = getSessionAccount(request);
 		if(null == account)
-			return "redirect:login.do";
+			return "redirect:/login.do";
 		return "account/modifyPwd";
 	}
 	
@@ -88,54 +88,62 @@ public class AccountMngController {
 	 * 登录
 	 * @return
 	 */
-	@RequestMapping("doModifyPwd")
+	@RequestMapping("account/doModifyPwd")
 	public String doModifyPwd(HttpServletRequest request){
 		Account account = getSessionAccount(request);
 		if(null == account)
-			return "redirect:login.do";
+			return "redirect:/login.do";
 		accountService.modifyPwd(request);
-		return "redirect:merchantDetail.do";
+		return "redirect:account/merchantDetail.do";
 	}
 	
 	/**
 	 * 商戶詳情
 	 * @return
 	 */
-	@RequestMapping("merchantDetail")
+	@RequestMapping("account/merchantDetail")
 	public String merchantDetail(HttpServletRequest request){
 		Account account = getSessionAccount(request);
 		if(null == account)
-			return "redirect:login.do";
-		System.out.println(account.getId());
+			return "redirect:/login.do";
 		// 商户
 		Integer merchantId = account.getMerchantId();
-		System.out.println(merchantId);
 		request.setAttribute("merchant", merchantDao.queryMechantById(merchantId));
 		// 商户奖品
 		List<CouponType> couponTypes = couponTypeDao.queryAllCouponTypesByMerchantId(merchantId);
 		request.setAttribute("couponTypes", couponTypes);
 		
-		// 当日数量
+		// 当日抽数量
         Date current = new Date();
-        Date currMonthFirstTime = DateUtil.getMonthFirstTime(current, 0);
-        Date currMonthEndTime = DateUtil.getMonthLastTime(current, 0);
-        List<OperationRecord> operationToday = operationRecordDao.queryAllOpersByTime(
-                Constants.OPERATION_TYPE_LOTTERY, merchantId, currMonthFirstTime, currMonthEndTime);
-        if(null == operationToday || operationToday.isEmpty())
-        	request.setAttribute("todayNum", operationToday.size());
-        
-        // 当月数量
         String today = DateUtil.formatDate(current, "yyyyMMdd");
         Date begin = DateUtil.parseDate(today, "yyyyMMdd");
         Date end = DateUtil.addDays(begin, 1);
-        List<OperationRecord> operationMonth = operationRecordDao.queryAllOpersByTime(
+        List<OperationRecord> operationToday = operationRecordDao.queryAllOpersByTime(
                 Constants.OPERATION_TYPE_LOTTERY, merchantId, begin, end);
-        if(null == operationToday || operationMonth.isEmpty())
+        if(null != operationToday && !operationToday.isEmpty())
+        	request.setAttribute("todayNum", operationToday.size());
+        // 当日兑数量
+        List<OperationRecord> operationTodayC = operationRecordDao.queryAllOpersByTime(
+                Constants.OPERATION_TYPE_EXCHANGED, merchantId, begin, end);
+        if(null != operationTodayC && !operationTodayC.isEmpty())
+        	request.setAttribute("todayCNum", operationTodayC.size());
+        
+        // 当月抽数量
+        Date currMonthFirstTime = DateUtil.getMonthFirstTime(current, 0);
+        Date currMonthEndTime = DateUtil.getMonthLastTime(current, 0);
+        List<OperationRecord> operationMonth = operationRecordDao.queryAllOpersByTime(
+                Constants.OPERATION_TYPE_LOTTERY, merchantId, currMonthFirstTime, currMonthEndTime);
+        if(null != operationMonth && !operationMonth.isEmpty())
         	request.setAttribute("monthNum", operationMonth.size());
+        // 当月兑数量
+        List<OperationRecord> operationMonthC = operationRecordDao.queryAllOpersByTime(
+                Constants.OPERATION_TYPE_EXCHANGED, merchantId, currMonthFirstTime, currMonthEndTime);
+        if(null != operationMonthC && !operationMonthC.isEmpty())
+        	request.setAttribute("monthCNum", operationMonthC.size());
         
 		return "account/merchantDetail";
 	}
-	
+
 	/**
 	 * 获取登录的用户
 	 * @param request

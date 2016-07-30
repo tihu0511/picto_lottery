@@ -16,7 +16,7 @@
 	.login_form { border:1px solid #999; margin:50px auto; padding:15px 30px; width:260px }
 	.login_form input { width:120px; }
 	.login_head { color:#0066cc; font-size:20px; text-align:center; line-height:20px }
-	.login_table{ clear:both; height:160px }
+	.login_table{ clear:both; min-height:160px; }
 	.login_table dt{ float:left; clear:left; width:110px; height:40px; text-align:right; line-height:40px }
 	.login_table dd{ float:left; clear:right; height:40px; line-height:40px; margin-left:20px; }
 	.login_butt { text-align:center; margin:20px 0 20px }
@@ -46,9 +46,13 @@
 		</div>
 		<dl class="login_table" style="padding-top:60px;height:100px;">
 			<dt>本日抽奖次数：</dt>
-			<dd>${todayNum}</dd>
-			<dt>本月累计次数：</dt>
-			<dd>${monthNum}</dd>
+			<dd>${empty todayNum?'0':todayNum}</dd>
+			<dt>本日兑换次数：</dt>
+			<dd>${empty todayCNum?'0':todayCNum}</dd>
+			<dt>本月抽奖次数：</dt>
+			<dd>${empty monthNum?'0':monthNum}</dd>
+			<dt>本月兑换次数：</dt>
+			<dd>${empty monthCNum?'0':monthCNum}</dd>
 		</dl>
 
 	</form>
