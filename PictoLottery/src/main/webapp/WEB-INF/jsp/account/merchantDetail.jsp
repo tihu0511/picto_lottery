@@ -17,6 +17,7 @@
 	.login_form input { width:120px; }
 	.login_head { color:#0066cc; font-size:20px; text-align:center; line-height:20px }
 	.login_table{ clear:both; min-height:160px; }
+	.login_table td{ border:1px #ccc solid}
 	.login_table dt{ float:left; clear:left; width:110px; height:40px; text-align:right; line-height:40px }
 	.login_table dd{ float:left; clear:right; height:40px; line-height:40px; margin-left:20px; }
 	.login_butt { text-align:center; margin:20px 0 20px }
@@ -36,15 +37,27 @@
 			<dd>${merchant.brand}</dd>
 		</dl>
 		<div>
-			<h1 style="color:#0011ef; font-size:17px; text-align:left; padding-left:30px; line-height:17px">剩余奖项</h1>
+			<h1 style="color:#0011ef; font-size:17px; text-align:left; padding-left:30px; line-height:17px">本月数据</h1>
 			<dl class="login_table">
-				<c:forEach var="couponType" items="${couponTypes}">
-					<dt>${couponType.name}：</dt>
-					<dd>${couponType.restNum}</dd>
-				</c:forEach>
+				<table width="100%" cellspacing="1">
+					<thead>
+						<tr>
+							<td width="60%">奖项</td>
+							<td width="20%">派发数</td>
+							<td>兑换数</td>
+						</tr>
+					</thead>
+					<c:forEach var="result" items="${results}">
+						<tr>
+							<td>${result[0].name}</td>
+							<td>${result[1]}</td>
+							<td>${result[2]}</td>
+						</tr>
+					</c:forEach>
+				</table>
 			</dl>
 		</div>
-		<dl class="login_table" style="padding-top:60px;height:100px;">
+		<!--dl class="login_table" style="padding-top:60px;height:100px;">
 			<dt>本日抽奖次数：</dt>
 			<dd>${empty todayNum?'0':todayNum}</dd>
 			<dt>本日兑换次数：</dt>
@@ -53,7 +66,7 @@
 			<dd>${empty monthNum?'0':monthNum}</dd>
 			<dt>本月兑换次数：</dt>
 			<dd>${empty monthCNum?'0':monthCNum}</dd>
-		</dl>
+		</dl-->
 
 	</form>
 </div>

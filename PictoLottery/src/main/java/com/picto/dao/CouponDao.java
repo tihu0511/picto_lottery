@@ -24,4 +24,7 @@ public interface CouponDao {
 
     List<Coupon> queryAllCouponsByOpenidAndMerId(@Param("merchantId") Integer merchantId, @Param("openId") String openId,
                                                  @Param("date") Date date);
+    
+    List<Coupon> queryExchangedCouponsByDiscountProductIdAndTime(@Param("merchantId") Integer merchantId, @Param("discountProductId") Integer couponTypeId,
+    											@Param("state") Integer state, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }
