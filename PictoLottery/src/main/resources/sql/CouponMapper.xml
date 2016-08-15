@@ -56,7 +56,7 @@
     
     
     <select id="queryExchangedCouponsByDiscountProductIdAndTime" resultType="com.picto.entity.Coupon">
-        select c.* from coupon c
+        <include refid="queryCouponColumn" /> c
         where merchant_id = #{merchantId} and c.discount_product_id = #{discountProductId}
         <if test="state != null">
             and c.state = #{state}

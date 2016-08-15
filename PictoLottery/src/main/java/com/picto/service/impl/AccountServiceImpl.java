@@ -1,5 +1,6 @@
 package com.picto.service.impl;
 
+import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,11 +8,25 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import jxl.SheetSettings;
+import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.UnderlineStyle;
+import jxl.format.VerticalAlignment;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
 import com.picto.constants.Constants;
 import com.picto.dao.CouponDao;
 import com.picto.dao.CouponTypeDao;
 import com.picto.dao.DiscountProductDao;
 import com.picto.entity.*;
+import com.picto.util.DateUtil;
 import com.picto.util.SecurityUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -268,5 +283,95 @@ public class AccountServiceImpl implements AccountService {
 		// 验证参数
 		if(StringUtils.isBlank(validCode) || !validCode.equalsIgnoreCase(sessionValidCode))
 			throw new RuntimeException("验证码错误");
+	}
+
+	public void couponStatistic(HttpServletRequest request) {
+		String path = "/data/files";
+		String merchantId = request.getParameter("merchantId");
+		if(StringUtils.isBlank(merchantId))
+			throw new RuntimeException("商户ID为空");
+		
+		Date current = new Date();
+        Date currMonthFirstTime = DateUtil.getMonthFirstTime(current, -1);
+        Date currMonthEndTime = DateUtil.getMonthLastTime(current, -1);
+        
+        String[] title = new String[]{"序号", "优惠码", "是否外发优惠", "派发时间", "兑换时间"};
+    	Merchant merchant = merchantDao.queryMechantById(Integer.parseInt(merchantId));
+		List<String[]> result = new ArrayList<String[]>();
+		result.add(title);
+		File file = new File(path + File.separator + merchant.getMechantName() + DateUtil.formatDate(currMonthFirstTime, "yyyyMM") + ".xls");
+		List<DiscountProduct> products = discountProductDao.queryDiscountByMerchantId(merchant.getId());
+		int i = 0;
+		for(DiscountProduct product: products){
+    		List<Coupon> coupons = couponDao.queryExchangedCouponsByDiscountProductIdAndTime(merchant.getId(), product.getId(), null, currMonthFirstTime, currMonthEndTime);
+    		for(Coupon coupon : coupons){
+    			String[] cp = new String[5];
+	    		cp[0] = "" + i++;
+	    		cp[1] = coupon.getSerialNumber();
+    			cp[2] = null != product.getIsSendout() && product.getIsSendout() ?"是":"否";
+    			if(null != coupon.getCreateTime())
+    			cp[3] = DateUtil.formatDate(coupon.getCreateTime(), "yyyyMMdd HH:mm:ss");
+    			
+    			if(null != coupon.getState() && Constants.COUPON_STATE_EXCHANGED == coupon.getState().intValue())
+    				cp[4] = coupon.getUpdateTime() + "";
+    			
+    			result.add(cp);
+    		}
+    		try {
+				buildExcel(file, result);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+    	}
+		
+	}
+	
+
+	/**
+	 * 写Excel
+	 * @param file
+	 * @param result
+	 * @throws Exception
+	 */
+	private void buildExcel(File file, List<String[]> result) throws Exception{
+		WritableWorkbook wwb = Workbook.createWorkbook(file);
+		try {
+			WritableSheet sheet = wwb.createSheet("账户统计", 0);
+			// 写表头
+			SheetSettings setting = sheet.getSettings();
+			// 冻结表头
+			setting.setVerticalFreeze(1);
+			WritableCellFormat wcf = new WritableCellFormat();
+			// 设置边框;
+			wcf.setBorder(Border.ALL, BorderLineStyle.THIN);
+			// 设置文字居中对齐方式;
+			wcf.setAlignment(Alignment.CENTRE);
+			// 设置垂直居中;
+			wcf.setVerticalAlignment(VerticalAlignment.CENTRE);
+			WritableFont font = new WritableFont(WritableFont.createFont("宋体"), 10, WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE);
+			wcf.setFont(font);
+			
+			String[] titles = result.get(0);
+			for(int i = 0; i < titles.length; i++){
+				sheet.setColumnView(i, 30);
+				sheet.addCell(new Label(i, 0, titles[i], wcf));
+			}
+			// 设置行高
+			sheet.setRowView(0, 350, false);
+			for (int i = 1; i < result.size(); i++) {
+				String[] contents = result.get(i);
+				for(int j = 0; j < contents.length; j++){
+					sheet.addCell(new Label(j, i, contents[j]));
+				}
+			}
+			
+			wwb.write();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			wwb.close();
+		}
+		
 	}
 }

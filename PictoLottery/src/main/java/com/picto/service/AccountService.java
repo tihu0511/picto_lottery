@@ -21,4 +21,10 @@ public interface AccountService {
 	 * @param account
 	 */
 	void modifyPwd(HttpServletRequest request); 
+	
+	/**
+	 * 奖项报表
+	 * @param request
+	 */
+	void couponStatistic(HttpServletRequest request);
 }

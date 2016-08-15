@@ -107,9 +107,9 @@ public class AccountController {
 		// 商户奖品
         Date current = new Date();
         Date currMonthFirstTime = DateUtil.getMonthFirstTime(current, 0);
-        System.out.println(currMonthFirstTime);
+//        System.out.println(currMonthFirstTime);
         Date currMonthEndTime = DateUtil.getMonthLastTime(current, 0);
-        System.out.println(currMonthEndTime);
+//        System.out.println(currMonthEndTime);
         List<DiscountProduct> discountProducts = discountProductDao.queryDiscountByMerchantId(merchantId);
         
         List<Object []> results = new ArrayList<Object []>();
@@ -126,44 +126,25 @@ public class AccountController {
 			if(null != couponse && !couponse.isEmpty())
 				couponsExchanged = couponse.size();
 			
-	        System.out.println(couponsExchanged);
+//	        System.out.println(couponsExchanged);
 	        
 			results.add(new Object[]{dp, couponsPresented, couponsExchanged});
 		}
 		request.setAttribute("results", results);
-//		// 商户奖品
-//		List<CouponType> couponTypes = couponTypeDao.queryAllCouponTypesByMerchantId(merchantId);
-//		request.setAttribute("couponTypes", couponTypes);
-//		
-//		// 当日抽数量
-//        Date current = new Date();
-//        String today = DateUtil.formatDate(current, "yyyyMMdd");
-//        Date begin = DateUtil.parseDate(today, "yyyyMMdd");
-//        Date end = DateUtil.addDays(begin, 1);
-//        List<OperationRecord> operationToday = operationRecordDao.queryAllOpersByTime(
-//                Constants.OPERATION_TYPE_LOTTERY, merchantId, begin, end);
-//        if(null != operationToday && !operationToday.isEmpty())
-//        	request.setAttribute("todayNum", operationToday.size());
-//        // 当日兑数量
-//        List<OperationRecord> operationTodayC = operationRecordDao.queryAllOpersByTime(
-//                Constants.OPERATION_TYPE_EXCHANGED, merchantId, begin, end);
-//        if(null != operationTodayC && !operationTodayC.isEmpty())
-//        	request.setAttribute("todayCNum", operationTodayC.size());
-//        
-//        // 当月抽数量
-//        Date currMonthFirstTime = DateUtil.getMonthFirstTime(current, 0);
-//        Date currMonthEndTime = DateUtil.getMonthLastTime(current, 0);
-//        List<OperationRecord> operationMonth = operationRecordDao.queryAllOpersByTime(
-//                Constants.OPERATION_TYPE_LOTTERY, merchantId, currMonthFirstTime, currMonthEndTime);
-//        if(null != operationMonth && !operationMonth.isEmpty())
-//        	request.setAttribute("monthNum", operationMonth.size());
-//        // 当月兑数量
-//        List<OperationRecord> operationMonthC = operationRecordDao.queryAllOpersByTime(
-//                Constants.OPERATION_TYPE_EXCHANGED, merchantId, currMonthFirstTime, currMonthEndTime);
-//        if(null != operationMonthC && !operationMonthC.isEmpty())
-//        	request.setAttribute("monthCNum", operationMonthC.size());
-        
 		return "account/merchantDetail";
+	}
+	
+	/**
+	 * 登录
+	 * @return
+	 */
+	@RequestMapping("account/couponStatistic")
+	public String couponStatistic(HttpServletRequest request){
+		Account account = getSessionAccount(request);
+		if(null == account)
+			return "redirect:/login.do";
+		accountService.couponStatistic(request);
+		return "redirect:success";
 	}
 
 	/**
